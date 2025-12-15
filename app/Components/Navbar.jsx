@@ -5,7 +5,7 @@ import HoverText from "./HoverText";
 import gsap from "gsap";
 import { useTransitionRouter } from "next-view-transitions";
 import { useGSAP } from "@gsap/react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
 
 const Navbar = () => {
   const router = useTransitionRouter();
@@ -14,10 +14,12 @@ const Navbar = () => {
   const lineMail = useRef(null);
   const navRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const button2 = useRef(null);
   const hoverFill2 = useRef(null);
   const textHover2 = useRef(null);
   const arrow2 = useRef(null);
+  const conRef = useRef(null);
 
   const links = [
     { name: "Home", href: "/" },
@@ -64,6 +66,31 @@ const Navbar = () => {
       });
     }
   }, [menuOpen]);
+
+  useEffect(() => {
+    if (!conRef.current) return;
+
+    conRef.current.style.willChange = "clip-path, transform, opacity";
+    gsap.set(".textN", { willChange: "transform, opacity" });
+
+    if (contactOpen) {
+      gsap.to(conRef.current, {
+        clipPath: "inset(0% 0% 0% 0%)",
+        duration: 1.8,
+        ease: "power4.inOut",
+        pointerEvents: "auto",
+        force3D: true,
+      });
+    } else {
+      gsap.to(conRef.current, {
+        clipPath: "inset(0% 0% 0% 100%)",
+        duration: 0.9,
+        ease: "power3.inOut",
+        pointerEvents: "none",
+        force3D: true,
+      });
+    }
+  }, [contactOpen]);
 
   // ✅ Lock scroll when menu is open
   useEffect(() => {
@@ -140,6 +167,9 @@ const Navbar = () => {
     menuOpen ? freezeScroll() : unfreezeScroll();
   }, [menuOpen]);
 
+  useEffect(() => {
+    contactOpen ? freezeScroll() : unfreezeScroll();
+  }, [contactOpen]);
 
 
   useEffect(() => {
@@ -151,6 +181,129 @@ const Navbar = () => {
 
   return (
     <>
+      <div
+        ref={conRef}
+        className="w-screen h-full fixed top-0 left-0 flex p-[3vw] md:p-[1vw] backdrop-blur-sm text-white  z-50 items-end justify-end"
+        style={{
+          clipPath: "inset(0% 0% 0% 100%)",
+          pointerEvents: "none",
+        }}
+      >
+        <div className="w-full md:w-1/2 h-full flex flex-col relative bg-black rounded p-[2vw] ">
+
+          {/* Close button */}
+          <button
+            onClick={() => setContactOpen(false)}
+            className="absolute top-5 right-5 cursor-pointer"
+          >
+            <X className="xl:text-[3vw] text-white" />
+          </button>
+
+          {/* Heading */}
+          <h2 className="font-[PPNeueMontreal] font-bold uppercase tracking-tight text-[6vw] md:text-[2vw] mb-6">
+            Start a Project
+          </h2>
+
+          {/* 🔥 PROJECT FORM */}
+          <form
+            className="space-y-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              // handle submit (API)
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Your Name"
+              required
+              className="w-full bg-transparent border-b border-gray-700 py-3 focus:outline-none"
+            />
+
+            <input
+              type="email"
+              placeholder="Email Address"
+              required
+              className="w-full bg-transparent border-b border-gray-700 py-3 focus:outline-none"
+            />
+
+            <input
+              type="text"
+              placeholder="Company (optional)"
+              className="w-full bg-transparent border-b border-gray-700 py-3 focus:outline-none"
+            />
+
+            <select
+              required
+              className="w-full bg-black border-b border-gray-700 py-3 focus:outline-none"
+            >
+              <option value="">Project Type</option>
+              <option>Website</option>
+              <option>Branding</option>
+              <option>Web App</option>
+              <option>E-commerce</option>
+              <option>Other</option>
+            </select>
+
+            <select
+              required
+              className="w-full bg-black border-b border-gray-700 py-3 focus:outline-none"
+            >
+              <option value="">Budget Range</option>
+              <option>₹50k – ₹1L</option>
+              <option>₹1L – ₹3L</option>
+              <option>₹3L – ₹5L</option>
+              <option>₹5L+</option>
+            </select>
+
+            <textarea
+              placeholder="Tell us about your project"
+              rows={4}
+              required
+              className="w-full bg-transparent border-b border-gray-700 py-3 focus:outline-none resize-none"
+            />
+
+            {/* Submit */}
+            <button
+              type="submit"
+              className="mt-6 px-6 py-3 border border-white rounded-full uppercase tracking-wide hover:bg-white hover:text-black transition"
+            >
+              Send Project Details
+            </button>
+          </form>
+
+          {/* 🔹 DIVIDER */}
+          <div className="my-10 border-t border-gray-700"></div>
+
+          {/* 📅 CALENDAR BOOKING */}
+          <div>
+            <p className="opacity-70 mb-3 uppercase text-sm">
+              Prefer a quick call?
+            </p>
+
+            <a
+              href="https://calendly.com/your-calendly-link"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-6 py-3 border border-white rounded-full uppercase tracking-wide hover:bg-white hover:text-black transition"
+            >
+              Book a Call
+              <ArrowRight className="-rotate-45" />
+            </a>
+          </div>
+
+          {/* Footer links */}
+          <div className="mt-10 text-sm text-gray-400 space-y-2">
+            <p>hello@nrstudios.in</p>
+            <div className="flex gap-4 uppercase">
+              <a href="https://instagram.com/nrstudios" target="_blank">Instagram</a>
+              <a href="https://dribbble.com/nrstudios" target="_blank">Dribbble</a>
+              <a href="https://linkedin.com/company/nrstudios" target="_blank">LinkedIn</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
       {/* ✅ Fullscreen Menu Overlay */}
       <div
         ref={navRef}
@@ -215,7 +368,7 @@ const Navbar = () => {
       {/* ✅ Top Navbar */}
       <div
         style={{ fontFamily: "MyFont2" }}
-        className="w-full fixed top-0 text-white mix-blend-difference left-0 p-5 md:px-[2vw] xl:px-[2vw] z-50 "
+        className="w-full fixed top-0 text-white mix-blend-difference left-0 p-5 md:px-[2vw] xl:px-[2vw] z-40 "
       >
         <div className="flex justify-between items-center border-b pb-1">
           <div
@@ -248,9 +401,9 @@ const Navbar = () => {
             </div>
             <div className="overflow-hidden button">
               <button
-
-                className="relative cursor-pointer w-[100px] h-[35px] md:w-[140px] tracking-tighter flex items-center justify-center md:h-[41px] border border-white rounded-full font-[dbsharp] font-semibold overflow-hidden uppercase tracking-wider" >
-                {menuOpen ? "Close" : "Contact Us"}{" "}
+                onClick={() => setContactOpen(!contactOpen)}
+                className="relative cursor-pointer w-[100px] h-[35px] md:w-[140px] tracking-tighter flex items-center justify-center md:h-[41px] border border-white rounded-full font-[dbsharp] font-semibold overflow-hidden uppercase " >
+                {contactOpen ? "Close" : "Contact"}{" "}
                 <ArrowRight ref={arrow2} strokeWidth={2} className="-rotate-45" />{" "}
               </button>
             </div>

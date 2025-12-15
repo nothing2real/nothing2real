@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "./Components/Navbar";
 import { ViewTransitions } from "next-view-transitions";
 import { Analytics } from "@vercel/analytics/next"
+import AppLoader from "./Components/AppLoader";
 
 
 export const metadata = {
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
       <html lang="en">
         <body>
           <Navbar />
+          <AppLoader/>
           {children}
           <Analytics />
         </body>

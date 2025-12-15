@@ -152,17 +152,17 @@ export default function Page() {
             <div className="grid md:grid-cols-12 md:gap-8 gap-4 grid-cols-6 col-start-1 col-span-6 md:col-span-12 border-b border-black/60">
               <div className="border-wrapper col-start-1 md:col-start-1 col-span-4 md:col-span-7 lg:col-start-1 lg:col-span-4 xl:col-span-4 flex flex-col text-black overflow-hidden">
                 {/* Hero Text */}
-                <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw]  font-[PPNeueMontreal] font-semibold lg:text-[3vw] 2xl:leading-[3vw] lg:leading-[3vw] md:text-[5vw] text-[6vw] leading-[6vw] md:leading-[5vw] ">
+                <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw]  font-[PPNeueMontreal] font-bold lg:text-[3vw] 2xl:leading-[3vw] lg:leading-[3vw] md:text-[5vw] text-[6vw] leading-[6vw] md:leading-[5vw] ">
                   <h1 className="textH ">
                     Every Innovation
                   </h1>
                 </div>
-                <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw] xl:-mt-[1vw] font-[PPNeueMontreal] font-semibold lg:text-[3vw] 2xl:leading-[4vw] lg:leading-[3vw] md:text-[5vw] text-[6vw] leading-[6vw] md:leading-[5vw] ">
+                <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw] xl:-mt-[1vw] font-[PPNeueMontreal] font-bold lg:text-[3vw] 2xl:leading-[4vw] lg:leading-[3vw] md:text-[5vw] text-[6vw] leading-[6vw] md:leading-[5vw] ">
                   <h1 className="textH">
                     Deserves Thoughtful
                   </h1>
                 </div>
-                <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw] xl:-mt-[1vw] font-[PPNeueMontreal] font-semibold lg:text-[3vw] 2xl:leading-[3vw] lg:leading-[3vw] md:text-[5vw] text-[6vw] leading-[6vw] md:leading-[5vw] ">
+                <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw] xl:-mt-[1vw] font-[PPNeueMontreal] font-bold lg:text-[3vw] 2xl:leading-[3vw] lg:leading-[3vw] md:text-[5vw] text-[6vw] leading-[6vw] md:leading-[5vw] ">
                   <h1 className="textH">
                     Developers
                   </h1>
@@ -189,7 +189,7 @@ export default function Page() {
               </div>
               <div className="w-full col-start-1 lg:pt-[8vw] font-[PPNeueMontreal] xl:pt-0 overflow-hidden text-black/70 pt-[2vw] col-span-4 md:col-span-5 xl:col-span-3">
                 <TextY>
-                  <p className="xl:text-[1vw] lg:text-[2vw] font-semibold lg:leading-[2vw] xl:leading-[1.1vw] text-[4vw] leading-[4vw] ">
+                  <p className="xl:text-[1vw] lg:text-[2vw] font-semibold lg:leading-[2vw]  xl:leading-[1.1vw] text-[4vw] leading-[4vw] ">
                     We turn your <span className="text-black">“NOTHING”</span>  complexity vision
                     into <span className="text-black">“REAL”</span> revolutionary ideas feels inevitable
                   </p>

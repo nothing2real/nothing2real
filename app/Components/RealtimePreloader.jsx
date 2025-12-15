@@ -1,21 +1,16 @@
-// components/RealtimePreloader.tsx
+// components/RealtimePreloader.jsx
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { useRouter } from 'next/navigation';
 
-interface RealtimePreloaderProps {
-  minLoadTime?: number; // Minimum display time in milliseconds
-  reloadThreshold?: number; // Browser usage time threshold to trigger reload (ms)
-}
-
 export default function RealtimePreloader({ 
   minLoadTime = 2000,
   reloadThreshold = 300000 // 5 minutes default
-}: RealtimePreloaderProps) {
-  const textRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
+}) {
+  const textRef = useRef(null);
+  const progressRef = useRef(null);
   const [progress, setProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
   const [browserUsageTime, setBrowserUsageTime] = useState(0);
@@ -24,7 +19,7 @@ export default function RealtimePreloader({
   // Track browser usage time
   useEffect(() => {
     let startTime = Date.now();
-    let intervalId: NodeJS.Timeout;
+    let intervalId;
 
     const updateUsageTime = () => {
       const currentTime = Date.now();
