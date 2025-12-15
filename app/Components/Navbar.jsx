@@ -21,6 +21,53 @@ const Navbar = () => {
   const arrow2 = useRef(null);
   const conRef = useRef(null);
 
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    company: "",
+    projectType: "",
+    budget: "",
+    message: "",
+  });
+
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSending(true);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) throw new Error("Failed");
+
+      setSent(true);
+      setFormData({
+        name: "",
+        email: "",
+        company: "",
+        projectType: "",
+        budget: "",
+        message: "",
+      });
+
+    } catch (err) {
+      alert("Failed to send. Try again.");
+    } finally {
+      setSending(false);
+    }
+  };
+
+
   const links = [
     { name: "Home", href: "/" },
     { name: "Studio", href: "/studio" },
@@ -189,7 +236,7 @@ const Navbar = () => {
           pointerEvents: "none",
         }}
       >
-        <div className="w-full md:w-1/2 h-full flex flex-col relative bg-black rounded p-[2vw] ">
+        <div className="w-full md:w-1/2 h-full flex flex-col relative bg-black rounded p-[2vw] overflow-y-auto ">
 
           {/* Close button */}
           <button
@@ -207,12 +254,12 @@ const Navbar = () => {
           {/* 🔥 PROJECT FORM */}
           <form
             className="space-y-4"
-            onSubmit={(e) => {
-              e.preventDefault();
-              // handle submit (API)
-            }}
+            onSubmit={handleSubmit}
           >
             <input
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
               type="text"
               placeholder="Your Name"
               required
@@ -220,6 +267,9 @@ const Navbar = () => {
             />
 
             <input
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               type="email"
               placeholder="Email Address"
               required
@@ -227,12 +277,18 @@ const Navbar = () => {
             />
 
             <input
+              name="company"
+              value={formData.company}
+              onChange={handleChange}
               type="text"
               placeholder="Company (optional)"
               className="w-full bg-transparent border-b border-gray-700 py-3 focus:outline-none"
             />
 
             <select
+              name="projectType"
+              value={formData.projectType}
+              onChange={handleChange}
               required
               className="w-full bg-black border-b border-gray-700 py-3 focus:outline-none"
             >
@@ -245,6 +301,9 @@ const Navbar = () => {
             </select>
 
             <select
+              name="budget"
+              value={formData.budget}
+              onChange={handleChange}
               required
               className="w-full bg-black border-b border-gray-700 py-3 focus:outline-none"
             >
@@ -256,19 +315,24 @@ const Navbar = () => {
             </select>
 
             <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
               placeholder="Tell us about your project"
               rows={4}
               required
               className="w-full bg-transparent border-b border-gray-700 py-3 focus:outline-none resize-none"
             />
 
-            {/* Submit */}
+
             <button
               type="submit"
-              className="mt-6 px-6 py-3 border border-white rounded-full uppercase tracking-wide hover:bg-white hover:text-black transition"
+              disabled={sending}
+              className="mt-6 px-6 py-3 border border-white rounded-full uppercase tracking-wide hover:bg-white hover:text-black transition disabled:opacity-50"
             >
-              Send Project Details
+              {sending ? "Sending..." : "Send Project Details"}
             </button>
+
           </form>
 
           {/* 🔹 DIVIDER */}
