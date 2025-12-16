@@ -50,7 +50,7 @@ const Page = () => {
 
           <div className="bg-white overflow-hidden"> 
             <div className="overflow-hidden">
-              <h1 className="font-[Helvetica] textH font-bold leading-[0.9] text-[15vw] md:text-[10vw] xl:text-[8vw]">
+              <h1 className="font-[Helvetica] textH font-bold leading-[16vw] text-[15vw] md:leading-[10.5vw] md:text-[10vw] xl:leading-[9vw] xl:text-[8vw]">
                 Projects
               </h1>
             </div>
@@ -66,7 +66,7 @@ const Page = () => {
 
 
         <section className="w-full h-full p-[2vw]">
-          <div className="w-full h-full  items-center justify-between grid gap-8 grid-cols-6 md:grid-cols-12">
+          <div className="w-full h-full  items-center justify-between border-t border-gray-300 grid gap-8 grid-cols-6 md:grid-cols-12">
             {projects.map((project, index) => (
               <div
                 key={index}
@@ -88,8 +88,7 @@ const Page = () => {
                   </p>
                 </div>
 
-                <div className="w-full h-[30vw] bg-red-400 ">
-
+                <div className="w-full md:h-[30vw] h-[60vw] bg-red-400 ">
                 </div>
 
                 {/* META */}
@@ -106,39 +105,6 @@ const Page = () => {
           </div>
         </section>
 
-        {/* ================= PROJECT LIST ================= */}
-        <section className="px-[5vw] mt-[20vw] pb-[15vw]">
-          <div className="border-t border-black/20">
-            {projects.map((project, index) => (
-              <div
-                key={index}
-                className="grid md:grid-cols-12 grid-cols-6  gap-6 py-[6vw] border-b border-black/20"
-              >
-                {/* INDEX */}
-                <div className="col-span-1 text-sm opacity-50">
-                  {String(index + 1).padStart(2, "0")}
-                </div>
-
-                {/* TITLE */}
-                <div className="col-span-3 md:col-span-6">
-                  <h2 className="font-[Helvetica] font-bold text-[8vw] md:text-[4vw] leading-tight">
-                    {project.title}
-                  </h2>
-
-                  <p className="mt-4 max-w-[45ch] text-[4vw] md:text-[2vw] leading-[3.8vw] opacity-70">
-                    {project.description}
-                  </p>
-                </div>
-
-                {/* META */}
-                <div className=" md:block md:col-span-4 text-black  col-span-2 text-sm opacity-60">
-                  <p>{project.category}</p>
-                  <p className="mt-2">{project.year}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
 
         {/* ================= FOOTER ================= */}
         <Footer />

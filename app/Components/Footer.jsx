@@ -78,7 +78,7 @@ const Footer = () => {
       <div className="grid md:grid-cols-12 grid-cols-1 pt-[5vw] gap-4 md:mt-[10vw] border-t border-black/70 xl:mt-[2vw] md:pt-[2vw] mt-[2vw]">
         {/* Left Logo */}
 
-        <div className="overflow-hidden font-[PPNeueMontreal] font-bold md:col-start-1 md:col-span-8 xl:text-[2.5vw] xl:leading-[2.5vw] lg:text-[12vw] md:text-[14vw] text-[6vw] leading-[6vw]  text-black/60 ">
+        <div className="overflow-hidden font-[PPNeueMontreal] pt-[10vw] w-full font-bold md:col-start-1 md:col-span-8 xl:text-[2.5vw] xl:leading-[2.5vw] lg:text-[12vw] md:text-[14vw] text-[4vw] leading-[4vw]  text-black/60 ">
           <TextY>
             <p>
               Let’s start our conversation to transform your

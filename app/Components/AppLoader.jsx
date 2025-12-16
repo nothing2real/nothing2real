@@ -103,7 +103,7 @@ export default function AppLoader() {
       className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black px-[2vw] font-[PPNeueMontreal]"
     >
       {/* Text */}
-      <div className="relative xl:text-[8vw] tracking-tighter font-bold mb-6">
+      <div className="relative xl:text-[8vw] text-[13vw] md:text-[10vw] tracking-tighter font-bold mb-6">
         <span className="block text-[#f0eee9]/50">NOTHINGREAL</span>
         <span
           ref={textRef}
@@ -121,13 +121,6 @@ export default function AppLoader() {
         </span>
       </div>
 
-      {/* Progress bar */}
-      <div className="w-full h-1 mt-[15vw] bg-gray-800 overflow-hidden rounded-full">
-        <div
-          className="h-full bg-white"
-          style={{ width: `${progress}%` }}
-        />
-      </div>
 
       {/* Percentage */}
       <div className="absolute bottom-5 right-5 font-bold xl:text-[5vw] text-white">

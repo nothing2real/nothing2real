@@ -143,6 +143,41 @@ export default function Page() {
     });
   }, []);
 
+
+  useGSAP(() => {
+    gsap.set(".image", {
+      scale: 1.3,
+    });
+
+    const charSplit = new SplitText(".textf", {
+      type: "chars",
+      charsClass: "char",
+    });
+
+    charSplit.chars.forEach((char) => {
+      const wrapper = document.createElement("span");
+      wrapper.classList.add("inline-block", "overflow-hidden");
+      char.parentNode.insertBefore(wrapper, char);
+      wrapper.appendChild(char);
+    });
+
+    gsap.from(charSplit.chars, {
+      x: -80,
+      opacity: 0,
+      delay: 0.7,
+      duration: 1.4,
+      stagger: 0.02,
+      ease: "power4.out",
+      force3D: true,
+      scrollTrigger: {
+        start: "top 80%",
+        trigger: ".footer",
+
+      }
+
+    });
+  });
+
   return (
     <ReactLenis root>
       <div ref={mainRef} className="w-full overflow-hidden min-h-screen main  bg-[#16181B] text-white">
@@ -150,7 +185,7 @@ export default function Page() {
           {/* Hero Text */}
           <div className="overflow-hidden w-full h-full grid grid-cols-6 md:grid-cols-12  gap-4 md:gap-6 xl:gap-8 pt-[20vw] md:pt-[10vw] xl:pt-[5vw] ">
             <div className="grid md:grid-cols-12 md:gap-8 gap-4 grid-cols-6 col-start-1 col-span-6 md:col-span-12 border-b border-black/60">
-              <div className="border-wrapper col-start-1 md:col-start-1 col-span-4 md:col-span-7 lg:col-start-1 lg:col-span-4 xl:col-span-4 flex flex-col text-black overflow-hidden">
+              <div className="border-wrapper col-start-1 md:col-start-1 col-span-4 md:col-span-7 tracking-tighter lg:col-start-1 lg:col-span-4 xl:col-span-4 flex flex-col text-black overflow-hidden">
                 {/* Hero Text */}
                 <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw]  font-[PPNeueMontreal] font-bold lg:text-[3vw] 2xl:leading-[3vw] lg:leading-[3vw] md:text-[5vw] text-[6vw] leading-[6vw] md:leading-[5vw] ">
                   <h1 className="textH ">
@@ -169,7 +204,7 @@ export default function Page() {
                 </div>
               </div>
 
-              <div className="w-full h-full justify-end items-end pt-[5vw] md:mt-0 lg:pt-[8vw] xl:pt-[8vw] text-black col-start-1 lg:col-start-5 lg:col-span-3 md:col-start-4 md:col-span-4 xl:col-start-6  col-span-3 xl:col-span-3">
+              <div className="w-full h-full justify-end items-end pt-[5vw] md:mt-0 lg:pt-[8vw] xl:pt-[8vw] text-black/40 col-start-1 lg:col-start-5 lg:col-span-3 md:col-start-4 md:col-span-4 xl:col-start-6  col-span-3 xl:col-span-3">
                 <div className="overflow-hidden">
                   <p className="textH xl:text-[5vw] text-[7vw] leading-[7vw] xl:leading-[4.5vw]  md:pt-0 xl:pt-[9vw] lg:pt-[16vw] lg:text-[5vw] font-[PPNeueMontreal] font-bold lg:leading-[5.5vw]">
                     2025©
@@ -208,7 +243,7 @@ export default function Page() {
                 </TextY>
               </div>
             </div>
-            <div className="w-full col-start-2 lg:col-start-5 lg:col-span-7 md:col-start-3 xl:col-start-6 text-black relative col-span-4 md:col-span-6">
+            <div className="w-full col-start-2  lg:col-start-5 lg:col-span-7 md:col-start-3 xl:col-start-6 text-black relative col-span-4 md:col-span-6">
               <h1 className="xl:text-[9.2vw]  lg:text-[11vw] md:text-[14vw] text-[13.5vw] tracking-tight font-[PPNeueMontreal] font-bold uppercase">ELEGANCE*</h1>
               <h1 className="xl:text-[2.2vw] text-[4vw] lg:text-[4vw] absolute bottom-0 right-0 font-[PPNeueMontreal] font-bold ">Speaks</h1>
             </div>
@@ -258,7 +293,7 @@ export default function Page() {
             <div className="md:col-start-1 md:col-span-2 xl:col-start-1 xl:col-span-2 lg:col-start-1 lg:col-span-2 col-start-5 col-span-2 overflow-hidden pt-[5vw]">
               <img src={images.feviconico.src} className="w-full h-full object-center object-cover" />
             </div>
-            <div className="md:col-start-4 xl:col-start-4 xl:col-span-4 lg:col-start-4 lg:col-span-6 col-start-1 col-span-5 md:col-span-4 overflow-hidden pt-[5vw]">
+            <div className="md:col-start-4  xl:col-start-4 xl:col-span-4 lg:col-start-4 lg:col-span-6 col-start-1 col-span-5 md:col-span-4 overflow-hidden pt-[5vw]">
               <TextY>
                 <p className="xl:text-[1.2vw] xl:leading-tight lg:text-[2.5vw] md:text-[2vw] md:leading-[2.5vw] font-[PPNeueMontreal] font-semibold lg:leading-[2.5vw] text-[4vw] leading-[4.5vw]  w-full    text-black/70">
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  At our approach, we transform ideas into powerful digital experiences. Whether we build your website from the ground up or elevate your existing design, every decision we make is intentional
@@ -316,7 +351,7 @@ export default function Page() {
             </h1>
           </div>
           <div className="grid md:grid-cols-12 grid-cols-6 gap-4 md:gap-8 pt-[15vw] md:pt-[5vw] pb-[10vw]">
-            <div className="md:col-start-5 md:col-span-8  col-start-1 col-span-6">
+            <div className="md:col-start-6 md:col-span-8  col-start-1 col-span-6">
               <Accordion />
             </div>
           </div>

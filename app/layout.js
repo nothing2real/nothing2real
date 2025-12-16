@@ -18,6 +18,7 @@ export default function RootLayout({ children }) {
         <body>
           <Navbar />
           <AppLoader/>
+          
           {children}
           <Analytics />
         </body>
