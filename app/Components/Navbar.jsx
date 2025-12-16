@@ -6,6 +6,8 @@ import gsap from "gsap";
 import { useTransitionRouter } from "next-view-transitions";
 import { useGSAP } from "@gsap/react";
 import { ArrowRight, X } from "lucide-react";
+import { usePathname } from "next/navigation";
+
 
 const Navbar = () => {
   const router = useTransitionRouter();
@@ -21,6 +23,9 @@ const Navbar = () => {
   const arrow2 = useRef(null);
   const conRef = useRef(null);
 
+  const pathname = usePathname();
+
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -32,6 +37,8 @@ const Navbar = () => {
 
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -40,6 +47,7 @@ const Navbar = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
+    setError("");
 
     try {
       const res = await fetch("/api/contact", {
@@ -51,6 +59,7 @@ const Navbar = () => {
       if (!res.ok) throw new Error("Failed");
 
       setSent(true);
+      setSuccess(true);
       setFormData({
         name: "",
         email: "",
@@ -228,101 +237,123 @@ const Navbar = () => {
 
   return (
     <>
-      <div
-        ref={conRef}
-        className="w-screen h-full fixed top-0 left-0 flex p-[3vw] md:p-[1vw] backdrop-blur-sm text-white  z-50 items-end justify-end"
+      <div ref={conRef} className="w-screen h-full fixed top-0 left-0 flex p-[3vw] md:p-[1vw] backdrop-blur-sm text-white  z-50 items-end justify-end"
         style={{
           clipPath: "inset(0% 0% 0% 100%)",
           pointerEvents: "none",
-        }}
-      >
+        }} >
         <div className="w-full md:w-1/2 h-full flex flex-col relative bg-black rounded p-[2vw] overflow-y-auto ">
 
-          {/* Close button */}
-          <button
-            onClick={() => setContactOpen(false)}
-            className="absolute top-5 right-5 cursor-pointer"
-          >
-            <X className="xl:text-[3vw] text-white" />
-          </button>
+          <button onClick={() => setContactOpen(false)} className="absolute top-5 right-5 cursor-pointer" >  <X className="xl:text-[3vw] text-white" /> </button>
 
-          {/* Heading */}
-          <h2 className="font-[PPNeueMontreal] font-bold uppercase tracking-tight text-[6vw] md:text-[2vw] mb-6">
+          <h2 className="font-[PPNeueMontreal] font-bold uppercase tracking-tight text-[6vw] md:text-[3vw] ">
             Start a Project
           </h2>
+          <p className="dm-mono-light xl:text-[0.9vw] text-[4vw] md:text-[3vw] mb-6">Reach out and let's explore how we can bring your ideas to life. Whether you're ready to begin or just have questions.</p>
 
-          {/* 🔥 PROJECT FORM */}
           <form
-            className="space-y-4"
+            className="space-y-2"
             onSubmit={handleSubmit}
           >
-            <input
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              type="text"
-              placeholder="Your Name"
-              required
-              className="w-full bg-transparent border-b border-gray-700 py-3 focus:outline-none"
-            />
 
-            <input
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              type="email"
-              placeholder="Email Address"
-              required
-              className="w-full bg-transparent border-b border-gray-700 py-3 focus:outline-none"
-            />
 
-            <input
-              name="company"
-              value={formData.company}
-              onChange={handleChange}
-              type="text"
-              placeholder="Company (optional)"
-              className="w-full bg-transparent border-b border-gray-700 py-3 focus:outline-none"
-            />
+            {success && (
+              <p className="text-green-400 text-sm mt-4">
+                ✔ Enquiry sent successfully. We’ll contact you soon.
+              </p>
+            )}
 
-            <select
-              name="projectType"
-              value={formData.projectType}
-              onChange={handleChange}
-              required
-              className="w-full bg-black border-b border-gray-700 py-3 focus:outline-none"
-            >
-              <option value="">Project Type</option>
-              <option>Website</option>
-              <option>Branding</option>
-              <option>Web App</option>
-              <option>E-commerce</option>
-              <option>Other</option>
-            </select>
+            {error && (
+              <p className="text-red-400 text-sm mt-4">
+                {error}
+              </p>
+            )}
 
-            <select
-              name="budget"
-              value={formData.budget}
-              onChange={handleChange}
-              required
-              className="w-full bg-black border-b border-gray-700 py-3 focus:outline-none"
-            >
-              <option value="">Budget Range</option>
-              <option>₹50k – ₹1L</option>
-              <option>₹1L – ₹3L</option>
-              <option>₹3L – ₹5L</option>
-              <option>₹5L+</option>
-            </select>
+            <div className="formItem">
+              <label>Name</label>
+              <input
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                type="text"
+                required
+                className="w-full bg-transparent border p-2 border-gray-700 py-3 focus:outline-none"
+              />
+            </div>
 
-            <textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              placeholder="Tell us about your project"
-              rows={4}
-              required
-              className="w-full bg-transparent border-b border-gray-700 py-3 focus:outline-none resize-none"
-            />
+
+            <div className="formItem">
+              <label>Email</label>
+              <input
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                type="email"
+                required
+                className="w-full bg-transparent border p-2 border-gray-700 py-3 focus:outline-none"
+              />
+            </div>
+
+            <div className="formItem">
+              <label>Company</label>
+              <input
+                name="company"
+                value={formData.company}
+                onChange={handleChange}
+                type="text"
+                className="w-full bg-transparent border p-2 border-gray-700 py-3 focus:outline-none"
+              />
+            </div>
+
+            <div className="formItem">
+              <label>Project Type*</label>
+              <select
+                name="projectType"
+                value={formData.projectType}
+                onChange={handleChange}
+                required
+                className="w-full bg-black border p-2 border-gray-700 py-3 focus:outline-none"
+              >
+                <option value="">Project Type</option>
+                <option>Website</option>
+                <option>Branding</option>
+                <option>Web App</option>
+                <option>E-commerce</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div className="formItem">
+              <label>Budget Plan*</label>
+              <select
+                name="budget"
+                value={formData.budget}
+                onChange={handleChange}
+                required
+                className="w-full bg-black border p-2 border-gray-700 py-3 focus:outline-none"
+              >
+                <option value="">Budget Range</option>
+                <option>₹5k – ₹10K</option>
+                <option>₹15k – ₹35K</option>
+                <option>₹40k – ₹70K</option>
+                <option>₹1L – ₹3L</option>
+                <option>₹4L+</option>
+              </select>
+            </div>
+
+            <div className="formItem">
+              <label>Tell us about your project*</label>
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                rows={4}
+                required
+                className="w-full bg-black border p-2 border-gray-700 py-3 focus:outline-none"
+              />
+
+            </div>
+
 
 
             <button
@@ -333,20 +364,18 @@ const Navbar = () => {
               {sending ? "Sending..." : "Send Project Details"}
             </button>
 
+
           </form>
 
-          {/* 🔹 DIVIDER */}
           <div className="my-10 border-t border-gray-700"></div>
 
-          {/* 📅 CALENDAR BOOKING */}
           <div>
             <p className="opacity-70 mb-3 uppercase text-sm">
               Prefer a quick call?
             </p>
 
             <a
-              href="https://calendly.com/your-calendly-link"
-              target="_blank"
+              href="https://cal.com/nothing2real-ulhfmo"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-3 px-6 py-3 border border-white rounded-full uppercase tracking-wide hover:bg-white hover:text-black transition"
             >
@@ -381,33 +410,52 @@ const Navbar = () => {
 
           <div
             style={{ fontStretch: "75%" }}
-            className="md:w-1/2 h-full flex-col  flex items-start mx-[5vw] md:mx-[2vw] font-[PPNeueMontreal] font-bold uppercase  xl:text-[3vw] xl:leading-[3vw] text-[9vw] leading-[10.5vw] md:text-[8vw] md:leading-[7.5vw] lg:text-[7vw] lg:leading-[6.5vw] space-y-2  justify-center "
+            className="md:w-1/2 h-full flex-col  flex items-start mx-[5vw] md:mx-[2vw] font-[PPNeueMontreal] font-semibold uppercase  xl:text-[3vw] xl:leading-[3vw] text-[9vw] leading-[10.5vw] md:text-[8vw] md:leading-[7.5vw] lg:text-[7vw] lg:leading-[6.5vw] space-y-2  justify-center "
           >
-            {links.map((link, i) => (
-              <div
-                key={link.name}
-                className="relative tracking-tight overflow-hidden group cursor-pointer"
+            {links.map((link) => {
+              const active = pathname === link.href;
 
-              >
-                <HoverText>
-                  <h1 className="overflow-hidden ">
-                    <a
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setMenuOpen(false);
-                        router.push(link.href, { onTransitionReady: pageAnimation });
-                      }}
-                      href={link.href}
-                      className="block overflow-hidden textN relative"
-                    >
-                      {link.name}
-                    </a>
-                  </h1>
-                </HoverText>
-              </div>
-            ))}
+              return (
+                <div
+                  key={link.name}
+                  className="relative flex items-center justify-center gap-2 group cursor-pointer"
+                >
+                  {/* LINK TEXT */}
+                  <HoverText>
+                    <h1 className="overflow-hidden">
+                      <a
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setMenuOpen(false);
+                          router.push(link.href, {
+                            onTransitionReady: pageAnimation,
+                          });
+                        }}
+                        href={link.href}
+                        className={`
+              block textN relative transition-opacity duration-300
+              ${active ? "opacity-100" : "opacity-60 group-hover:opacity-100"}
+            `}
+                      >
+                        {link.name}
+                      </a>
+                    </h1>
+                  </HoverText>
+
+                  {/* 🔥 ACTIVE LINE BAR (HORIZONTAL) */}
+                  <span
+                    className={`
+          h-[4px] w-[60px] bg-white origin-left
+          transition-transform duration-500 ease-out
+          ${active ? "scale-x-100 opacity-100" : "scale-x-0 opacity-0"}
+        `}
+                  />
+                </div>
+              );
+            })}
+
           </div>
-          <div className="mt-[6vw] md:mt-[3vw] text-[4vw] font-[PPNeueMontreal] font-semibold md:text-[1.2vw]  px-[2vw] tracking-tight text-gray-300 space-y-2">
+          <div className="mt-[6vw] md:mt-[3vw] text-[2vw] xl:text-[1vw] font-[PPNeueMontreal] font-semibold md:text-[1.2vw]  px-[2vw] tracking-tight text-gray-300 space-y-2">
             <p className="opacity-80">Get in Touch</p>
             <div className="flex gap-5 overflow-hidden  group uppercase dm-mono-medium">
               <div className="overflow-hidden">

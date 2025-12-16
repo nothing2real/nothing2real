@@ -25,9 +25,9 @@ export default function Page() {
   const section1 = useRef(null);
 
 
+
+
   useGSAP(() => {
-
-
     gsap.set(studio.current, { overflow: "hidden", x: 600, willChange: "transform" });
     gsap.to(studio.current, {
       x: 0,
@@ -216,9 +216,10 @@ export default function Page() {
         </section>
 
 
-        <section ref={section2} className="w-full h-full py-[5vw] md:px-[2vw] px-[5vw] bg-white  pt-[15vw] md:pt-[5vw]  ">
+        <section ref={section2} className="w-full h-full py-[5vw] md:px-[2vw] px-[5vw] bg-white   pt-[15vw] md:pt-[5vw]  ">
 
-          <div className="grid md:grid-cols-12 grid-cols-6 border-y border-black/60 xl:gap-8 md:gap-6 pt-[5vw] gap-4">
+          <div className="grid md:grid-cols-12 grid-cols-6 border-y border-black/60 xl:gap-8 md:gap-6 relative pt-[5vw] gap-4">
+
             <div className="md:col-start-6 md:col-span-8 col-start-1 col-span-5  items-start justify-start overflow-hidden ">
               <TextY>
                 <h1 className="font-[Helvetica] font-bold xl:text-[3.4vw] xl:leading-[3.6vw] text-[7vw] leading-[7vw] text-[#1E1E1E]/70 ">
@@ -239,7 +240,7 @@ export default function Page() {
                 About Us
               </button>
             </div>
-            <div className="md:col-start-8 col-start-3 col-span-4  md:col-span-5 rounded-sm overflow-hidden">
+            <div className="md:col-start-8 col-start-3  col-span-4  md:col-span-5 rounded-sm overflow-hidden">
               <img src={images.mainbanner1.src} className="w-full h-full object-center object-cover" />
             </div>
           </div>

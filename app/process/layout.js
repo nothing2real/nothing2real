@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Projects',
-  description: 'We are with high Intensity to develop',
+  title: 'Process',
+  description: 'We choose with 7 stages of agile methodolog',
 }
 
 export default function RootLayout({ children }) {
