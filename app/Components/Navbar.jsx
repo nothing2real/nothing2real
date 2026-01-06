@@ -485,7 +485,7 @@ const Navbar = () => {
         <div className="flex justify-between items-center border-b pb-1">
           <div
             style={{ fontStretch: "75%" }}
-            className="overflow-hidden text-[5vw] uppercase font-[dbsharp] font-semibold sm:text-[3vw] text-white xl:text-[1.5vw] xl:leading-[1.5vw]"
+            className="overflow-hidden text-[5vw]  font-[dbsharp] font-semibold sm:text-[3vw] text-white xl:text-[1.5vw] xl:leading-[1.5vw]"
           >
             <Link
               onClick={(e) => {
@@ -495,7 +495,7 @@ const Navbar = () => {
               href="/"
             >
               <HoverText>
-                <h1>NR.Studio©</h1>
+                <h1>Nothing2Real©</h1>
               </HoverText>
             </Link>
           </div>

@@ -5,6 +5,8 @@ import Footer from "../Components/Footer";
 import { ReactLenis } from "@studio-freight/react-lenis";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { images } from "@/public/assets/assets";
+import Image from "next/image";
 
 const Page = () => {
 
@@ -27,6 +29,7 @@ const Page = () => {
       description: "E-commerce & brand experience for a heritage textile house.",
       year: "2025",
       category: "E-commerce / Branding",
+      image:images.Nethaposter
     },
     {
       title: "Naveen Sangewar",
@@ -83,12 +86,13 @@ const Page = () => {
                     {project.title}
                   </h2>
 
-                  <p className="mt-4 max-w-[45ch] text-[4vw] md:text-[1vw]  opacity-70">
+                  <p className="mt-4 max-w-[45vh] text-[4vw] md:text-[1vw]  opacity-70">
                     {project.description}
                   </p>
                 </div>
 
-                <div className="w-full md:h-[30vw] h-[60vw] bg-red-400 ">
+                <div className="w-full md:h-[98vh] h-[60vh]  ">
+                  <Image src={project.image} className="object-cover w-full h-full" />
                 </div>
 
                 {/* META */}

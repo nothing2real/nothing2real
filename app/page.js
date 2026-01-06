@@ -181,23 +181,23 @@ export default function Page() {
   return (
     <ReactLenis root>
       <div ref={mainRef} className="w-full overflow-hidden min-h-screen main  bg-[#16181B] text-white">
-        <section ref={section1} className="w-full lg:h-screen xl:h-screen relative  md:px-[2vw] bg-white px-[5vw]">
+        <section ref={section1} className="w-full lg:h-screen xl:h-screen relative font-[PPNeueMontreal]  md:px-[2vw] bg-white px-[5vw]">
           {/* Hero Text */}
           <div className="overflow-hidden w-full h-full grid grid-cols-6 md:grid-cols-12  gap-4 md:gap-6 xl:gap-8 pt-[20vw] md:pt-[10vw] xl:pt-[5vw] ">
             <div className="grid md:grid-cols-12 md:gap-8 gap-4 grid-cols-6 col-start-1 col-span-6 md:col-span-12 border-b border-black/60">
               <div className="border-wrapper col-start-1 md:col-start-1 col-span-4 md:col-span-7 tracking-tighter lg:col-start-1 lg:col-span-4 xl:col-span-4 flex flex-col text-black overflow-hidden">
                 {/* Hero Text */}
-                <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw]  font-[PPNeueMontreal] font-bold lg:text-[3vw] 2xl:leading-[3vw] lg:leading-[3vw] md:text-[5vw] text-[6vw] leading-[6vw] md:leading-[5vw] ">
+                <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw]  font-[PPNeueMontreal] tracking-tighter font-bold lg:text-[3vw] 2xl:leading-[3vw] lg:leading-[3vw] md:text-[5vw] text-[6vw] leading-[6vw] md:leading-[5vw] ">
                   <h1 className="textH ">
                     Every Innovation
                   </h1>
                 </div>
-                <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw] xl:-mt-[1vw] font-[PPNeueMontreal] font-bold lg:text-[3vw] 2xl:leading-[4vw] lg:leading-[3vw] md:text-[5vw] text-[6vw] leading-[6vw] md:leading-[5vw] ">
+                <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw] xl:-mt-[1vw] font-[PPNeueMontreal] tracking-tighter font-bold lg:text-[3vw] 2xl:leading-[4vw] lg:leading-[3vw] md:text-[5vw] text-[6vw] leading-[6vw] md:leading-[5vw] ">
                   <h1 className="textH">
                     Deserves Thoughtful
                   </h1>
                 </div>
-                <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw] xl:-mt-[1vw] font-[PPNeueMontreal] font-bold lg:text-[3vw] 2xl:leading-[3vw] lg:leading-[3vw] md:text-[5vw] text-[6vw] leading-[6vw] md:leading-[5vw] ">
+                <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw] xl:-mt-[1vw] font-[PPNeueMontreal] tracking-tighter font-bold lg:text-[3vw] 2xl:leading-[3vw] lg:leading-[3vw] md:text-[5vw] text-[6vw] leading-[6vw] md:leading-[5vw] ">
                   <h1 className="textH">
                     Developers
                   </h1>
@@ -206,7 +206,7 @@ export default function Page() {
 
               <div className="w-full h-full justify-end items-end pt-[5vw] md:mt-0 lg:pt-[8vw] xl:pt-[8vw] text-black/40 col-start-1 lg:col-start-5 lg:col-span-3 md:col-start-4 md:col-span-4 xl:col-start-6  col-span-3 xl:col-span-3">
                 <div className="overflow-hidden">
-                  <p className="textH xl:text-[5vw] text-[7vw] leading-[7vw] xl:leading-[4.5vw]  md:pt-0 xl:pt-[9vw] lg:pt-[16vw] lg:text-[5vw] font-[PPNeueMontreal] font-bold lg:leading-[5.5vw]">
+                  <p className="textH xl:text-[5vw] text-[7vw] tracking-tighter leading-[7vw] xl:leading-[4.5vw]  md:pt-0 xl:pt-[9vw] lg:pt-[16vw] lg:text-[5vw] font-[PPNeueMontreal] font-bold lg:leading-[5.5vw]">
                     2025©
                   </p>
                 </div>
@@ -239,12 +239,12 @@ export default function Page() {
               </div>
               <div className="w-full col-start-3 md:col-start-5 xl:col-start-11 lg:pt-[8vw] xl:pt-0 text-black/70 pt-[2vw] overflow-hidden col-span-4 md:col-span-4 xl:col-span-2">
                 <TextY>
-                  <h1 className="xl:text-[2.2vw] text-[8.5vw]  font-[PPNeueMontreal] font-semibold justify-start ">Asthetic</h1>
+                  <h1 className="xl:text-[2.2vw] text-[8.5vw]  font-[PPNeueMontreal] tracking-tighter font-bold justify-start ">Asthetic</h1>
                 </TextY>
               </div>
             </div>
             <div className="w-full col-start-2  lg:col-start-5 lg:col-span-7 md:col-start-3 xl:col-start-6 text-black relative col-span-4 md:col-span-6">
-              <h1 className="xl:text-[9.2vw]  lg:text-[11vw] md:text-[14vw] text-[13.5vw] tracking-tight font-[PPNeueMontreal] font-bold uppercase">ELEGANCE*</h1>
+              <h1 className="xl:text-[11.2vw] tracking-tighter  lg:text-[11vw] md:text-[14vw] text-[13.5vw] tracking-tight font-[PPNeueMontreal] font-bold ">Elegance*</h1>
               <h1 className="xl:text-[2.2vw] text-[4vw] lg:text-[4vw] absolute bottom-0 right-0 font-[PPNeueMontreal] font-bold ">Speaks</h1>
             </div>
           </div>
@@ -257,7 +257,7 @@ export default function Page() {
 
             <div className="md:col-start-6 md:col-span-8 col-start-1 col-span-5  items-start justify-start overflow-hidden ">
               <TextY>
-                <h1 className="font-[Helvetica] font-bold xl:text-[3.4vw] xl:leading-[3.6vw] text-[7vw] leading-[7vw] text-[#1E1E1E]/70 ">
+                <h1 className="font-[PPNeueMontreal] tracking-tighter font-bold xl:text-[2.4vw] xl:leading-[2.6vw] md:text-[3.2vw] text-baseline text-[7vw] leading-[7vw] text-[#1E1E1E]/70 ">
                   Crafting premium digital aesthetics and transforming your nothing vision into real, exceptional visuals guided by our design principles.
                 </h1>
               </TextY>
@@ -329,14 +329,14 @@ export default function Page() {
             </div>
             <div className="md:col-start-9 xl:col-start-6  xl:col-span-8 lg:col-start-7 lg:col-span-6 col-start-2 col-span-5 overflow-hidden pt-[5vw]">
               <TextY>
-                <p className="xl:text-[2.5vw]  lg:text-[2.5vw] md:text-[2vw] md:leading-[2.5vw] lg:leading-[2.5vw] xl:leading-[2.6vw] text-[5vw] leading-[5.5vw] font-[PPNeueMontreal] font-bold  text-black/70">
+                <p className="xl:text-[2vw]  lg:text-[2.5vw] md:text-[2vw] md:leading-[2.5vw] lg:leading-[2.5vw] xl:leading-[2vw] text-[5vw] leading-[5.5vw] font-[PPNeueMontreal] tracking-tighter font-bold  text-black/70">
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; crafted to delight, engage, and convert your audience. We design not just for today, but for long-term impact, helping your brand attract more clients and create meaningful results.
                 </p>
               </TextY>
             </div>
 
             <div className="md:col-start-1 md:col-span-4 hidden md:block lg:block xl:hidden lg:col-start-1 lg:col-span-2 col-start-1 col-span-2 items-start justify-start overflow-hidden pt-[5vw]">
-              <h1 className="xl:text-[4vw] text-[7vw] md:text-[7vw] lg:text-[4vw] text2025 text-start font-[Helvetica] text-black/70 font-bold">2025©</h1>
+              <h1 className="xl:text-[4vw] text-[7vw] md:text-[7vw] lg:text-[4vw] overflow-hidden text2025 text-start font-[Helvetica] text-black/70 font-bold">2025©</h1>
             </div>
           </div>
         </section>

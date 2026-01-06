@@ -149,6 +149,11 @@
     padding: 0;
   }
 
+  ::-webkit-scrollbar{
+    display: none;
+  }
+
+
   ::view-transition-group(root) {
     z-index: auto !important;
   }
