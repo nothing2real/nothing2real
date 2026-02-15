@@ -1,171 +1,140 @@
-// components/RealtimePreloader.jsx
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import { useRouter } from 'next/navigation';
 
-export default function RealtimePreloader({ 
-  minLoadTime = 2000,
-  reloadThreshold = 300000 // 5 minutes default
-}) {
+export default function RealtimePreloader() {
   const textRef = useRef(null);
-  const progressRef = useRef(null);
+  const containerRef = useRef(null);
   const [progress, setProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(true);
-  const [browserUsageTime, setBrowserUsageTime] = useState(0);
-  const router = useRouter();
 
-  // Track browser usage time
-  useEffect(() => {
-    let startTime = Date.now();
-    let intervalId;
-
-    const updateUsageTime = () => {
-      const currentTime = Date.now();
-      const usageTime = currentTime - startTime;
-      setBrowserUsageTime(usageTime);
-
-      // Check if we should reload based on usage time
-      if (usageTime >= reloadThreshold) {
-        console.log(`Browser used for ${usageTime}ms, triggering reload...`);
-        handleReload();
-      }
-    };
-
-    // Update every second
-    intervalId = setInterval(updateUsageTime, 1000);
-
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [reloadThreshold]);
-
-  // Handle the reload logic
-  const handleReload = () => {
-    // You can choose to either:
-    // 1. Force a full page reload
-    // window.location.reload();
-    
-    // 2. Or do a Next.js router refresh (better for SPA)
-    router.refresh();
-    
-    // 3. Or redirect to home
-    // router.push('/');
-  };
+  // This ref tracks the actual percentage loaded (0-100)
+  const loadingStatus = useRef({ visual: 0, actual: 0 });
 
   useEffect(() => {
-    if (!textRef.current || !progressRef.current) return;
+    // 1. Get all heavy assets
+    const images = document.querySelectorAll('img');
+    const totalAssets = images.length;
+    let assetsLoaded = 0;
 
-    // Reset animation
-    gsap.set(textRef.current, {
-      backgroundSize: '0% 100%',
-      backgroundImage: 'linear-gradient(90deg, #3b82f6, #8b5cf6)',
-      backgroundRepeat: 'no-repeat',
-      WebkitBackgroundClip: 'text',
-      backgroundClip: 'text',
-      color: 'transparent',
-    });
+    const updateProgress = () => {
+      assetsLoaded++;
+      const targetPerc = totalAssets === 0 ? 100 : Math.round((assetsLoaded / totalAssets) * 100);
+      loadingStatus.current.actual = targetPerc;
+    };
 
-    // Create animation timeline
-    const tl = gsap.timeline({
-      defaults: { ease: 'power2.inOut' },
-      onUpdate: () => {
-        if (progressRef.current) {
-          const progress = tl.progress() * 100;
-          setProgress(Math.round(progress));
+    // Attach listeners to images
+    if (totalAssets === 0) {
+        loadingStatus.current.actual = 100;
+    } else {
+        images.forEach((img) => {
+            if (img.complete) updateProgress();
+            else {
+                img.addEventListener('load', updateProgress);
+                img.addEventListener('error', updateProgress); // count errors so we don't get stuck
+            }
+        });
+    }
+
+    // 2. GSAP "Smoother" - glides the visual state toward the actual state
+    const ctx = gsap.context(() => {
+      gsap.to(loadingStatus.current, {
+        visual: 100,
+        duration: 3, // Fallback duration if assets are instant
+        ease: "none",
+        onUpdate: () => {
+          // If the actual loading is faster than the animation, 
+          // we can accelerate, but we never let visual > actual
+          const currentVisual = loadingStatus.current.visual;
+          const currentActual = loadingStatus.current.actual;
+          
+          // Smooth the display
+          setProgress(Math.round(currentVisual));
+
+          // Reveal animation when finished
+          if (currentVisual >= 100) {
+            handleExit();
+          }
+        },
+        // This ensures the bar only hits 100 if assets are actually ready
+        modifiers: {
+          visual: (value) => {
+            return Math.min(value, loadingStatus.current.actual);
+          }
         }
-      },
-      onComplete: () => {
-        // Wait for minimum load time
-        setTimeout(() => {
-          setIsVisible(false);
-        }, minLoadTime - 2000); // Subtract animation duration
-      }
+      });
+
+      // Liquid text fill effect
+      gsap.to(textRef.current, {
+        backgroundSize: '100% 100%',
+        ease: "power1.inOut",
+        scrollTrigger: null, // Just a standalone tween
+        duration: 2.5
+      });
     });
 
-    // Animate text background fill
-    tl.to(textRef.current, {
-      backgroundSize: '100% 100%',
-      duration: 2,
-    })
-    // Optional: Add text reveal effect
-    .fromTo(textRef.current,
-      { opacity: 0.5 },
-      { opacity: 1, duration: 0.5 },
-      '-=1.5'
-    );
+    const handleExit = () => {
+      const exitTl = gsap.timeline({
+        onComplete: () => setIsVisible(false)
+      });
 
-    return () => {
-      tl.kill();
+      exitTl
+        .to(".loading-content", { y: -20, opacity: 0, duration: 0.8, ease: "power4.in" })
+        .to(containerRef.current, { 
+            clipPath: "inset(0 0 100% 0)", 
+            duration: 1.2, 
+            ease: "expo.inOut" 
+        });
     };
-  }, [minLoadTime]);
 
-  // Don't render if not visible
+    return () => ctx.revert();
+  }, []);
+
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black">
-      {/* Main animated text */}
-      <div className="relative">
-        <div
-          ref={textRef}
-          className="text-6xl md:text-8xl font-bold tracking-tighter"
-          style={{
-            backgroundImage: 'linear-gradient(90deg, #3b82f6, #8b5cf6)',
-            backgroundSize: '0% 100%',
-            backgroundRepeat: 'no-repeat',
-            WebkitBackgroundClip: 'text',
-            backgroundClip: 'text',
-            color: 'transparent',
-          }}
-        >
-          NOTHINGREAL
+    <div 
+      ref={containerRef}
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#F8F8F8]"
+      style={{ clipPath: "inset(0 0 0% 0)" }}
+    >
+      <div className="loading-content flex flex-col items-center">
+        {/* Minimalist Counter */}
+        <div className="mb-4 overflow-hidden">
+            <span className="block font-mono text-xs tracking-tighter text-black/40">
+                LOADING ARCHIVE — {progress}%
+            </span>
         </div>
-        
-        {/* Subtle glow effect */}
-        <div className="absolute inset-0 blur-2xl opacity-30"
-          style={{
-            backgroundImage: 'linear-gradient(90deg, #3b82f6, #8b5cf6)',
-          }}
-        />
-      </div>
 
-      {/* Progress indicator */}
-      <div className="mt-12 w-64 md:w-96">
-        <div className="flex justify-between text-sm text-gray-400 mb-2">
-          <span>Loading...</span>
-          <span>{progress}%</span>
-        </div>
-        <div className="h-1 bg-gray-800 rounded-full overflow-hidden">
+        {/* The Text Fill (Awwwards Style) */}
+        <div className="relative">
           <div
-            ref={progressRef}
-            className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-      </div>
-
-      {/* Browser usage indicator */}
-      <div className="mt-8 text-sm text-gray-500">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-          <span>Browser active for: {Math.floor(browserUsageTime / 1000)}s</span>
-        </div>
-        {browserUsageTime >= reloadThreshold && (
-          <div className="mt-2 text-amber-400 text-xs animate-pulse">
-            Reloading due to extended usage...
+            ref={textRef}
+            className="text-[12vw] font-black tracking-tighter leading-none uppercase"
+            style={{
+              backgroundImage: 'linear-gradient(to top, #000 50%, #e5e5e5 50%)',
+              backgroundSize: '100% 0%',
+              backgroundPosition: 'bottom',
+              backgroundRepeat: 'no-repeat',
+              WebkitBackgroundClip: 'text',
+              backgroundClip: 'text',
+              color: 'transparent',
+              WebkitTextStroke: '1px rgba(0,0,0,0.1)'
+            }}
+          >
+            NOTHINGREAL
           </div>
-        )}
-      </div>
+        </div>
 
-      {/* Reload trigger button (optional, for testing) */}
-      <button
-        onClick={handleReload}
-        className="mt-6 px-4 py-2 text-xs text-gray-400 border border-gray-800 rounded-lg hover:border-gray-600 transition-colors"
-      >
-        Manual Reload
-      </button>
+        {/* Minimal Progress Bar */}
+        <div className="mt-10 w-[20vw] h-[1px] bg-black/5 relative overflow-hidden">
+            <div 
+                className="absolute top-0 left-0 h-full bg-black transition-all duration-300 ease-out"
+                style={{ width: `${progress}%` }}
+            />
+        </div>
+      </div>
     </div>
   );
 }

@@ -227,6 +227,8 @@ const Page = () => {
                         </div>
                     ))}
                 </section>
+
+                {/* Mobile Section */}
                 <section className="w-full h-full md:hidden block px-[5vw] bg-white">
                     <div className="grid grid-cols-6 gap-4 pt-[20vw] ">
                         <div className="pt-[5vw] font-[PPNeueMontreal] col-start-2 col-span-5">
