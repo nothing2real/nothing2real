@@ -20,6 +20,7 @@ import studioipad from './Studio_Ipad.png'
 import feviconico from './feviconico.png'
 import arrow from './Arrow_Down.png'
 import Nethaposter from './Nethaposter.png'
+import bharath from './heromobile.avif'
 
 
 export const images = {
@@ -37,7 +38,8 @@ export const images = {
   Rohith,
   varshit,
   gopi,
-  Nethaposter
+  Nethaposter,
+  bharath
 }
 
 

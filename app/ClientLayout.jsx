@@ -1,32 +1,38 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Navbar from "./Components/Navbar";
-import Preloader from "./Components/Preloader";
+import RealtimePreloader from "./Components/RealtimePreloader";
 
 export default function ClientLayout({ children }) {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+  const [removeLoader, setRemoveLoader] = useState(false);
 
-  useEffect(() => {
-    const handleLoad = () => setIsLoaded(true);
+  // This function is called by the Preloader when its EXIT animation is done
+  const handleLoaderFinished = () => {
+    setRemoveLoader(true);
+  };
 
-    if (document.readyState === "complete" || document.readyState === "interactive") {
-      handleLoad();
-    } else {
-      window.addEventListener("DOMContentLoaded", handleLoad);
-    }
-
-    return () => window.removeEventListener("DOMContentLoaded", handleLoad);
-  }, []);
+  // This function is called by the Preloader as soon as the EXIT animation STARTS
+  const handleRevealStarted = () => {
+    setShowContent(true);
+  };
 
   return (
     <>
-      {!isLoaded && <Preloader />}
-      {isLoaded && (
-        <>
-          <Navbar />
-          {children}
-        </>
+      {!removeLoader && (
+        <RealtimePreloader 
+          onComplete={handleLoaderFinished} 
+          onStartExit={handleRevealStarted}
+        />
       )}
+      
+      {/* We render the content but keep it hidden/invisible 
+          until the preloader starts its exit shutter. 
+      */}
+      <div className={`transition-opacity duration-1000 ${showContent ? "opacity-100" : "opacity-0"}`}>
+        <Navbar />
+        <main>{children}</main>
+      </div>
     </>
   );
 }

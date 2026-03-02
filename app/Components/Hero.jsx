@@ -1,94 +1,140 @@
 import { images } from '@/public/assets/assets'
-import React from 'react'
+import React, { useRef } from 'react'
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
-useGSAP(() => {
-    // GPU acceleration
-    gsap.set("*", { force3D: true, willChange: "transform" })
-
-
-    gsap.from(".textH", {
-        y: 200,
-        duration: 1.8,
-        ease: "power4.out",
-        stagger: 0.08,
-        delay: 0.85,
-        force3D: true
-    })
-})
-
 const Hero = () => {
+    const container = useRef(null);
+
+    useGSAP(() => {
+        // GPU acceleration & initial states
+        gsap.set(".textH", { yPercent: 110 });
+        gsap.set(".hero-image-inner", { scale: 1.5 });
+        
+        const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+
+        tl.to(".textH", {
+            yPercent: 0,
+            duration: 1.8,
+            stagger: 0.1,
+            delay: 0.5
+        })
+        .to(".image-reveal-box", {
+            clipPath: "inset(0% 0% 0% 0%)",
+            duration: 1.8,
+            ease: "expo.inOut"
+        }, "-=1.5")
+        .to(".hero-image-inner", {
+            scale: 1,
+            duration: 2,
+            ease: "expo.out"
+        }, "-=1.5")
+        .from(".sub-info", {
+            opacity: 0,
+            y: 20,
+            duration: 1,
+            stagger: 0.1
+        }, "-=1");
+
+        // Subtle Parallax on Scroll
+        gsap.to(".hero-image-inner", {
+            yPercent: 20,
+            ease: "none",
+            scrollTrigger: {
+                trigger: container.current,
+                start: "top top",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+
+    }, { scope: container });
+
     return (
-        <div>
-            <section className="w-full min-h-screen relative flex flex-col px-[2vw] bg-white justify-center">
-
-                {/* Hero Text */}
-                <div className="overflow-hidden w-full h-full grid grid-cols-12 gap-8 xl:pt-[5vw] ">
-
-
-                    <div className="border-wrapper md:col-start-1 col-span-4 flex flex-col text-black overflow-hidden">
-                        {/* Hero Text */}
-                        <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw]  font-[PPNeueMontreal] font-semibold lg:text-[3vw] 2xl:leading-[3vw] lg:leading-[3vw] md:text-[5vw] text-[8vw] leading-[8vw] md:leading-[5vw] ">
-                            <div className="textH">
-                                <h1>Every Innovation</h1>
-                            </div>
-
-                        </div>
-                        <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw] xl:-mt-[1vw] font-[PPNeueMontreal] font-semibold lg:text-[3vw] 2xl:leading-[4vw] lg:leading-[3vw] md:text-[5vw] text-[8vw] leading-[8vw] md:leading-[5vw] ">
-                            <div className="textH">
-                                Deserves Thoughtful
-                            </div>
-                        </div>
-                        <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw] xl:-mt-[1vw] font-[PPNeueMontreal] font-semibold lg:text-[3vw] 2xl:leading-[3vw] lg:leading-[3vw] md:text-[5vw] text-[8vw] leading-[8vw] md:leading-[5vw] ">
-                            <h1 className="textH">
-                                Developers
-                            </h1>
-                        </div>
-
-
-
-                    </div>
-
-                    <div className="w-full h-full justify-end items-end pt-[8vw] text-black md:col-start-6  col-span-2">
-                        <p className="textH xl:text-[5vw] xl:leading-[4.5vw] pt-[10vw] lg:text-[5vw] font-[PPNeueMontreal] font-bold lg:leading-[5.5vw]">
-                            2025©
-                        </p>
-                    </div>
-                    <div className="w-full md:col-start-9 mix-blend-normal col-span-4 overflow-hidden bg-red-500 h-full">
-                        <img
-                            className="w-full h-full object-center object-cover overflow-hidden"
-                            src={images.studioipad.src}  // image path
-                            alt="description"
-                            width={500}             // required
-                            height={500}            // required
-                        />
-
-                    </div>
-
-
-                    <div className="w-full col-start-1 text-black pt-[2vw] col-span-3">
-                        <p className="xl:text-[1.2vw]">
-                            We turn your vision into meaningful digital experiences.
-                        </p>
-                    </div>
-                    <div className="w-full col-start-6 text-black pt-[2vw] col-span-3">
-                        <p className="xl:text-[1.2vw]">
-                            Crafting intuitive, human-focused interfaces — from pixels to backend logic
-                        </p>
-                    </div>
-                    <div className="w-full col-start-11 text-black pt-[2vw] col-span-2">
-                        <h1 className="xl:text-[2.2vw] font-[PPNeueMontreal] font-bold justify-start uppercase">PERFECTION</h1>
-                    </div>
-                    <div className="w-full col-start-6 text-black relative col-span-6">
-                        <h1 className="xl:text-[9.2vw] lg:text-[9vw] tracking-wide font-[PPNeueMontreal] font-bold uppercase">ELEGANCE*</h1>
-                        <h1 className="xl:text-[2.2vw] absolute bottom-0 right-0 font-[PPNeueMontreal] font-bold ">Speaks</h1>
-                    </div>
-
+        <section ref={container} className="w-full min-h-screen relative bg-[#F8F8F8] px-[4vw] py-[2vw] flex flex-col justify-between overflow-hidden selection:bg-black selection:text-white">
+            
+            {/* Top Navigation-like Row */}
+            <div className="flex justify-between items-start w-full z-10">
+                <div className="overflow-hidden">
+                    <p className="sub-info font-mono text-[10px] uppercase tracking-[0.2em] opacity-40">
+                        Based in Earth / Available 2026
+                    </p>
                 </div>
-            </section>
-        </div>
+                <div className="overflow-hidden text-right">
+                    <p className="sub-info font-mono text-[10px] uppercase tracking-[0.2em] opacity-40">
+                        Studio Archive© / 001
+                    </p>
+                </div>
+            </div>
+
+            {/* Main Content Area */}
+            <div className="grid grid-cols-12 gap-4 items-end mb-[5vw]">
+                
+                {/* Left Column: Huge Headlines */}
+                <div className="col-span-12 lg:col-span-8 relative z-20">
+                    <div className="overflow-hidden">
+                        <h1 className="textH text-[13vw] lg:text-[10vw] font-bold leading-[0.85] tracking-tighter uppercase font-[PPNeueMontreal]">
+                            Every <span className="italic font-light opacity-30">Innovation</span>
+                        </h1>
+                    </div>
+                    <div className="overflow-hidden">
+                        <h1 className="textH text-[13vw] lg:text-[10vw] font-bold leading-[0.85] tracking-tighter uppercase font-[PPNeueMontreal]">
+                            Deserves <span className="text-black/20">Thoughtful</span>
+                        </h1>
+                    </div>
+                    <div className="overflow-hidden">
+                        <h1 className="textH text-[13vw] lg:text-[10vw] font-bold leading-[0.85] tracking-tighter uppercase font-[PPNeueMontreal]">
+                            Developers*
+                        </h1>
+                    </div>
+                </div>
+
+                {/* Center Column: Date/Year */}
+                <div className="hidden lg:block lg:col-span-1">
+                    <p className="sub-info font-bold text-[4vw] leading-none mb-4 rotate-[-90deg] origin-bottom-left inline-block">
+                        2025
+                    </p>
+                </div>
+
+                {/* Right Column: Floating Image Reveal */}
+                <div className="col-span-12 lg:col-span-3">
+                    <div className="image-reveal-box w-full aspect-[3/4] overflow-hidden relative shadow-2xl" 
+                         style={{ clipPath: "inset(100% 0% 0% 0%)" }}>
+                        <img
+                            className="hero-image-inner w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                            src={images.studioipad.src}
+                            alt="Process"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            {/* Bottom Row: Detailed Description & Editorial Flair */}
+            <div className="grid grid-cols-12 gap-8 items-end pt-10 border-t border-black/5">
+                <div className="col-span-12 md:col-span-4 lg:col-span-3 overflow-hidden">
+                    <p className="sub-info text-sm leading-relaxed opacity-60">
+                        We bridge the gap between human intuition and digital complexity, turning vision into high-performance experiences.
+                    </p>
+                </div>
+                
+                <div className="col-span-12 md:col-span-4 lg:col-span-3 overflow-hidden">
+                    <p className="sub-info text-sm leading-relaxed opacity-60">
+                        From pixel-perfect interfaces to robust backend architectures—we build with restraint and purpose.
+                    </p>
+                </div>
+
+                <div className="hidden lg:block lg:col-start-10 lg:col-span-3 text-right">
+                    <h2 className="sub-info text-[2.5vw] font-bold uppercase leading-none tracking-tighter">
+                        Perfection <br/> 
+                        <span className="text-black/10">Through Elegance</span>
+                    </h2>
+                </div>
+            </div>
+
+            {/* Floating Subtle Element */}
+            <div className="absolute top-[30%] right-[5%] w-px h-24 bg-gradient-to-b from-black/20 to-transparent hidden lg:block" />
+        </section>
     )
 }
 

@@ -527,17 +527,18 @@ const Page = () => {
                             </TextY>
                         </div>
                     </div>
-                    <div className="overflow-hidden md:pt-[10vw] pt-[20vw] py-[2vw]  w-full">
-                        <h1 className="uppercase xl:text-[4vw] text-[8vw] font-bold flex items-center justify-start gap-2 md:items-center md:justify-start font-[PPNeueMontreal] text-white"><span>Services</span><img src={images.arrow.src} className="inline-block w-[15%] h-[15%] mix-blend-difference bg-white md:w-[5%] md:h-[5%] border rounded-full p-1 md:p-2 -rotate-135" />
-                        </h1>
-                    </div>
-                    <div className="grid md:grid-cols-12 grid-cols-6 gap-4 md:gap-8 pt-[15vw] md:pt-[5vw] pb-[10vw]">
-                        <div className="md:col-start-6 md:col-span-8 col-start-1 text-white col-span-6">
-                            <Accordion />
-                        </div>
-                    </div>
+
+
 
                 </section>
+
+                <div className="grid md:grid-cols-12 bg-white grid-cols-6 gap-4 md:gap-8 pt-[15vw] md:pt-[5vw] pb-[10vw]">
+                    <h1 className="md:col-start-1 xl:text-[5vw] font-bold tracking-tight md:col-span-6 col-start-1 col-span-6 text-black">Services</h1>
+                    <div className="md:col-start-6 md:col-span-8 col-start-1 text-white col-span-6">
+                        
+                        <Accordion />
+                    </div>
+                </div>
 
                 {/* Why Us?? */}
                 <section className="w-full px-[5vw] md:px-[2vw] h-full ">
@@ -593,7 +594,7 @@ const Page = () => {
                         <div className="xl:col-start-9 col-start-3 col-span-3 xl:col-span-2">
                             <img src={images.Rohith.src} className="w-full h-full object-center object-cover" alt="" />
                             <div className="flex items-center justify-between">
-                                <h1 className="xl:text-[1vw] text-[4vw] text-white mix-blend-difference">Naresh</h1>
+                                <h1 className="xl:text-[1vw] text-[4vw] text-white mix-blend-difference">Rohith</h1>
                                 <h1 className="xl:text-[0.7vw] text-[2vw] text-white mix-blend-difference">Frontend Developer</h1>
                             </div>
                         </div>
@@ -604,7 +605,7 @@ const Page = () => {
                                 <h1 className="xl:text-[0.7vw] text-[2vw] text-white mix-blend-difference">Backend Developer</h1>
                             </div>
                         </div>
-                      
+
                     </div>
 
                 </section>

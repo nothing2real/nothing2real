@@ -1,176 +1,114 @@
-// components/RealtimePreloader.tsx
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
-import { useRouter } from 'next/navigation';
 
-interface RealtimePreloaderProps {
-  minLoadTime?: number; // Minimum display time in milliseconds
-  reloadThreshold?: number; // Browser usage time threshold to trigger reload (ms)
-}
-
-export default function RealtimePreloader({ 
-  minLoadTime = 2000,
-  reloadThreshold = 300000 // 5 minutes default
-}: RealtimePreloaderProps) {
-  const textRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
+export default function RealtimePreloader() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLHeadingElement>(null);
+  const counterRef = useRef<HTMLSpanElement>(null);
   const [progress, setProgress] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
-  const [browserUsageTime, setBrowserUsageTime] = useState(0);
-  const router = useRouter();
+  const [isFinished, setIsFinished] = useState(false);
 
-  // Track browser usage time
   useEffect(() => {
-    let startTime = Date.now();
-    let intervalId: NodeJS.Timeout;
+    // 1. Split text for character-by-character animation
+    const text = textRef.current;
+    if (text && text.textContent) {
+      const chars = text.textContent.split("");
+      text.innerHTML = chars
+        .map((char) => `<span class="inline-block char">${char === " " ? "&nbsp;" : char}</span>`)
+        .join("");
+    }
 
-    const updateUsageTime = () => {
-      const currentTime = Date.now();
-      const usageTime = currentTime - startTime;
-      setBrowserUsageTime(usageTime);
-
-      // Check if we should reload based on usage time
-      if (usageTime >= reloadThreshold) {
-        console.log(`Browser used for ${usageTime}ms, triggering reload...`);
-        handleReload();
+    // 2. Real-time Loading Logic (Fonts + Document)
+    let progressValue = 0;
+    const updateProgress = () => {
+      // Logic: Fast start, slow down at 90% until document.readyState is 'complete'
+      const isDocComplete = document.readyState === 'complete';
+      const increment = isDocComplete ? 2 : 0.4;
+      
+      if (progressValue < 100) {
+        progressValue = Math.min(progressValue + increment, 100);
+        setProgress(Math.floor(progressValue));
+        requestAnimationFrame(updateProgress);
+      } else {
+        // Wait for Fonts to be actually ready before triggering the exit
+        document.fonts.ready.then(() => {
+          triggerExitAnimation();
+        });
       }
     };
 
-    // Update every second
-    intervalId = setInterval(updateUsageTime, 1000);
+    const triggerExitAnimation = () => {
+      const tl = gsap.timeline({
+        onComplete: () => setIsFinished(true)
+      });
 
-    return () => {
-      clearInterval(intervalId);
+      tl.to(".char", {
+        y: -100,
+        opacity: 0,
+        stagger: 0.02,
+        duration: 1,
+        ease: "power4.inOut"
+      })
+      .to(counterRef.current, {
+        opacity: 0,
+        y: 20,
+        duration: 0.5
+      }, "-=0.8")
+      .to(containerRef.current, {
+        clipPath: "inset(0 0 100% 0)", // Sophisticated Shutter Lift
+        duration: 1.2,
+        ease: "expo.inOut"
+      });
     };
-  }, [reloadThreshold]);
 
-  // Handle the reload logic
-  const handleReload = () => {
-    // You can choose to either:
-    // 1. Force a full page reload
-    // window.location.reload();
-    
-    // 2. Or do a Next.js router refresh (better for SPA)
-    router.refresh();
-    
-    // 3. Or redirect to home
-    // router.push('/');
-  };
+    updateProgress();
+  }, []);
 
-  useEffect(() => {
-    if (!textRef.current || !progressRef.current) return;
-
-    // Reset animation
-    gsap.set(textRef.current, {
-      backgroundSize: '0% 100%',
-      backgroundImage: 'linear-gradient(90deg, #3b82f6, #8b5cf6)',
-      backgroundRepeat: 'no-repeat',
-      WebkitBackgroundClip: 'text',
-      backgroundClip: 'text',
-      color: 'transparent',
-    });
-
-    // Create animation timeline
-    const tl = gsap.timeline({
-      defaults: { ease: 'power2.inOut' },
-      onUpdate: () => {
-        if (progressRef.current) {
-          const progress = tl.progress() * 100;
-          setProgress(Math.round(progress));
-        }
-      },
-      onComplete: () => {
-        // Wait for minimum load time
-        setTimeout(() => {
-          setIsVisible(false);
-        }, minLoadTime - 2000); // Subtract animation duration
-      }
-    });
-
-    // Animate text background fill
-    tl.to(textRef.current, {
-      backgroundSize: '100% 100%',
-      duration: 2,
-    })
-    // Optional: Add text reveal effect
-    .fromTo(textRef.current,
-      { opacity: 0.5 },
-      { opacity: 1, duration: 0.5 },
-      '-=1.5'
-    );
-
-    return () => {
-      tl.kill();
-    };
-  }, [minLoadTime]);
-
-  // Don't render if not visible
-  if (!isVisible) return null;
+  if (isFinished) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black">
-      {/* Main animated text */}
-      <div className="relative">
-        <div
+    <div 
+      ref={containerRef}
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0a0a0a] text-white overflow-hidden"
+    >
+      {/* Texture: Subtle Grain Overlay */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+
+      <div className="relative w-full max-w-7xl px-8 flex flex-col items-start">
+        
+        {/* Agency Metadata (Top Left) */}
+        <div className="absolute top-10 left-10 flex gap-8 text-[10px] uppercase tracking-[0.3em] text-zinc-500 font-mono">
+          <span>Status: {progress < 100 ? 'Syncing_Core' : 'Ready'}</span>
+          <span className="hidden md:block">Engine: v3.0.4</span>
+        </div>
+
+        {/* Big Brand Typography */}
+        <h1 
           ref={textRef}
-          className="text-6xl md:text-8xl font-bold tracking-tighter"
-          style={{
-            backgroundImage: 'linear-gradient(90deg, #3b82f6, #8b5cf6)',
-            backgroundSize: '0% 100%',
-            backgroundRepeat: 'no-repeat',
-            WebkitBackgroundClip: 'text',
-            backgroundClip: 'text',
-            color: 'transparent',
-          }}
+          className="text-[12vw] font-black leading-[0.9] tracking-tighter uppercase italic select-none"
         >
           NOTHINGREAL
-        </div>
-        
-        {/* Subtle glow effect */}
-        <div className="absolute inset-0 blur-2xl opacity-30"
-          style={{
-            backgroundImage: 'linear-gradient(90deg, #3b82f6, #8b5cf6)',
-          }}
-        />
-      </div>
+        </h1>
 
-      {/* Progress indicator */}
-      <div className="mt-12 w-64 md:w-96">
-        <div className="flex justify-between text-sm text-gray-400 mb-2">
-          <span>Loading...</span>
-          <span>{progress}%</span>
-        </div>
-        <div className="h-1 bg-gray-800 rounded-full overflow-hidden">
-          <div
-            ref={progressRef}
-            className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
-            style={{ width: `${progress}%` }}
-          />
+        {/* Real-time Counter (Bottom Right) */}
+        <div className="absolute bottom-10 right-10 flex items-baseline overflow-hidden">
+          <span 
+            ref={counterRef}
+            className="text-[10vw] font-light leading-none tabular-nums"
+          >
+            {progress}
+          </span>
+          <span className="text-xl ml-2 text-blue-600 font-bold">%</span>
         </div>
       </div>
 
-      {/* Browser usage indicator */}
-      <div className="mt-8 text-sm text-gray-500">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-          <span>Browser active for: {Math.floor(browserUsageTime / 1000)}s</span>
-        </div>
-        {browserUsageTime >= reloadThreshold && (
-          <div className="mt-2 text-amber-400 text-xs animate-pulse">
-            Reloading due to extended usage...
-          </div>
-        )}
-      </div>
-
-      {/* Reload trigger button (optional, for testing) */}
-      <button
-        onClick={handleReload}
-        className="mt-6 px-4 py-2 text-xs text-gray-400 border border-gray-800 rounded-lg hover:border-gray-600 transition-colors"
-      >
-        Manual Reload
-      </button>
+      {/* Aesthetic Progress Bar (Minimalist) */}
+      <div 
+        className="absolute bottom-0 left-0 h-[2px] bg-blue-600 transition-all duration-150 ease-out" 
+        style={{ width: `${progress}%` }}
+      />
     </div>
   );
 }
