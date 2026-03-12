@@ -24,7 +24,8 @@ export default function Page() {
   const section2 = useRef(null);
   const section1 = useRef(null);
 
-
+  const pathRef = useRef(null); // New ref for SVG path
+  const bannerImgRef = useRef(null); // New ref for image parallax
 
 
   useGSAP(() => {
@@ -176,6 +177,38 @@ export default function Page() {
       }
 
     });
+
+    // 1. SVG Drawing Animation
+    const path = pathRef.current;
+    const pathLength = path.getTotalLength();
+
+    // Set initial state of path (hidden)
+    gsap.set(path, {
+      strokeDasharray: pathLength,
+      strokeDashoffset: pathLength,
+      opacity: 1
+    });
+
+    gsap.to(path, {
+      strokeDashoffset: 0,
+      ease: "none",
+      scrollTrigger: {
+        trigger: section2.current,
+        start: "top 70%",
+        end: "bottom 60%",
+        scrub: 1,
+      }
+    });
+
+    // 2. Parallax effect for the image
+    gsap.to(bannerImgRef.current, {
+      yPercent: -20,
+      ease: "none",
+      scrollTrigger: {
+        trigger: section2.current,
+        scrub: true,
+      }
+    });
   });
 
   return (
@@ -251,36 +284,58 @@ export default function Page() {
         </section>
 
 
-        <section ref={section2} className="w-full h-full py-[5vw] md:px-[2vw] px-[5vw] bg-white   pt-[15vw] md:pt-[5vw]  ">
+        <section ref={section2} className="w-full relative py-[10vw] md:px-[2vw] px-[5vw] bg-white overflow-hidden">
 
-          <div className="grid md:grid-cols-12 grid-cols-6 border-y border-black/60 xl:gap-8 md:gap-6 relative pt-[5vw] gap-4">
+          {/* BACKGROUND SVG PATH - The "Awwwards" touch */}
+          <svg
+            className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20"
+            viewBox="0 0 1000 1000"
+            fill="none"
+            preserveAspectRatio="none"
+          >
+            <path
+              ref={pathRef}
+              d="M-50,100 C 200,150 400,50 600,300 S 800,500 1100,450"
+              stroke="black"
+              strokeWidth="2"
+            />
+          </svg>
 
-            <div className="md:col-start-6 md:col-span-8 col-start-1 col-span-5  items-start justify-start overflow-hidden ">
-              <TextY>
-                <h1 className="font-[PPNeueMontreal] tracking-tighter font-bold xl:text-[2.4vw] xl:leading-[2.6vw] md:text-[3.2vw] text-baseline text-[7vw] leading-[7vw] text-[#1E1E1E]/70 ">
-                  Crafting premium digital aesthetics and transforming your nothing vision into real, exceptional visuals guided by our design principles.
-                </h1>
-              </TextY>
+          <div className="grid md:grid-cols-12 grid-cols-6 border-t border-black/10 relative pt-[5vw] gap-4">
+            <div className="md:col-start-1 md:col-span-4 col-start-1 col-span-2">
+              <span className="font-mono text-[12px] uppercase tracking-widest text-black/40">01 / Concept</span>
             </div>
-            <div className="md:col-start-5 md:col-span-9 xl:-mt-[2.5vw] items-start justify-start overflow-hidden col-span-6">
+
+            <div className="md:col-start-6 md:col-span-7 col-start-1 col-span-6 overflow-hidden">
               <TextY>
-                <h1 className="font-[Helvetica] font-bold  xl:text-[3.4vw] xl:leading-[3.8vw] text-[7vw] leading-[7vw] text-[#1E1E1E] ">
+                <h1 className="font-[PPNeueMontreal] tracking-tighter font-medium xl:text-[3.5vw] xl:leading-[3.8vw] md:text-[4vw] text-[8vw] leading-[1.1] text-[#1E1E1E]">
+                  Crafting <span className="italic font-serif">premium</span> digital aesthetics and transforming your vision into <span className="text-black/30">real, exceptional</span> visuals.
                 </h1>
               </TextY>
             </div>
           </div>
-          <div className="grid md:grid-cols-12 grid-cols-6 xl:gap-8 md:gap-6 pt-[2vw]  gap-4">
-            <div className="md:col-start-6 md:col-span-2 col-start-3 col-span-3 ">
-              <button className="w-full xl:text-[1.2vw] xl:leading-[1.4vw] font-[PPNeueMontreal] font-bold text-black border rounded-full p-2">
-                About Us
+
+          <div className="grid md:grid-cols-12 grid-cols-6 xl:gap-8 md:gap-6 pt-[8vw] items-end">
+            <div className="md:col-start-2 md:col-span-3 col-start-1 col-span-3 mb-[2vw]">
+              <p className="text-black/60 font-[PPNeueMontreal] text-[1.1vw] leading-relaxed mb-6">
+                We don't just build; we compose. Every pixel is a note in a larger symphony of user experience.
+              </p>
+              <button className="group relative px-6 py-3 border border-black rounded-full overflow-hidden transition-colors hover:text-white">
+                <span className="relative z-10 font-bold uppercase text-[0.8vw]">About Us</span>
+                <div className="absolute inset-0 bg-black translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-expo"></div>
               </button>
             </div>
-            <div className="md:col-start-8 col-start-3  col-span-4  md:col-span-5 rounded-sm overflow-hidden">
-              <img src={images.mainbanner1.src} className="w-full h-full object-center object-cover" />
+
+            <div className="md:col-start-6 col-span-full md:col-span-7 rounded-2xl overflow-hidden aspect-[16/9] relative">
+              <img
+                ref={bannerImgRef}
+                src={images.mainbanner1.src}
+                className="w-full h-[140%] object-cover absolute top-0"
+                alt="Studio Banner"
+              />
             </div>
           </div>
         </section>
-
 
 
 

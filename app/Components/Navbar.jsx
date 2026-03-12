@@ -502,15 +502,7 @@ const Navbar = () => {
 
           {/* Right side */}
           <div className="flex items-center justify-center gap-5">
-            <div
 
-              style={{ fontStretch: "75%" }}
-              className="relative overflow-hidden md:block hidden xl:text-[1.5vw] xl:leading-[1.5vw] font-semibold font-[dbsharp]" >
-              <HoverText>
-                <h1>HELLO@NRSTUDIOS.IN</h1>
-              </HoverText>
-              <span ref={lineMail} className="absolute left-0 bottom-0 h-[0.1vw] bg-white w-full origin-left scale-x-0" ></span>
-            </div>
             <div className="overflow-hidden button">
               <button
                 onClick={() => setContactOpen(!contactOpen)}
