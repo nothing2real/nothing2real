@@ -159,6 +159,7 @@ const Accordion = () => {
           <p>Custom Layouts & Component Library</p>
           <p>GSAP / Framer Animations</p>
           <p>Next.js High-Performance Build</p>
+          <p>Wordpress & Elementor Build</p>
           <p>SEO-ready Structure</p>
         </>
       ),

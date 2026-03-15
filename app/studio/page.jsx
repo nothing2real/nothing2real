@@ -29,6 +29,38 @@ const Page = () => {
     const text4Ref = useRef(null)
     const team2Ref = useRef(null)
     const team1Ref = useRef(null)
+    const teamMembersRef = useRef([])
+    const teamNamesRef = useRef([])
+    const teamRolesRef = useRef([])
+
+    const handleMouseMove = (e, index) => {
+        const card = teamMembersRef.current[index]
+        const rect = card.getBoundingClientRect()
+        const x = e.clientX - rect.left
+        const y = e.clientY - rect.top
+        const centerX = rect.width / 2
+        const centerY = rect.height / 2
+        const rotateX = (y - centerY) / 10
+        const rotateY = (centerX - x) / 10
+
+        gsap.to(card, {
+            rotationY: rotateY,
+            rotationX: rotateX,
+            duration: 0.3,
+            ease: "power2.out",
+            transformPerspective: 1000,
+            transformOrigin: "center center"
+        })
+    }
+
+    const handleMouseLeave = (index) => {
+        gsap.to(teamMembersRef.current[index], {
+            rotationY: 0,
+            rotationX: 0,
+            duration: 0.5,
+            ease: "power2.out"
+        })
+    }
 
     useGSAP(() => {
 
@@ -333,6 +365,49 @@ const Page = () => {
         });
     }, { scope: container });
 
+    useGSAP(() => {
+        // Animate team members on scroll with enhanced effects
+        gsap.set(teamMembersRef.current, { y: 100, opacity: 0, rotationX: -15 })
+        gsap.to(teamMembersRef.current, {
+            y: 0,
+            opacity: 1,
+            rotationX: 0,
+            stagger: 0.2,
+            duration: 1.2,
+            ease: "power4.out",
+            scrollTrigger: {
+                trigger: teamMembersRef.current[0],
+                start: "top 80%",
+            },
+        })
+
+        // SplitText for names and roles on hover
+        teamMembersRef.current.forEach((card, index) => {
+            const nameSplit = new SplitText(teamNamesRef.current[index], { type: "chars" })
+            const roleSplit = new SplitText(teamRolesRef.current[index], { type: "words" })
+
+            gsap.set([nameSplit.chars, roleSplit.words], { y: 20, opacity: 0 })
+
+            card.addEventListener('mouseenter', () => {
+                gsap.to(nameSplit.chars, {
+                    y: 0,
+                    opacity: 1,
+                    stagger: 0.05,
+                    duration: 0.6,
+                    ease: "power3.out"
+                })
+                gsap.to(roleSplit.words, {
+                    y: 0,
+                    opacity: 1,
+                    stagger: 0.1,
+                    duration: 0.8,
+                    ease: "power3.out",
+                    delay: 0.2
+                })
+            })
+        })
+    })
+
     useEffect(() => {
         document.fonts.ready.then(() => {
         });
@@ -561,53 +636,78 @@ const Page = () => {
                     </div>
                 </section>
 
-                <section className="w-full h-full py-[5vw] md:px-[2vw] px-[5vw]">
-                    <div className="w-full  xl:text-[8vw] pt-[10vw]  text-[13vw] xl:leading-[7vw] mt-[10vw] -rotate-2 font-[dbsharp] text-red-500 leading-[13vw] uppercase font-bold text-center">
+                <section className="w-full h-full py-[5vw] md:px-[2vw] px-[5vw] relative overflow-hidden">
+                    {/* Animated Background */}
+                    <div className="absolute inset-0 bg-linear-to-br from-red-500/10 via-transparent to-blue-500/10 animate-pulse"></div>
+                    <div className="absolute inset-0">
+                        {[...Array(20)].map((_, i) => (
+                            <div
+                                key={i}
+                                className="absolute w-2 h-2 bg-white/20 rounded-full animate-bounce"
+                                style={{
+                                    left: `${Math.random() * 100}%`,
+                                    top: `${Math.random() * 100}%`,
+                                    animationDelay: `${Math.random() * 2}s`,
+                                    animationDuration: `${2 + Math.random() * 2}s`
+                                }}
+                            ></div>
+                        ))}
+                    </div>
+
+                    <div className="w-full  xl:text-[8vw] pt-[10vw]  text-[13vw] xl:leading-[7vw] mt-[10vw] -rotate-2 font-[dbsharp] text-red-500 leading-[13vw] uppercase font-bold text-center relative z-10">
                         <div className="overflow-hidden">
                             <h1 ref={team1Ref} className=" overflow-hidden will-change-transform" style={{ fontStretch: "85%" }}>
                                 Meet Our
                             </h1>
                         </div>
                     </div>
-                    <div className="w-full  xl:text-[8vw] text-[13vw] xl:leading-[7vw]  -rotate-2 font-[dbsharp] text-white leading-[13vw] uppercase font-bold text-center">
+                    <div className="w-full  xl:text-[8vw] text-[13vw] xl:leading-[7vw]  -rotate-2 font-[dbsharp] text-white leading-[13vw] uppercase font-bold text-center relative z-10">
                         <div className="overflow-hidden">
                             <h1 ref={team2Ref} className=" overflow-hidden will-change-transform" style={{ fontStretch: "85%" }}>
                                 Team Members
                             </h1>
                         </div>
                     </div>
-                    <div className="grid md:grid-cols-12 xl:gap-8 md:pt-[5vw] font-[PPNeueMontreal] font-bold pt-[10vw] gap-6 py-2 grid-cols-6">
-                        <div className="md:col-start-1 col-start-1 col-span-3 w-full h-full md:col-span-2">
-                            <img src={images.ruthwik.src} className="w-full h-full object-center object-cover" alt="" />
-                            <div className="flex items-center justify-between">
-                                <h1 className="xl:text-[1vw] text-[4vw] text-white mix-blend-difference">Nagaruthik</h1>
-                                <h1 className="xl:text-[0.7vw] text-[2vw] text-white mix-blend-difference">Full-Stack Developer</h1>
-                            </div>
-                        </div>
-                        <div className="xl:col-start-3 col-start-4 col-span-3 xl:col-span-2">
-                            <img src={images.varshit.src} className="w-full h-full object-center object-cover" alt="" />
-                            <div className="flex items-center justify-between">
-                                <h1 className="xl:text-[1vw] text-[4vw] text-white mix-blend-difference">Varshith</h1>
-                                <h1 className="xl:text-[0.7vw] text-[2vw] text-white mix-blend-difference">Art Director</h1>
-                            </div>
-                        </div>
-                        <div className="xl:col-start-9 col-start-3 col-span-3 xl:col-span-2">
-                            <img src={images.Rohith.src} className="w-full h-full object-center object-cover" alt="" />
-                            <div className="flex items-center justify-between">
-                                <h1 className="xl:text-[1vw] text-[4vw] text-white mix-blend-difference">Rohith</h1>
-                                <h1 className="xl:text-[0.7vw] text-[2vw] text-white mix-blend-difference">Frontend Developer</h1>
-                            </div>
-                        </div>
-                        <div className="xl:col-start-11 col-start-4 col-span-3 xl:col-span-2">
-                            <img src={images.gopi.src} className="w-full h-full object-center object-cover" alt="" />
-                            <div className="flex items-center justify-between">
-                                <h1 className="xl:text-[1vw] text-[4vw] text-white mix-blend-difference">Gopi Krishna</h1>
-                                <h1 className="xl:text-[0.7vw] text-[2vw] text-white mix-blend-difference">Backend Developer</h1>
-                            </div>
-                        </div>
 
+                    <div className="grid md:grid-cols-12 xl:gap-8 md:pt-[5vw] font-[PPNeueMontreal] font-bold pt-[10vw] gap-6 py-2 grid-cols-6 relative z-10">
+                        {[
+                            { img: images.ruthwik.src, name: 'Nagaruthik', role: 'Full-Stack Developer' },
+                            { img: images.varshit.src, name: 'Varshith', role: 'Art Director' },
+                            { img: images.Rohith.src, name: 'Rohith', role: 'Frontend Developer' },
+                            { img: images.gopi.src, name: 'Gopi Krishna', role: 'Backend Developer' }
+                        ].map((member, index) => (
+                            <div
+                                key={index}
+                                ref={(el) => teamMembersRef.current[index] = el}
+                                className={`md:col-start-1 col-start-1 col-span-3 w-full h-full md:col-span-2 xl:col-start-${index === 0 ? 1 : index === 1 ? 3 : index === 2 ? 9 : 11} col-start-${index === 0 ? 1 : index === 1 ? 4 : index === 2 ? 3 : 4} col-span-3 xl:col-span-2 relative group cursor-pointer transform-gpu`}
+                                onMouseMove={(e) => handleMouseMove(e, index)}
+                                onMouseLeave={() => handleMouseLeave(index)}
+                            >
+                                <div className="relative overflow-hidden rounded-2xl bg-linear-to-br from-gray-800 to-gray-900 p-1 shadow-2xl transform transition-transform duration-300 group-hover:scale-105">
+                                    <div className="relative overflow-hidden rounded-xl">
+                                        <img
+                                            src={member.img}
+                                            className="w-full h-full object-center object-cover transition-transform duration-700 group-hover:scale-110"
+                                            alt=""
+                                        />
+                                        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                        <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out">
+                                            <h1 className="text-2xl font-bold mb-2 team-name" ref={(el) => teamNamesRef.current[index] = el}>{member.name}</h1>
+                                            <p className="text-sm opacity-90 team-role" ref={(el) => teamRolesRef.current[index] = el}>{member.role}</p>
+                                            <div className="flex space-x-3 mt-4">
+                                                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                                                    <span className="text-xs">LI</span>
+                                                </div>
+                                                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center hover:bg-white/40 transition-colors">
+                                                    <span className="text-xs">GH</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
-
                 </section>
 
                 <section className="w-full h-full  overflow-hidden ">
