@@ -318,7 +318,7 @@ export default function Page() {
           <div className="grid md:grid-cols-12 grid-cols-6 xl:gap-8 md:gap-6 pt-[8vw] items-end">
             <div className="md:col-start-2 md:col-span-3 col-start-1 col-span-3 mb-[2vw]">
               <p className="text-black/60 font-[PPNeueMontreal] text-[1.1vw] leading-relaxed mb-6">
-                We don't just build; we compose. Every pixel is a note in a larger symphony of user experience.
+                We dont just build; we compose. Every pixel is a note in a larger symphony of user experience.
               </p>
               <button className="group relative px-6 py-3 border border-black rounded-full overflow-hidden transition-colors hover:text-white">
                 <span className="relative z-10 font-bold uppercase text-[0.8vw]">About Us</span>
