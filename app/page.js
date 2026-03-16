@@ -308,7 +308,7 @@ export default function Page() {
             <div className="md:col-start-1 md:col-span-12 col-start-1 col-span-6 overflow-hidden">
               <TextY>
                 <h1
-                  className="font-[PPNeueMontreal] tracking-tighter font-semibold xl:text-[4.5vw] xl:leading-[4.8vw] md:text-[4vw] text-[8vw] leading-[1.1] text-[#1E1E1E]"
+                  className="font-[PPNeueMontreal] tracking-tighter font-semibold xl:text-[4.5vw] xl:leading-[4.5vw]  md:text-[4vw] text-[8vw] leading-[1.1] text-[#1E1E1E]"
                   style={{ textIndent: "25%" }} // Responsive indent
                 >
                   Great digital products begin with clarity of vision.
@@ -387,7 +387,7 @@ export default function Page() {
                   Studio Provides
                 </h1>
               </div>
-              
+
               <TextY>
                 <ul className="xl:text-[1.1vw] pt-[1vw] xl:leading-[1.2vw] tracking-tight md:text-[3vw] md:leading-[3vw] lg:text-[2vw] lg:leading-[2vw] text-[4vw] leading-[4.2vw] dm-mono-medium  text-black/70">
 
@@ -432,8 +432,8 @@ export default function Page() {
             </h1>
           </div>
           <div className="grid md:grid-cols-12 grid-cols-6 gap-4 md:gap-8 pt-[15vw] md:pt-[5vw] pb-[10vw]">
-            <div className="md:col-start-6 md:col-span-8  col-start-1 col-span-6">
-              <Accordion />
+            <div className=" md:col-span-12  col-start-1 col-span-6">
+              <Service />
             </div>
           </div>
         </section>

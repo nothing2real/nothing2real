@@ -112,47 +112,95 @@ const Page = () => {
 
             <div className="w-full h-full overflow-hidden bg-white text-black  mx-auto">
 
-                <section className="w-full min-h-screen px-[5vw] md:px-[2vw] md:mt-[5vw] mt-[10vw]   ">
-                    <div className="grid grid-cols-1 w-full  md:grid-cols-12 gap-4 pt-[10vw] md:pt-[1vw]">
-                        <div className=" md:col-span-3 md:col-start-1">
-                            <h1 sty className="xl:text-[1.5vw] xl:leading-[2vw] lg:text-[2vw] lg:leading-[2vw] md:text-[2.5vw] md:leading-[3vw] text-[5vw] dm-mono-medium uppercase font-bold ">(Our Process)</h1>
-                        </div>
-                        <div className=" md:col-span-8 md:col-start-5 font-[PPNeueMontreal] font-bold w-full ">
-                            <TextY>
-                                <p className="text-[7vw] tracking-tight xl:leading-[3.2vw] xl:text-[3vw] lg:text-[3.5vw] lg:leading-[4vw] md:text-[4.5vw]   leading-[7.5vw] md:leading-[5vw]  text-black/60 ">
-                                    We believe in building lasting partnerships —
-                                    not just delivering projects.
-                                    Every website we craft carries your story, your emotion, and your identity.
-                                </p>
-                            </TextY>
-                        </div>
+                <section className="relative w-full min-h-[120vh] px-[5vw] md:px-[2vw] flex flex-col justify-center">
+                    {/* Background Large Outlined Text - High-end Brand Feel */}
+                    <div className="absolute top-[15%] left-0 w-full pointer-events-none overflow-hidden select-none opacity-5 md:block hidden">
+                        <h1 className="text-[25vw] leading-none font-bold uppercase tracking-tighter whitespace-nowrap">
+                            Process / Process / Process
+                        </h1>
                     </div>
-                    <div className="grid grid-cols-6 md:grid-cols-12 w-full h-full gap-4 mt-[5vw]   items-end justify-end md:items-start md:justify-start pt-[30vw] md:pt-[1vw] ">
-                        <div className="col-span-4 col-start-1 md:block hidden md:col-span-5 md:pt-0 pt-[10vw] w-full h-[220px] md:h-[380px]">
-                            <img src={images.processBanner.src} className="w-full h-full object-right object-cover " alt="" />
+
+                    <div className="grid grid-cols-1 md:grid-cols-12 w-full gap-4 relative z-10">
+
+                        {/* Left Column: Technical Metadata */}
+                        <div className="md:col-span-3 flex flex-col justify-between py-10">
+                            <div className="overflow-hidden">
+                                <TextY>
+                                    <span className="dm-mono-medium uppercase text-[12px] md:text-[0.8vw] tracking-[0.2em] text-black/40 flex items-center gap-2">
+                                        <span className="w-8 h-[1px] bg-black/20"></span>
+                                        Methodology 2026
+                                    </span>
+                                </TextY>
+                            </div>
+
+                            <div className="mt-auto md:block hidden">
+                                <div className="flex flex-col gap-4">
+                                    <div className="w-10 h-10 border border-black/10 rounded-full flex items-center justify-center animate-bounce">
+                                        <ArrowDown size={18} strokeWidth={1.5} />
+                                    </div>
+                                    <p className="text-[0.7vw] uppercase tracking-widest text-black/50 leading-relaxed max-w-[150px]">
+                                        Scroll to explore the seven stages of creation
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <div className="col-start-3 col-span-4 md:hidden block md:col-start-8 md:col-span-4 w-full h-[150px] md:h-[400px]">
-                            <img src={images.processBanner.src} className="w-full h-full object-cover object-right " alt="" />
+
+                        {/* Right Column: Hero Content & Visual */}
+                        <div className="md:col-span-12">
+                            <div className="relative">
+                                {/* Main Headline */}
+                                <div className="overflow-hidden mb-12">
+                                    <TextY delay={2}>
+                                        <h1 style={{ textIndent: "25%" }} className="font-[PPNeueMontreal] tracking-tighter font-semibold text-[5vw] md:text-[3vw] leading-[0.95] text-[#1E1E1E]">
+                                            Every product begins with a clear vision.
+                                            Through research, strategy, and thoughtful design, we transform ideas into digital experiences that are meaningful, scalable, and built to last.
+                                        </h1>
+                                    </TextY>
+                                </div>
+
+                                {/* Floating Feature Image with Parallax Mask */}
+                                <div className="grid grid-cols-1 md:grid-cols-8 gap-8 items-start">
+                                    <div className="md:col-span-5 relative group">
+
+                                        {/* Subtle Label */}
+                                        <div className="absolute -bottom-6 right-0 text-[10px] dm-mono-medium uppercase text-black/30">
+                                            Visualizing Structure // 001
+                                        </div>
+                                    </div>
+
+                                    <div className="md:col-span-3 pt-4">
+                                        <TextY>
+                                            <p className="font-[PPNeueMontreal] text-[4.5vw] md:text-[1.2vw] leading-snug text-black/70">
+                                                Every product begins with a clear vision. Through research, strategy, and thoughtful design, we transform ideas into digital experiences that are meaningful and built to last.
+                                            </p>
+                                        </TextY>
+                                        <div className="h-[1px] w-full bg-black/10 mt-8"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </section>
 
                 {/* Section 2 */}
 
-                <section className="w-screen h-full px-[5vw] md:px-[2vw] md:h-screen overflow-hidden  mt-[2vw]">
-                    <div className="w-full h-full object-cover object-bottom relative overflow-hidden">
-                        <h1 className="text-white xl:text-[8vw] xl:leading-[7vw] text-[8vw] leading-[7vw]  mix-blend-difference font-[PPNeueMontreal] font-semibold absolute top-6  left-6 w-[60%] z-10">View Our 7 Stage Process </h1>
-                        <ParallaxImage src={images.twoBanner.src} />
-                        <h1 className="xl:text-[8vw] absolute bottom-5 right-5 font-[PPNeueMontreal] font-semibold text-white z-10">(<ArrowDown className="inline-block  xl:w-25 xl:h-35" strokeWidth={2} />)</h1>
-                    </div>
-
-                </section>
                 <section className="w-full min-h-screen px-[5vw] md:px-[2vw]   flex items-start justify-start   overflow-hidden">
                     <div className=" pt-[3vw]  w-full ">
                         <div className="grid grid-cols-1 md:grid-cols-12  gap-4 space-y-2   items-start">
                             <div className="md:col-start-1 md:col-span-4 border-t border-gray-100/50 pt-[1vw] ">
-                                <h1 className=""><span style={{ fontStretch: "75%" }} className="text-black font-semibold tracking-tight  xl:text-[4vw] text-[7vw] leading-[6vw] md:text-[4vw] md:leading-[3vw] lg:text-[3vw] lg:leading-[2.5vw] font-[dbsharp]">7 Stages</span></h1>
+                                <div className="space-y-6">
+                                    <div className="overflow-hidden">
+                                        <span className="dm-mono-medium text-[10px] md:text-[0.7vw] tracking-[0.3em] text-black/40 uppercase flex items-center gap-3">
+                                            <span className="w-6 h-[1px] bg-black/20"></span>
+                                            Phase 02 / Strategic Execution
+                                        </span>
+                                    </div>
 
+                                    <h2 className="font-[PPNeueMontreal] text-[18vw] md:text-[8vw] leading-[0.8] tracking-tighter text-black font-bold">
+                                        07 <span className="italic font-light text-black/30">Stages</span>
+                                    </h2>
+                                </div>
 
 
                                 <TextY>
@@ -178,50 +226,122 @@ const Page = () => {
                                 <div className="w-full h-[500px] md:h-[1000px] overflow-hidden bg-red-600 rounded-sm">
                                     <img className="w-full h-full object-center object-cover  rounded-sm" loading="lazy-loading" src={images.mainbanner1.src} alt="" />
                                 </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+                                    <div className="space-y-4">
+                                        <div className="h-[1px] w-full bg-black/10"></div>
+                                        <p className="dm-mono-medium text-[10px] text-black/40 uppercase tracking-widest">[ The Outcome ]</p>
+                                        <p className="font-[PPNeueMontreal] text-[4vw] md:text-[0.9vw] text-black/60 leading-relaxed">
+                                            We ensure scalability and performance are baked into the core of the product from stage one.
+                                        </p>
+                                    </div>
+                                    <div className="space-y-4">
+                                        <div className="h-[1px] w-full bg-black/10"></div>
+                                        <p className="dm-mono-medium text-[10px] text-black/40 uppercase tracking-widest">[ Collaboration ]</p>
+                                        <p className="font-[PPNeueMontreal] text-[4vw] md:text-[0.9vw] text-black/60 leading-relaxed">
+                                            Transparent workflows with bi-weekly reviews and direct access to our design system.
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
-                <section ref={containerRef} className="w-screen min-h-screen py-[5vw] md:block hidden bg-white  mt-[5vw]  ">
+                <section ref={containerRef} className="w-full bg-white py-[15vw] md:py-[10vw]">
+                    {/* Section Header */}
+                    <div className="px-[5vw] mb-[10vw] md:mb-[5vw]">
+                        <h2 className="font-[PPNeueMontreal] text-[12vw] md:text-[5vw] text-black tracking-tighter leading-none">
+                            The <span className="italic font-light text-black/40">Blueprint</span>
+                        </h2>
+                        <p className="dm-mono-medium text-[3.5vw] md:text-[0.8vw] uppercase tracking-widest text-black/30 mt-4">
+                            [ Phase 03 // Production Cycle ]
+                        </p>
+                    </div>
+
                     {processList.map((stage, index) => (
                         <div
                             key={index}
-                            className="w-full  min-h-screen border-t-2 border-black md:h-screen cards mt-[5vw]  bg-white p-[2vw] font-[PPNeueMontreal]  grid grid-cols-1 md:grid-cols-12 gap-4 relative  items-start justify-start overflow-hidden"
+                            className="cards w-full min-h-[80vh] md:h-screen sticky top-0 flex items-center justify-center overflow-hidden border-t border-black/5 bg-white px-[5vw] md:px-[2vw]"
                         >
+                            {/* Mobile-Specific Layout (Block) */}
+                            <div className="flex flex-col w-full h-full md:hidden pt-[10vw] pb-[20vw] gap-6">
+                                <div className="flex items-center justify-between">
+                                    <h3 className="font-[dbsharp] text-[15vw] leading-none text-black/10">
+                                        0{index + 1}
+                                    </h3>
+                                    <span className="dm-mono-medium text-[3vw] tracking-[0.2em] text-black/40 uppercase">
+                                        Stage .0{index + 1}
+                                    </span>
+                                </div>
 
-                            <div className="md:col-start-1 pt-[5vw] md:col-span-1">
-                                <h1 className="text-white font-[dbsharp] mix-blend-difference uppercase tracking-tight xl:text-[6vw] lg:text-[8vw] md:text-[9vw] text-[10vw] leading-[8vw] mb-6">
-                                    [{index + 1}]
-                                </h1>
-                            </div>
+                                <div className="w-full aspect-square overflow-hidden rounded-sm bg-gray-100">
+                                    <img
+                                        src={stage.bg}
+                                        alt={stage.title}
+                                        className="w-full h-full object-cover grayscale"
+                                    />
+                                </div>
 
-                            <div className="md:col-start-4  md:col-span-7  pt-[5vw] items-start justify-start">
-                                <div className="">
-                                    <h1 className="text-white   mix-blend-difference uppercase tracking-tight xl:text-[3vw] xl:leading-[3vw] font-bold lg:text-[5vw] lg:leading-[5vw] md:text-[7vw] md:leading-[7vw] text-[8vw] leading-[8vw] mb-1">
+                                <div className="space-y-4">
+                                    <h1 className="font-[PPNeueMontreal] text-[8vw] leading-[1] font-bold text-black uppercase tracking-tighter">
                                         {stage.title}
                                     </h1>
-                                </div>
-                            </div>
-                            <div className="md:col-start-4 md:col-span-4 gap-3 w-full    items-start justify-start">
-                                <img src={stage.bg} alt={stage.title} className=" w-full h-full  object-cover mix-blend-normal object-center" />
-                            </div>
-                            <div className="md:col-start-9 md:col-span-4 gap-3 items-start justify-start">
-                                <div className="relative  mix-blend-difference  text-start ">
                                     <TextY>
-                                        <p className="text-white/70  font-[MyFont]  xl:text-[1.5vw] xl:leading-[1.5vw] lg:text-[1.8vw] lg:leading-[1.8vw] md:leading-[2vw] md:text-[2vw] text-[4vw] leading-[4vw]">
+                                        <p className="font-[PPNeueMontreal] text-[4.5vw] leading-relaxed text-black/60">
                                             {stage.desc}
                                         </p>
                                     </TextY>
                                 </div>
+
+                                <div className="mt-auto border-b border-black/10 pb-4">
+                                    <p className="dm-mono-medium text-[3vw] text-black/30 uppercase flex items-center gap-2">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                                        Verified Outcome
+                                    </p>
+                                </div>
                             </div>
 
-                            <div className="md:col-start-9 md:col-span-4 gap-3 items-start justify-start">
-                                <div className="relative  mix-blend-difference  text-start ">
+                            {/* Desktop-Specific Layout (Grid) */}
+                            <div className="hidden md:grid grid-cols-12 w-full h-full items-center relative z-20">
+                                <div className="col-span-2">
+                                    <h3 className="font-[dbsharp] text-[12vw] leading-none text-black/10 uppercase">
+                                        0{index + 1}
+                                    </h3>
+                                </div>
 
-                                    <p className="text-white uppercase text-end  font-[MyFont2]  xl:text-[1.5vw] xl:leading-[1.5vw] lg:text-[1.8vw] lg:leading-[1.8vw] md:leading-[2vw] md:text-[2vw] text-[4vw] leading-[4vw]">
-                                        -Nr.Studio©
-                                    </p>
+                                <div className="col-span-5 pr-[5vw]">
+                                    <div className="space-y-6">
+                                        <span className="dm-mono-medium text-[0.7vw] tracking-[0.4em] text-black/40 uppercase">
+                                            Current Stage // .0{index + 1}
+                                        </span>
+                                        <h1 className="font-[PPNeueMontreal] text-[4vw] leading-[1] font-bold text-black uppercase tracking-tighter">
+                                            {stage.title}
+                                        </h1>
+                                        <div className="w-12 h-[2px] bg-black/20"></div>
+                                        <TextY>
+                                            <p className="font-[PPNeueMontreal] text-[1.2vw] leading-relaxed text-black/60 max-w-md">
+                                                {stage.desc}
+                                            </p>
+                                        </TextY>
+                                        <div className="pt-8">
+                                            <p className="dm-mono-medium text-[0.6vw] text-black/30 uppercase flex items-center gap-2">
+                                                <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                                                Production Ready Output
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <div className="col-span-5 h-[70vh] relative group overflow-hidden rounded-sm">
+                                    <img
+                                        src={stage.bg}
+                                        alt={stage.title}
+                                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-[2s] ease-in-out scale-110 group-hover:scale-100"
+                                    />
+                                    <div className="absolute bottom-6 right-6 mix-blend-difference">
+                                        <p className="text-white font-[PPNeueMontreal] text-[0.8vw] opacity-40 uppercase tracking-widest">
+                                            Nothing2Real Studio ©
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

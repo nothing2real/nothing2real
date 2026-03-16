@@ -1,131 +1,93 @@
-"use client";
-import React, { useRef } from "react";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ArrowUpRight, Zap, Layers, Globe, Smartphone, ShieldCheck } from "lucide-react";
-import Accordion from "./Accordion";
+import { services } from '@/public/assets/assets'
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import React, { use, useLayoutEffect } from 'react'
 
 gsap.registerPlugin(ScrollTrigger);
 
-const services = [
-  {
-    id: "01",
-    title: "Brand Strategy & Identity",
-    description: "We don't just design logos; we architect visual legacies. We define the sonic and visual frequency of your brand to ensure it resonates in a crowded market.",
-    tags: ["Logo Design", "Visual Language", "Brand Voice"],
-    icon: <Layers size={32} strokeWidth={1} />,
-    color: "#f3f3f3"
-  },
-  {
-    id: "02",
-    title: "Cinematic Web Engineering",
-    description: "Using Next.js and high-end GSAP orchestration, we build digital environments that feel fluid, responsive, and inevitably premium.",
-    tags: ["Next.js", "GSAP Animations", "WebGL"],
-    icon: <Zap size={32} strokeWidth={1} />,
-    color: "#ffffff"
-  },
-  {
-    id: "03",
-    title: "E-Commerce Ecosystems",
-    description: "Transforming transactions into experiences. We build high-conversion storefronts that maintain aesthetic integrity while driving massive ROI.",
-    tags: ["Shopify", "Custom Checkout", "Inventory UX"],
-    icon: <Globe size={32} strokeWidth={1} />,
-    color: "#f9f9f9"
-  }
-];
-
-export default function ServicesSection() {
-  const sectionRef = useRef(null);
-  const triggerRef = useRef(null);
-  const leftContentRef = useRef(null);
-
-  useGSAP(() => {
-    // Pin the left side heading while the right side scrolls
-    ScrollTrigger.create({
-      trigger: triggerRef.current,
-      start: "top top",
-      end: "bottom bottom",
-      pin: leftContentRef.current,
-      pinSpacing: false,
-    });
-
-    // Animate service cards on entry
-    gsap.utils.toArray(".service-card").forEach((card) => {
-      gsap.from(card, {
-        opacity: 0,
-        y: 100,
-        rotateX: -10,
-        duration: 1,
-        ease: "power4.out",
-        scrollTrigger: {
-          trigger: card,
-          start: "top 90%",
-          end: "top 60%",
-          scrub: 1,
-        }
-      });
-    });
-  }, { scope: sectionRef });
-
-  return (
-    <section ref={sectionRef} className="relative w-full bg-white text-black min-h-screen">
-      <div ref={triggerRef} className="flex flex-col md:flex-row px-[5vw] md:px-[2vw]">
-        
-        {/* LEFT SIDE: PINNED CONTENT */}
-        <div ref={leftContentRef} className="w-full md:w-1/3 h-fit md:h-screen flex flex-col justify-start pt-[10vw]">
-          <span className="font-mono text-[12px] uppercase tracking-widest text-black/40 mb-4">02 / Expertise</span>
-          <h2 className="text-[12vw] md:text-[5vw] font-bold leading-[0.9] tracking-tighter uppercase font-[PPNeueMontreal]">
-            Services <br /> <span className="italic font-serif opacity-30">Provided</span>
-          </h2>
-          <p className="mt-8 text-[4vw] md:text-[1.2vw] text-black/60 max-w-[250px] leading-tight">
-            We provide technical gravity to your creative vision. 
-          </p>
-          <div className="hidden md:block mt-12 w-20 h-20 border border-black/10 rounded-full flex items-center justify-center animate-spin-slow">
-             <ArrowUpRight className="rotate-45" />
-          </div>
-        </div>
-
-        {/* RIGHT SIDE: SCROLLING DETAILS */}
-        <div className="w-full md:w-2/3 flex flex-col gap-[10vh] py-[10vw]">
-          {services.map((service) => (
-            <div 
-              key={service.id} 
-              className="service-card group relative p-8 md:p-16 rounded-[2rem] border border-black/5 hover:border-black/20 transition-colors duration-500"
-              style={{ backgroundColor: service.color }}
-            >
-              <div className="flex justify-between items-start mb-12">
-                <span className="font-mono text-[1.5vw] opacity-20">{service.id}</span>
-                <div className="p-4 bg-white rounded-2xl shadow-sm group-hover:scale-110 transition-transform duration-500">
-                  {service.icon}
+const Cards = ({ title, desc, features, img, id }) => {
+    return (
+        <div id={`card-${id + 1}`} className='w-full h-full cards  border-b border-black overflow-hidden p-[2vw] grid md:grid-cols-12 grid-cols-6 gap-4   justify-center bg-indigo-300'>
+            <div className='md:col-start-1 col-start-1 col-span-6 card-inner md:col-span-8 items-end  justufy-between'>
+                <div className='w-full xl:text-[4vw] xl:leading-[3.5vw] lg:text-[5vw] lg:leading-[4.5vw] md:text-[5vw] md:leading-[5.5vw] text-[8vw] leading-[7.5vw] font-[PPNeueMontreal] font-bold text-black uppercase tracking-tighter '>
+                    <h1 className='text-[#1E1E1E]'>{title}</h1>
                 </div>
-              </div>
-              
-              <h3 className="text-[8vw] md:text-[3.5vw] font-bold tracking-tighter mb-6 leading-none">
-                {service.title}
-              </h3>
-              
-              <p className="text-[4.5vw] md:text-[1.5vw] leading-tight text-black/70 mb-10 max-w-xl">
-                {service.description}
-              </p>
+                <div className='w-full grid grid-cols-6 gap-4 items-center p-[3vw] justify-between'>
+                    <div className='xl:text-[1.3vw] col-start-1 col-span-4 md:col-start-1 md:col-span-3  xl:leading-[1.5vw] font-[PPNeueMontreal] text-black font-bold'>
+                        {desc}
+                    </div>
+                    <div className='xl:leading-[1vw] col-start-4 text-[3vw] col-span-3 md:col-start-5  border-black p-[2vw] md:col-span-2 md:text-[1vw] xl:text-[1vw] font-mono text-black'>
 
-              <div className="flex flex-wrap gap-3">
-                {service.tags.map(tag => (
-                  <span key={tag} className="px-4 py-2 rounded-full border border-black/10 font-mono text-[10px] uppercase tracking-wider group-hover:bg-black group-hover:text-white transition-colors duration-300">
-                    {tag}
-                  </span>
-                ))}
-              </div>
+                        <div>{features}</div>
+
+                    </div>
+                </div>
             </div>
-          ))}
-          
-          {/* Detailed Accordion for Technical Cleanup */}
-          <div className="mt-20">
-            <h4 className="font-mono uppercase text-[12px] mb-10 opacity-40 text-center italic">Deep Dive Into Technicals</h4>
-            <Accordion />
-          </div>
+            <div className=' md:col-start-10 col-start-3 col-span-4 items-center justify-center mx-auto md:col-span-4 overflow-hidden rounded-sm bg-red-500 '>
+                <img src={img.src} className='w-full h-full object-center object-cover  bg-indigo-400 ' alt="" />
+            </div>
         </div>
-      </div>
-    </section>
-  );
+    )
 }
+
+const Service = () => {
+
+    useGSAP(() => {
+        const cards = gsap.utils.toArray(".cards");
+
+        // Base style setup
+        gsap.set(cards, {
+            transformOrigin: "center top",
+            scale: 1,
+            y: 0,
+            z: 0.1,
+        });
+
+        cards.forEach((card, i) => {
+            const next = cards[i + 1];
+            const isLast = i === cards.length - 1;
+
+            // Pin each card
+            ScrollTrigger.create({
+                trigger: card,
+                start: "top top",
+                end: "bottom top",
+                pin: true,
+                pinSpacing: false,
+                scrub: 1,
+            });
+
+            // Animate the previous card upward as next card enters
+            if (!isLast) {
+                ScrollTrigger.create({
+                    trigger: next,
+                    start: "top 85%",   // smoother entry
+                    end: "top 40%",     // better overlap zone
+                    scrub: 1,
+                    onUpdate: (self) => {
+                        gsap.to(card, {
+                            y: 120 * self.progress,   // smooth rise
+                            scale: 1 - self.progress * 0.03, // subtle depth feel
+                            ease: "power3.out",
+                            overwrite: "auto",
+                        });
+                    }
+                });
+            }
+        });
+    });
+
+
+
+
+    return (
+        <div className='w-full min-h-screen bg-white '>
+            {services.map((item, id) => (
+                <Cards id={id} {...item} key={id} />
+            ))}
+        </div>
+    )
+}
+
+export default Service;
