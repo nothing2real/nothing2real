@@ -194,8 +194,8 @@ export default function Page() {
       ease: "none",
       scrollTrigger: {
         trigger: section2.current,
-        start: "top 70%",
-        end: "bottom 60%",
+        start: "top 80%",
+        end: "bottom 70%",
         scrub: 1,
       }
     });
@@ -297,7 +297,7 @@ export default function Page() {
               ref={pathRef}
               d="M-50,100 C 200,150 400,50 600,300 S 800,500 1100,450"
               stroke="black"
-              strokeWidth="2"
+              strokeWidth="50"
             />
           </svg>
 
@@ -305,34 +305,60 @@ export default function Page() {
             <div className="md:col-start-1 md:col-span-4 col-start-1 col-span-2">
               <span className="font-mono text-[12px] uppercase tracking-widest text-black/40">01 / Concept</span>
             </div>
-
-            <div className="md:col-start-6 md:col-span-7 col-start-1 col-span-6 overflow-hidden">
+            <div className="md:col-start-1 md:col-span-12 col-start-1 col-span-6 overflow-hidden">
               <TextY>
-                <h1 className="font-[PPNeueMontreal] tracking-tighter font-medium xl:text-[3.5vw] xl:leading-[3.8vw] md:text-[4vw] text-[8vw] leading-[1.1] text-[#1E1E1E]">
-                  Crafting <span className="italic font-serif">premium</span> digital aesthetics and transforming your vision into <span className="text-black/30">real, exceptional</span> visuals.
+                <h1
+                  className="font-[PPNeueMontreal] tracking-tighter font-semibold xl:text-[4.5vw] xl:leading-[4.8vw] md:text-[4vw] text-[8vw] leading-[1.1] text-[#1E1E1E]"
+                  style={{ textIndent: "25%" }} // Responsive indent
+                >
+                  Great digital products begin with clarity of vision.
+                  <span className="italic font-sans text-indigo-400"> We</span> design
+                  experiences that feel simple, intentional, and powerful — turning
+                  <span className="text-orange-500 italic font-sans"> complex ideas into interfaces people naturally</span> visuals.
                 </h1>
               </TextY>
             </div>
           </div>
 
           <div className="grid md:grid-cols-12 grid-cols-6 xl:gap-8 md:gap-6 pt-[8vw] items-end">
+
+
+            <div className="md:col-start-6 col-span-5 md:col-span-3 col-start-2 overflow-hidden aspect-[16/9] relative">
+              <TextY>
+                <p className="text-black/80 font-[PPNeueMontreal] font-medium text-[4vw] xl:text-[1.1vw] leading-[1.02] xl:leading-[1.1] md:mb-6">
+                  We don't just build websites.
+                  <br />
+                  We design digital systems where
+                  design, motion, and technology
+                  work together to create
+                  meaningful user experiences.
+                </p>
+              </TextY>
+            </div>
+
+            <div className="md:col-start-6 col-span-5 col-start-1 md:col-span-3  overflow-hidden aspect-[16/9] relative">
+              <TextY>
+                <p className="text-black/80 font-[PPNeueMontreal] font-medium text-[4vw] xl:text-[1.1vw] leading-[1.02] xl:leading-[1.1] mb-6">
+                  At our studio, every project begins
+                  with understanding.
+                  <br />
+                  We study your brand, your audience,
+                  and your vision — then translate it
+                  into digital experiences that feel
+                  clear, engaging, and memorable.
+                </p>
+              </TextY>
+            </div>
+
             <div className="md:col-start-2 md:col-span-3 col-start-1 col-span-3 mb-[2vw]">
-              <p className="text-black/60 font-[PPNeueMontreal] text-[1.1vw] leading-relaxed mb-6">
+
+              <p className="text-black/60 font-[PPNeueMontreal] text-[4vw] md:text-[1.1vw] leading-tight font-medium mb-6">
                 We dont just build; we compose. Every pixel is a note in a larger symphony of user experience.
               </p>
               <button className="group relative px-6 py-3 border border-black rounded-full overflow-hidden transition-colors hover:text-white">
-                <span className="relative z-10 font-bold uppercase text-[0.8vw]">About Us</span>
+                <span className="relative z-10 font-bold uppercase text-[2.5vw] md:text-[0.8vw]">About Us</span>
                 <div className="absolute inset-0 bg-black translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-expo"></div>
               </button>
-            </div>
-
-            <div className="md:col-start-6 col-span-full md:col-span-7 rounded-2xl overflow-hidden aspect-[16/9] relative">
-              <img
-                ref={bannerImgRef}
-                src={images.mainbanner1.src}
-                className="w-full h-[140%] object-cover absolute top-0"
-                alt="Studio Banner"
-              />
             </div>
           </div>
         </section>
@@ -361,13 +387,13 @@ export default function Page() {
                   Studio Provides
                 </h1>
               </div>
+              
               <TextY>
                 <ul className="xl:text-[1.1vw] pt-[1vw] xl:leading-[1.2vw] tracking-tight md:text-[3vw] md:leading-[3vw] lg:text-[2vw] lg:leading-[2vw] text-[4vw] leading-[4.2vw] dm-mono-medium  text-black/70">
-                  <li>Brand Identity</li>
-                  <li>Brand Strategy</li>
-                  <li>Web Design</li>
-                  <li>Web Dev</li>
-                  <li>Web SEO Friendly</li>
+
+                  {["Brand Identity, Product Design", "UI / UX Design", "Web Development", "Performance Optimization"].map((service, id) => (
+                    <li key={id}>{service}</li>
+                  ))}
 
                 </ul>
               </TextY>
@@ -417,7 +443,7 @@ export default function Page() {
         </section>
 
 
-      </div>
-    </ReactLenis>
+      </div >
+    </ReactLenis >
   )
 }
