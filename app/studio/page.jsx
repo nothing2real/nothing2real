@@ -547,7 +547,7 @@ const Page = () => {
                     <div className="w-full  xl:text-[8vw] text-[11vw] xl:leading-[7vw] mt-[10vw] -rotate-2 font-[PPNeueMontreal] text-white/50 leading-[10vw] uppercase font-bold text-center">
                         <div className="overflow-hidden">
                             <h1 ref={text1Ref} className=" overflow-hidden will-change-transform" style={{ fontStretch: "85%" }}>
-                                We don’t just  chase
+                                We don&apos;t just  chase
                             </h1>
                         </div>
                     </div>
@@ -625,7 +625,7 @@ const Page = () => {
                 {/* What we Do?? */}
                 <section className="w-full min-h-screen px-[5vw] md:px-[2vw] ">
                     <div className="overflow-hidden   mt-[5vw]">
-                        <h1 className="uppercase xl:text-[4vw] text-[8vw] font-bold flex items-center justify-start gap-2 md:items-center md:justify-start font-[PPNeueMontreal] text-white"><span>What we do?</span><img src={images.arrow.src} className="inline-block w-[15%] h-[15%] mix-blend-difference bg-white md:w-[5%] md:h-[5%] border rounded-full p-1 md:p-2 -rotate-135" />
+                        <h1 className="uppercase xl:text-[4vw] text-[8vw] font-bold flex items-center justify-start gap-2 md:items-center md:justify-start font-[PPNeueMontreal] text-white"><span>What we do?</span><img src={images.arrow.src} alt="arrow" className="inline-block w-[15%] h-[15%] mix-blend-difference bg-white md:w-[5%] md:h-[5%] border rounded-full p-1 md:p-2 -rotate-135" />
                         </h1>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-4 space-y-2 mt-[3vw]  items-start">
@@ -643,18 +643,18 @@ const Page = () => {
                     </div>
                 </section>
 
-                <div className="grid md:grid-cols-12 bg-white grid-cols-6 gap-4 md:gap-8 pt-[15vw] md:pt-[5vw] pb-[10vw]">
-                    <h1 className="md:col-start-1 xl:text-[5vw] font-bold tracking-tight md:col-span-6 col-start-1 col-span-6 text-black">Services</h1>
-                    <div className="md:col-start- md:col-span-12 col-start-1 text-white col-span-6">
+                <div className="grid md:grid-cols-12 bg-white grid-cols-6 gap-4 md:gap-8 pt-[15vw] px-[2vw] md:pt-[5vw] pb-[10vw]">
+                    <h1 className="md:col-start-1 xl:text-[5vw] text-[8vw] font-bold tracking-tight md:col-span-6 col-start-1 col-span-6 text-black">Services</h1>
+                    <div className="md:col-start-7 mt-[5vw] md:col-span-6 col-start-1 text-white col-span-6">
 
-                        <ServicesGrid />
+                        <Accordion />
                     </div>
                 </div>
 
                 {/* Why Us?? */}
                 <section className="w-full px-[5vw] md:px-[2vw] h-full ">
                     <div className="overflow-hidden   mt-[5vw]">
-                        <h1 className="uppercase xl:text-[4vw] text-[8vw] font-bold flex items-center justify-start gap-2 md:items-center md:justify-start font-[PPNeueMontreal] text-white"><span>Why Us</span><img src={images.arrow.src} className="inline-block w-[15%] h-[15%] mix-blend-difference bg-white md:w-[5%] md:h-[5%] border rounded-full p-1 md:p-2 -rotate-135" />
+                        <h1 className="uppercase xl:text-[4vw] text-[8vw] font-bold flex items-center justify-start gap-2 md:items-center md:justify-start font-[PPNeueMontreal] text-white"><span>Why Us</span><img src={images.arrow.src} alt="arrow" className="inline-block w-[15%] h-[15%] mix-blend-difference bg-white md:w-[5%] md:h-[5%] border rounded-full p-1 md:p-2 -rotate-135" />
                         </h1>
                     </div>
                     <div className="grid grid-cols-6 md:grid-cols-12 gap-4 space-y-2 mt-[3vw]  items-start">
@@ -665,7 +665,7 @@ const Page = () => {
                         <div className="md:col-start-6 col-start-1 w-full col-span-6 md:col-span-6 ">
                             <TextY>
                                 <p className="text-base tracking-tight sm:text-lg font-[PPNeueMontreal] font-medium pb-[1vw] text-[4vw] leading-[4vw] md:text-[3vw] md:leading-[3vw] lg:text-[2.5vw] lg:leading-[2.5vw] xl:leading-[1.5vw] xl:text-[1.5vw] text-white/80 2xl:text-[1.5vw] 2xl:leading-[1.7vw]   ">
-                                    At our studio, creativity meets precision. We’re a team of passionate developers and designers who believe every digital experience should feel as good as it looks. From crafting seamless UI/UX flows to building powerful full-stack applications, we handle every step with care — design, development, testing, and deployment.
+                                    At our studio, creativity meets precision. We&apos;re a team of passionate developers and designers who believe every digital experience should feel as good as it looks. From crafting seamless UI/UX flows to building powerful full-stack applications, we handle every step with care — design, development, testing, and deployment.
                                 </p>
                             </TextY>
                         </div>

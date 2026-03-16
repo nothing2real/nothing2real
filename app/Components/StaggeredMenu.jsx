@@ -370,7 +370,7 @@ export const StaggeredMenu = ({
 
     return (
         <div
-            className={`sm-scope z-40 ${isFixed ? 'fixed top-0 left-0 w-screen h-screen overflow-hidden' : 'w-full h-full'}`}
+            className={`sm-scope z-10 ${isFixed ? 'fixed top-0 left-0 w-screen h-screen overflow-hidden' : 'w-full h-full'}`}
         >
             <div
                 className={
@@ -382,7 +382,7 @@ export const StaggeredMenu = ({
             >
                 <div
                     ref={preLayersRef}
-                    className="sm-prelayers absolute top-0 right-0 bottom-0 pointer-events-none  z-[0]"
+                    className="sm-prelayers absolute top-0 right-0 bottom-0 pointer-events-none  z-[1]"
                     aria-hidden="true"
                 >
                     {(() => {

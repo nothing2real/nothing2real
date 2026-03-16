@@ -20,8 +20,8 @@ const Navbar = () => {
 
   return (
     // 3. Keep the JSX clean
-    <nav className="fixed top-0 left-0 w-full z-[9]">
-      <div style={{ height: '90vh', pointerEvents: 'none' }}> 
+    <nav className="fixed top-0 left-0 w-full z-[1]">
+      <div style={{  pointerEvents: 'none' }} className='h-[70vh]'> 
         {/* pointerEvents: 'none' ensures the container doesn't block card scrolls, 
             the menu button itself will usually have its own pointer-events: auto */}
         <StaggeredMenu
