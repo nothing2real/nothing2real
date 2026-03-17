@@ -326,7 +326,7 @@ export default function Page() {
             <div className="md:col-start-6 col-span-5 md:col-span-3 col-start-2 overflow-hidden aspect-[16/9] relative">
               <TextY>
                 <p className="text-black/80 font-[PPNeueMontreal] font-medium text-[4vw] xl:text-[1.1vw] leading-[1.02] xl:leading-[1.1] md:mb-6">
-                  We don't just build websites.
+                  We dont just build websites.
                   <br />
                   We design digital systems where
                   design, motion, and technology
@@ -343,7 +343,7 @@ export default function Page() {
                   with understanding.
                   <br />
                   We study your brand, your audience,
-                  and your vision — then translate it
+                  and your vision —— then translate it
                   into digital experiences that feel
                   clear, engaging, and memorable.
                 </p>

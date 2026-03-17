@@ -5,8 +5,9 @@ import gsap from 'gsap';
 
 export default function AppLoader() {
   const loaderRef = useRef(null);
-  const textRef = useRef(null);
-
+  const pathRef = useRef(null);
+  const contentRef = useRef(null);
+  
   const progressRef = useRef(0);
   const rafRef = useRef(null);
 
@@ -17,75 +18,76 @@ export default function AppLoader() {
     let pageLoaded = false;
     let fontsLoaded = false;
 
-    // ---------- LOAD SIGNALS ----------
-    const onWindowLoad = () => {
-      pageLoaded = true;
-    };
+    // Signals
+    const onWindowLoad = () => { pageLoaded = true; };
+    if (document.readyState === 'complete') pageLoaded = true;
+    else window.addEventListener('load', onWindowLoad);
 
-    if (document.readyState === 'complete') {
-      pageLoaded = true;
-    } else {
-      window.addEventListener('load', onWindowLoad);
-    }
-
-    // Fonts loading (VERY IMPORTANT)
     if (document.fonts) {
-      document.fonts.ready.then(() => {
-        fontsLoaded = true;
-      });
+      document.fonts.ready.then(() => { fontsLoaded = true; });
     } else {
       fontsLoaded = true;
     }
 
-    // ---------- RESOURCE TRACKING ----------
-    const getNetworkProgress = () => {
-      const entries = performance.getEntriesByType('resource');
-      const pending = entries.filter(
-        e => !e.responseEnd || e.responseEnd === 0
-      ).length;
-
-      return pending === 0;
-    };
-
-    // Initial text state
-    if (textRef.current) {
-      gsap.set(textRef.current, { backgroundSize: '0% 100%' });
-    }
-
     const update = () => {
-      const networkDone = getNetworkProgress();
-      const fullyLoaded = pageLoaded && fontsLoaded && networkDone;
+      const isSystemReady = pageLoaded && fontsLoaded;
+      
+      // TARGET LOGIC
+      // If system isn't ready, target 90% to leave room for the final snap.
+      // If ready, target 100%.
+      const target = isSystemReady ? 100 : 90;
+      const speed = isSystemReady ? 0.1 : 0.01;
 
-      if (fullyLoaded) {
-        progressRef.current += (100 - progressRef.current) * 0.15;
-      } else {
-        progressRef.current += (90 - progressRef.current) * 0.04;
+      progressRef.current += (target - progressRef.current) * speed;
+
+      // --- THE FIX: HARD SNAP ---
+      // If we are at 99.5% or higher, just finish it.
+      if (isSystemReady && progressRef.current > 99.5) {
+        progressRef.current = 100;
       }
 
-      const value = Math.min(100, Math.round(progressRef.current));
-      setProgress(value);
+      const currentProgress = progressRef.current;
+      const roundedProgress = Math.floor(currentProgress);
+      
+      setProgress(roundedProgress);
 
-      // Sync text reveal
-      if (textRef.current) {
-        gsap.set(textRef.current, {
-          backgroundSize: `${value}% 100%`,
+      // Sync SVG
+      if (pathRef.current) {
+        const length = pathRef.current.getTotalLength();
+        gsap.set(pathRef.current, { 
+          strokeDashoffset: length - (currentProgress / 100) * length 
         });
       }
 
-      if (value >= 100) {
-        gsap.to(loaderRef.current, {
-          opacity: 0,
+      // EXIT TRIGGER
+      if (roundedProgress >= 100) {
+        const tl = gsap.timeline({
+          onComplete: () => setVisible(false)
+        });
+
+        tl.to(contentRef.current, {
           y: -20,
+          opacity: 0,
           duration: 0.6,
-          ease: 'power2.out',
-          onComplete: () => setVisible(false),
-        });
+          ease: "power2.inOut"
+        })
+        .to(loaderRef.current, {
+          clipPath: "inset(0% 0% 100% 0%)",
+          duration: 1,
+          ease: "expo.inOut"
+        }, "-=0.2");
+
         cancelAnimationFrame(rafRef.current);
         return;
       }
 
       rafRef.current = requestAnimationFrame(update);
     };
+
+    if (pathRef.current) {
+      const length = pathRef.current.getTotalLength();
+      gsap.set(pathRef.current, { strokeDasharray: length, strokeDashoffset: length });
+    }
 
     update();
 
@@ -100,31 +102,42 @@ export default function AppLoader() {
   return (
     <div
       ref={loaderRef}
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-black px-[2vw] font-[PPNeueMontreal]"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white overflow-hidden font-[PPNeueMontreal]"
+      style={{ clipPath: "inset(0% 0% 0% 0%)" }}
     >
-      {/* Text */}
-      <div className="relative xl:text-[8vw] text-[13vw] md:text-[10vw] tracking-tighter font-bold mb-6">
-        <span className="block text-[#f0eee9]/50">NOTHINGREAL</span>
-        <span
-          ref={textRef}
-          className="absolute inset-0 block"
-          style={{
-            backgroundImage: 'linear-gradient(#fff, #fff)',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: '0% 100%',
-            WebkitBackgroundClip: 'text',
-            backgroundClip: 'text',
-            color: 'transparent',
-          }}
-        >
-          NOTHINGREAL
-        </span>
-      </div>
+      {/* SVG Wireframe Background */}
+      <svg
+        className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.05]"
+        viewBox="0 0 1000 1000"
+        fill="none"
+        preserveAspectRatio="none"
+      >
+        <path
+          ref={pathRef}
+          d="M-50,400 L 250,400 L 350,200 L 650,200 L 750,500 L 1100,500"
+          stroke="black"
+          strokeWidth="2"
+        />
+        <circle cx="350" cy="200" r="3" fill="black" />
+        <circle cx="650" cy="200" r="3" fill="black" />
+      </svg>
 
-
-      {/* Percentage */}
-      <div className="absolute bottom-5 right-5 font-bold xl:text-[5vw] text-white">
-        {progress}%
+      <div ref={contentRef} className="relative z-10 flex flex-col items-center">
+        <h1 className="text-[10vw] md:text-[6vw] font-bold tracking-tighter text-black uppercase">
+          Nothing2Real
+        </h1>
+        
+        <div className="mt-4 flex items-center gap-4">
+          <div className="w-16 h-[1px] bg-black/10 relative overflow-hidden">
+            <div 
+              className="absolute inset-0 bg-black origin-left"
+              style={{ transform: `scaleX(${progress / 100})` }}
+            />
+          </div>
+          <span className="text-[10px] font-medium tracking-[0.3em] uppercase opacity-50">
+            {progress.toString().padStart(3, '0')}%
+          </span>
+        </div>
       </div>
     </div>
   );
