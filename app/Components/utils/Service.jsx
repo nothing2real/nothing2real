@@ -1,93 +1,164 @@
-import { services } from '@/public/assets/assets'
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import React, { use, useLayoutEffect } from 'react'
+"use client";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const Cards = ({ title, desc, features, img, id }) => {
-    return (
-        <div id={`card-${id + 1}`} className='w-full h-full cards  border-b border-black overflow-hidden p-[2vw] grid md:grid-cols-12 grid-cols-6 gap-4   justify-center bg-indigo-300'>
-            <div className='md:col-start-1 col-start-1 col-span-6 card-inner md:col-span-8 items-end  justufy-between'>
-                <div className='w-full xl:text-[4vw] xl:leading-[3.5vw] lg:text-[5vw] lg:leading-[4.5vw] md:text-[5vw] md:leading-[5.5vw] text-[8vw] leading-[7.5vw] font-[PPNeueMontreal] font-bold text-black uppercase tracking-tighter '>
-                    <h1 className='text-[#1E1E1E]'>{title}</h1>
-                </div>
-                <div className='w-full grid grid-cols-6 gap-4 items-center p-[3vw] justify-between'>
-                    <div className='xl:text-[1.3vw] col-start-1 col-span-4 md:col-start-1 md:col-span-3  xl:leading-[1.5vw] font-[PPNeueMontreal] text-black font-bold'>
-                        {desc}
-                    </div>
-                    <div className='xl:leading-[1vw] col-start-4 text-[3vw] col-span-3 md:col-start-5  border-black p-[2vw] md:col-span-2 md:text-[1vw] xl:text-[1vw] font-mono text-black'>
-
-                        <div>{features}</div>
-
-                    </div>
-                </div>
-            </div>
-            <div className=' md:col-start-10 col-start-3 col-span-4 items-center justify-center mx-auto md:col-span-4 overflow-hidden rounded-sm bg-red-500 '>
-                <img src={img.src} className='w-full h-full object-center object-cover  bg-indigo-400 ' alt="" />
-            </div>
-        </div>
-    )
-}
+import React from "react";
+import { ArrowUpRight } from "lucide-react"; // Optional: npm i lucide-react
 
 const Service = () => {
 
-    useGSAP(() => {
-        const cards = gsap.utils.toArray(".cards");
 
-        // Base style setup
-        gsap.set(cards, {
-            transformOrigin: "center top",
-            scale: 1,
-            y: 0,
-            z: 0.1,
-        });
+  const List = [
+    {
+      id: "01",
+      title: "Brand Identity",
+      description:
+        "Crafting a complete visual identity that defines your brand’s personality, voice, and presence across all platforms.",
+      services: [
+        "Brand Logo",
+        "Colors Patterns",
+        "Brand Typography",
+        "Poster Designs",
+        "Banner Designs",
+      ],
+    },
+    {
+      id: "02",
+      title: "Custom Website",
+      description:
+        "High-performance custom websites built with modern frameworks, advanced animations, and clean, scalable architecture.",
+      services: [
+        "Custom Layouts & Component Library",
+        "GSAP / Framer Animations",
+        "Next.js High-Performance Build",
+        "SEO-ready Structure",
+      ],
+    },
+    {
+      id: "03",
+      title: "Mobile-First Websites",
+      description:
+        "Fully responsive websites designed with a mobile-first approach to ensure a seamless experience on all devices.",
+      services: [
+        "100% Mobile-first layouts",
+        "Adaptive UI for all screen sizes",
+        "High-performance optimization",
+        "Smooth animations across devices",
+      ],
+    },
+    {
+      id: "04",
+      title: "E-commerce",
+      description:
+        "Powerful e-commerce platforms designed to maximize conversions with intuitive UX, fast performance, and secure transactions.",
+      services: [
+        "Product pages & category UI",
+        "Cart, Checkout, Secure Payments",
+        "Admin Dashboard",
+        "Search, Filters, Recommendations",
+        "Conversion-optimized layouts",
+      ],
+    },
+    {
+      id: "05",
+      title: "UI / UX Design",
+      description:
+        "User-centered design process that transforms ideas into beautiful, intuitive, and high-fidelity digital experiences.",
+      services: [
+        "Logo, Mockups, Colors, Typography",
+        "Wireframes & User Flows",
+        "High-fidelity Screens",
+        "Interactive Prototypes",
+        "Design System",
+      ],
+    },
+    {
+      id: "06",
+      title: "Website Maintenance & Optimization",
+      description:
+        "Keeping your website fast, secure, updated, and error-free with continuous improvements and performance monitoring.",
+      services: [
+        "Speed Optimization",
+        "Security Enhancements",
+        "Bug Fixes & Cleanup",
+        "SEO & Performance Updates",
+      ],
+    },
+  ];
 
-        cards.forEach((card, i) => {
-            const next = cards[i + 1];
-            const isLast = i === cards.length - 1;
+  return (
+    <div className="w-full font-[PPNeueMontreal] min-h-screen bg-white text-white selection:bg-[#5227FF]">
+      <section className="max-w-[1400px] mx-auto py-[15vh] px-[5vw]">
 
-            // Pin each card
-            ScrollTrigger.create({
-                trigger: card,
-                start: "top top",
-                end: "bottom top",
-                pin: true,
-                pinSpacing: false,
-                scrub: 1,
-            });
-
-            // Animate the previous card upward as next card enters
-            if (!isLast) {
-                ScrollTrigger.create({
-                    trigger: next,
-                    start: "top 85%",   // smoother entry
-                    end: "top 40%",     // better overlap zone
-                    scrub: 1,
-                    onUpdate: (self) => {
-                        gsap.to(card, {
-                            y: 120 * self.progress,   // smooth rise
-                            scale: 1 - self.progress * 0.03, // subtle depth feel
-                            ease: "power3.out",
-                            overwrite: "auto",
-                        });
-                    }
-                });
-            }
-        });
-    });
-
-
-
-
-    return (
-        <div className='w-full min-h-screen bg-white '>
-            {services.map((item, id) => (
-                <Cards id={id} {...item} key={id} />
-            ))}
+        {/* Header Section */}
+        <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-8">
+          <div className="max-w-2xl">
+            <span className="text-xs uppercase tracking-[0.3em] text-black/40 mb-4 block font-medium">
+              Capabilities
+            </span>
+            <h1 className="text-[10vw] md:text-[6vw] font-medium text-black leading-[0.9] tracking-tighter">
+              Services We <br />
+              <span className="italic font-light text-black/50">Offer</span>
+              <span className="text-[#5227FF]">.</span>
+            </h1>
+          </div>
+          <p className="text-black/40 max-w-[300px] text-sm md:text-base leading-relaxed mb-4">
+            We blend aesthetic excellence with technical precision to build the next generation of digital products.
+          </p>
         </div>
-    )
-}
+
+        {/* Cards Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {List.map((item, index) => (
+            <div
+              key={item.id}
+              className={`group relative h-[65vh] md:h-[50vh] flex flex-col transition-all duration-700 ease-out 
+                ${index % 2 !== 0 ? "md:translate-y-12" : ""}`} // Asymmetric Offset
+            >
+              <div className="relative w-full h-full bg-white border border-black/5 flex flex-col justify-between p-8 overflow-hidden hover:border-white/20 transition-colors duration-500">
+
+                {/* Background Number Reveal */}
+                <div className="absolute -bottom-10 -right-4 text-[15vw] font-bold text-black/[0.02] pointer-events-none group-hover:text-[#5227FF]/[0.05] transition-colors duration-700">
+                  {item.id}
+                </div>
+
+                {/* Top: ID & Icon */}
+                <div className="flex justify-between items-start">
+                  <span className="font-mono text-sm text-[#5227FF]">{item.id} /</span>
+                  <div className="p-2 border border-black/10 rounded-full opacity-0 group-hover:opacity-100 -translate-y-2 group-hover:translate-y-0 transition-all duration-500">
+                    <ArrowUpRight size={20} />
+                  </div>
+                </div>
+
+                {/* Middle: Title & Description */}
+                <div className="relative z-10">
+                  <h2 className="text-[8vw] md:text-[2vw] font-medium text-black leading-tight mb-6">
+                    {item.title.split(" ").map((word, i) => (
+                      <span key={i} className="block">{word}</span>
+                    ))}
+                  </h2>
+
+                </div>
+
+                {/* Bottom: Tags */}
+                <div className="relative z-10 flex flex-wrap gap-2 pt-6 border-t border-black/5">
+                  {item.services.map((service, i) => (
+                    <span
+                      key={i}
+                      className="text-[10px] uppercase tracking-widest px-3 py-1 bg-black/5 rounded-full text-black/60 group-hover:bg-white group-hover:text-black transition-all duration-300"
+                    >
+                      {service}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Subtle Progress Hover Effect */}
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-[#5227FF] scale-x-0 group-hover:scale-x-100 transition-transform duration-700 origin-left" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+};
 
 export default Service;

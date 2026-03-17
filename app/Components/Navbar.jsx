@@ -9,19 +9,20 @@ const Navbar = () => {
     { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
     { label: 'studio', ariaLabel: 'Learn about us', link: '/studio' },
     { label: 'Process', ariaLabel: 'View our services', link: '/process' },
+    { label: 'Projects', ariaLabel: 'View our projects', link: '/project' },
     { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
   ];
 
   const socialItems = [
     { label: 'Twitter', link: 'https://twitter.com' },
     { label: 'GitHub', link: 'https://github.com' },
-    { label: 'LinkedIn', link: 'https://linkedin.com' }
+    { label: 'LinkedIn', link: 'https://linkedin.com' } 
   ];
 
   return (
     // 3. Keep the JSX clean
-    <nav className="fixed top-0 left-0 w-full z-[1]">
-      <div style={{  pointerEvents: 'none' }} className='h-[70vh]'> 
+    <nav className="fixed top-0 left-0 w-full z-[10]">
+      <div style={{  pointerEvents: 'none' }} className='h-[60svh] '> 
         {/* pointerEvents: 'none' ensures the container doesn't block card scrolls, 
             the menu button itself will usually have its own pointer-events: auto */}
         <StaggeredMenu

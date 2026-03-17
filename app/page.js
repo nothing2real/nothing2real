@@ -9,7 +9,7 @@ import { SplitText } from "gsap/SplitText"
 import Footer from "./Components/Footer"
 import TextY from "./Components/TextY"
 import { ArrowRight } from "lucide-react"
-import Accordion from "./Components/utils/Accordion"
+import Hero from "./Components/Hero"
 import Service from "./Components/utils/Service"
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText)
@@ -47,51 +47,6 @@ export default function Page() {
 
 
 
-
-    const intro = introRef.current;
-    const arrow1 = arrow1Ref.current;
-
-    const intro2 = introRef2.current;
-    const arrow2 = arrow2Ref.current;
-
-    gsap.set(arrow1, { transformOrigin: "50% 50%", willChange: "transform" });
-    gsap.set(arrow2, { transformOrigin: "50% 50%", willChange: "transform" });
-
-    intro.onmouseenter = () => {
-      gsap.to(arrow1, {
-        rotate: 0,
-        duration: 1.1,
-        ease: "power4.inOut",
-        force3D: true,
-      });
-    };
-
-    intro.onmouseleave = () => {
-      gsap.to(arrow1, {
-        rotate: -135,
-        duration: 0.8,
-        ease: "power4.inOut",
-        force3D: true,
-      });
-    };
-
-    intro2.onmouseenter = () => {
-      gsap.to(arrow2, {
-        rotate: 0,
-        duration: 1.1,
-        ease: "power4.inOut",
-        force3D: true,
-      });
-    };
-
-    intro2.onmouseleave = () => {
-      gsap.to(arrow2, {
-        rotate: -135,
-        duration: 0.8,
-        ease: "power4.inOut",
-        force3D: true,
-      });
-    };
   });
 
 
@@ -110,6 +65,8 @@ export default function Page() {
       wordsClass: "word++",
       charsClass: "char++"
     })
+
+
 
     gsap.set(".char", { y: 200, force3D: true });
     gsap.to(splitNum.chars, {
@@ -178,27 +135,9 @@ export default function Page() {
 
     });
 
-    // 1. SVG Drawing Animation
-    const path = pathRef.current;
-    const pathLength = path.getTotalLength();
 
-    // Set initial state of path (hidden)
-    gsap.set(path, {
-      strokeDasharray: pathLength,
-      strokeDashoffset: pathLength,
-      opacity: 1
-    });
 
-    gsap.to(path, {
-      strokeDashoffset: 0,
-      ease: "none",
-      scrollTrigger: {
-        trigger: section2.current,
-        start: "top 80%",
-        end: "bottom 70%",
-        scrub: 1,
-      }
-    });
+
 
     // 2. Parallax effect for the image
     gsap.to(bannerImgRef.current, {
@@ -214,210 +153,109 @@ export default function Page() {
   return (
     <ReactLenis root>
       <div ref={mainRef} className="w-full overflow-hidden min-h-screen main  bg-[#16181B] text-white">
-        <section ref={section1} className="w-full lg:h-screen xl:h-screen relative font-[PPNeueMontreal]  md:px-[2vw] bg-white px-[5vw]">
-          {/* Hero Text */}
-          <div className="overflow-hidden w-full h-full grid grid-cols-6 md:grid-cols-12  gap-4 md:gap-6 xl:gap-8 pt-[20vw] md:pt-[10vw] xl:pt-[5vw] ">
-            <div className="grid md:grid-cols-12 md:gap-8 gap-4 grid-cols-6 col-start-1 col-span-6 md:col-span-12 border-b border-black/60">
-              <div className="border-wrapper col-start-1 md:col-start-1 col-span-4 md:col-span-7 tracking-tighter lg:col-start-1 lg:col-span-4 xl:col-span-4 flex flex-col text-black overflow-hidden">
-                {/* Hero Text */}
-                <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw]  font-[PPNeueMontreal] tracking-tighter font-bold lg:text-[3vw] 2xl:leading-[3vw] lg:leading-[3vw] md:text-[5vw] text-[6vw] leading-[6vw] md:leading-[5vw] ">
-                  <h1 className="textH ">
-                    Every Innovation
-                  </h1>
-                </div>
-                <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw] xl:-mt-[1vw] font-[PPNeueMontreal] tracking-tighter font-bold lg:text-[3vw] 2xl:leading-[4vw] lg:leading-[3vw] md:text-[5vw] text-[6vw] leading-[6vw] md:leading-[5vw] ">
-                  <h1 className="textH">
-                    Deserves Thoughtful
-                  </h1>
-                </div>
-                <div className="overflow-hidden xl:text-[3vw] xl:leading-[3vw] 2xl:text-[3vw] xl:-mt-[1vw] font-[PPNeueMontreal] tracking-tighter font-bold lg:text-[3vw] 2xl:leading-[3vw] lg:leading-[3vw] md:text-[5vw] text-[6vw] leading-[6vw] md:leading-[5vw] ">
-                  <h1 className="textH">
-                    Developers
-                  </h1>
-                </div>
-              </div>
-
-              <div className="w-full h-full justify-end items-end pt-[5vw] md:mt-0 lg:pt-[8vw] xl:pt-[8vw] text-black/40 col-start-1 lg:col-start-5 lg:col-span-3 md:col-start-4 md:col-span-4 xl:col-start-6  col-span-3 xl:col-span-3">
-                <div className="overflow-hidden">
-                  <p className="textH xl:text-[5vw] text-[7vw] tracking-tighter leading-[7vw] xl:leading-[4.5vw]  md:pt-0 xl:pt-[9vw] lg:pt-[16vw] lg:text-[5vw] font-[PPNeueMontreal] font-bold lg:leading-[5.5vw]">
-                    2025©
-                  </p>
-                </div>
-              </div>
-              <div className="w-full md:col-start-8 xl:col-start-9 col-start-3 mix-blend-normal md:col-span-5 xl:col-span-4 col-span-4 overflow-hidden  h-full">
-                <img
-                  className="w-full h-full object-center object-cover overflow-hidden"
-                  src={images.studioipad.src}  // image path
-                  alt="description"
-                  width={500}             // required
-                  height={500}            // required
-                  loading="lazy"
-                />
-
-              </div>
-              <div className="w-full col-start-1 lg:pt-[8vw] font-[PPNeueMontreal] xl:pt-0 overflow-hidden text-black/70 pt-[2vw] col-span-4 md:col-span-5 xl:col-span-3">
-                <TextY>
-                  <p className="xl:text-[1vw] lg:text-[2vw] font-semibold lg:leading-[2vw]  xl:leading-[1.1vw] text-[4vw] leading-[4vw] ">
-                    We turn your <span className="text-black">“NOTHING”</span>  complexity vision
-                    into <span className="text-black">“REAL”</span> revolutionary ideas feels inevitable
-                  </p>
-                </TextY>
-              </div>
-              <div className="w-full col-start-3 md:col-start-8 font-[PPNeueMontreal] xl:pt-0 lg:pt-[8vw] xl:col-start-6 overflow-hidden text-black/70 pt-[2vw] col-span-4 md:col-span-5 xl:col-span-3">
-                <TextY>
-                  <p className="xl:text-[1vw] lg:text-[2vw] font-semibold lg:leading-[2vw] xl:leading-[1.1vw] text-[4vw] leading-[4vw] ">
-                    Crafting intuitive, human-focused interfaces — from pixels to backend logic
-                  </p>
-                </TextY>
-              </div>
-              <div className="w-full col-start-3 md:col-start-5 xl:col-start-11 lg:pt-[8vw] xl:pt-0 text-black/70 pt-[2vw] overflow-hidden col-span-4 md:col-span-4 xl:col-span-2">
-                <TextY>
-                  <h1 className="xl:text-[2.2vw] text-[8.5vw]  font-[PPNeueMontreal] tracking-tighter font-bold justify-start ">Asthetic</h1>
-                </TextY>
-              </div>
-            </div>
-            <div className="w-full col-start-2  lg:col-start-5 lg:col-span-7 md:col-start-3 xl:col-start-6 text-black relative col-span-4 md:col-span-6">
-              <h1 className="xl:text-[11.2vw] tracking-tighter  lg:text-[11vw] md:text-[14vw] text-[13.5vw] tracking-tight font-[PPNeueMontreal] font-bold ">Elegance*</h1>
-              <h1 className="xl:text-[2.2vw] text-[4vw] lg:text-[4vw] absolute bottom-0 right-0 font-[PPNeueMontreal] font-bold ">Speaks</h1>
-            </div>
-          </div>
+        <section ref={section1} className="relative w-full min-h-screen bg-[#1A1A1A] text-white flex flex-col justify-between z-0 overflow-hidden">
+          <Hero />
         </section>
 
+        
 
-        <section ref={section2} className="w-full relative py-[10vw] md:px-[2vw] px-[5vw] bg-white overflow-hidden">
 
-          {/* BACKGROUND SVG PATH - The "Awwwards" touch */}
-          <svg
-            className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20"
-            viewBox="0 0 1000 1000"
-            fill="none"
-            preserveAspectRatio="none"
-          >
-            <path
-              ref={pathRef}
-              d="M-50,100 C 200,150 400,50 600,300 S 800,500 1100,450"
-              stroke="black"
-              strokeWidth="50"
-            />
-          </svg>
+
+        <section className="w-full relative py-[1vw] md:px-[2vw] px-[5vw] bg-white overflow-hidden">
+
 
           <div className="grid md:grid-cols-12 grid-cols-6 border-t border-black/10 relative pt-[5vw] gap-4">
             <div className="md:col-start-1 md:col-span-4 col-start-1 col-span-2">
-              <span className="font-mono text-[12px] uppercase tracking-widest text-black/40">01 / Concept</span>
+              <span className="font-mono text-[12px] uppercase tracking-widest text-black/40">02 / About Nothing2Real</span>
             </div>
             <div className="md:col-start-1 md:col-span-12 col-start-1 col-span-6 overflow-hidden">
               <TextY>
                 <h1
                   className="font-[PPNeueMontreal] tracking-tighter font-semibold xl:text-[4.5vw] xl:leading-[4.5vw]  md:text-[4vw] text-[8vw] leading-[1.1] text-[#1E1E1E]"
-                  style={{ textIndent: "25%" }} // Responsive indent
+                  style={{ textIndent: "25%" }}
                 >
-                  Great digital products begin with clarity of vision.
-                  <span className="italic font-sans text-indigo-400"> We</span> design
-                  experiences that feel simple, intentional, and powerful — turning
-                  <span className="text-orange-500 italic font-sans"> complex ideas into interfaces people naturally</span> visuals.
+                  We are <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFA500] to-[#5227FF]">Nothing2Real Studios</span> — where imagination becomes reality
                 </h1>
               </TextY>
             </div>
           </div>
 
           <div className="grid md:grid-cols-12 grid-cols-6 xl:gap-8 md:gap-6 pt-[8vw] items-end">
-
-
             <div className="md:col-start-6 col-span-5 md:col-span-3 col-start-2 overflow-hidden aspect-[16/9] relative">
               <TextY>
                 <p className="text-black/80 font-[PPNeueMontreal] font-medium text-[4vw] xl:text-[1.1vw] leading-[1.02] xl:leading-[1.1] md:mb-6">
-                  We dont just build websites.
-                  <br />
-                  We design digital systems where
-                  design, motion, and technology
-                  work together to create
-                  meaningful user experiences.
+                  Founded on the belief that every idea deserves to be brought to life, Nothing2Real Studios specializes in transforming concepts into extraordinary digital experiences that captivate and inspire.
                 </p>
               </TextY>
             </div>
 
-            <div className="md:col-start-6 col-span-5 col-start-1 md:col-span-3  overflow-hidden aspect-[16/9] relative">
+            <div className="md:col-start-9 col-span-5 col-start-1 md:col-span-3  overflow-hidden aspect-[16/9] relative">
               <TextY>
                 <p className="text-black/80 font-[PPNeueMontreal] font-medium text-[4vw] xl:text-[1.1vw] leading-[1.02] xl:leading-[1.1] mb-6">
-                  At our studio, every project begins
-                  with understanding.
-                  <br />
-                  We study your brand, your audience,
-                  and your vision —— then translate it
-                  into digital experiences that feel
-                  clear, engaging, and memorable.
+                  Our team of visionary creators, strategic thinkers, and technical experts work in perfect harmony to deliver solutions that not only meet expectations but exceed them.
                 </p>
               </TextY>
             </div>
 
-            <div className="md:col-start-2 md:col-span-3 col-start-1 col-span-3 mb-[2vw]">
-
-              <p className="text-black/60 font-[PPNeueMontreal] text-[4vw] md:text-[1.1vw] leading-tight font-medium mb-6">
-                We dont just build; we compose. Every pixel is a note in a larger symphony of user experience.
-              </p>
-              <button className="group relative px-6 py-3 border border-black rounded-full overflow-hidden transition-colors hover:text-white">
-                <span className="relative z-10 font-bold uppercase text-[2.5vw] md:text-[0.8vw]">About Us</span>
-                <div className="absolute inset-0 bg-black translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-expo"></div>
-              </button>
-            </div>
-          </div>
-        </section>
-
-
-
-        <section className="w-full lg:min-h-screen xl:min-h-screen  bg-white px-[5vw] md:px-[2vw]  ">
-
-          <div ref={introRef} className="overflow-hidden pt-[20vw] md:pt-[8vw] lg:pt-[15vw] xl:pt-[5vw]">
-            <h1 className="uppercase xl:text-[5vw] text-[8vw] font-bold flex items-center justify-start gap-2 md:items-center md:justify-start font-[PPNeueMontreal] text-black"><span>Intro</span><img ref={arrow1Ref} src={images.arrow.src} className="inline-block w-[15%] h-[15%] md:w-[5%] md:h-[5%] border rounded-full p-1 md:p-2 -rotate-135" /></h1>
-          </div>
-          <div className="grid grid-cols-6 md:grid-cols-12 gap-4 md:gap-5 lg:gap-6 xl:gap-8 ">
-            <div className="md:col-start-1 md:col-span-2 xl:col-start-1 xl:col-span-2 lg:col-start-1 lg:col-span-2 col-start-5 col-span-2 overflow-hidden pt-[5vw]">
-              <img src={images.feviconico.src} className="w-full h-full object-center object-cover" />
-            </div>
-            <div className="md:col-start-4  xl:col-start-4 xl:col-span-4 lg:col-start-4 lg:col-span-6 col-start-1 col-span-5 md:col-span-4 overflow-hidden pt-[5vw]">
+            <div className="md:col-start-6 col-span-5 col-start-1 md:col-span-6  overflow-hidden aspect-[16/9] relative">
               <TextY>
-                <p className="xl:text-[1.2vw] xl:leading-tight lg:text-[2.5vw] md:text-[2vw] md:leading-[2.5vw] font-[PPNeueMontreal] font-semibold lg:leading-[2.5vw] text-[4vw] leading-[4.5vw]  w-full    text-black/70">
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  At our approach, we transform ideas into powerful digital experiences. Whether we build your website from the ground up or elevate your existing design, every decision we make is intentional
+                <p className="text-black/80 font-[PPNeueMontreal] font-semibold text-[4vw] xl:text-[2.1vw] xl:leading-[2vw] leading-[1.02]  mb-6">
+                  From cutting-edge web development to immersive brand experiences, we craft digital solutions that tell your story, engage your audience, and drive meaningful results for your business.
                 </p>
               </TextY>
             </div>
-            <div className="md:col-start-9 lg:col-start-7 xl:col-start-11 xl:col-span-2 md:col-span-4 lg:col-span-4 col-start-4 col-span-3 overflow-hidden pt-[5vw]">
-              <div className="border-b border-gray-600/80 pb-1 ">
-                <h1 className="font-mono tracking-tight xl:text-[1.5vw] text-black">
-                  Studio Provides
-                </h1>
+          </div>
+
+          {/* Enhanced Services & Stats Sidebar */}
+          <div className="grid md:grid-cols-12 grid-cols-6 gap-4 md:gap-6  border-t border-black/5">
+            <div className="md:col-start-1 md:col-span-3 col-start-1 col-span-3">
+              <div className="border-b border-gray-600/80 pb-2 mb-4">
+                <h3 className="font-mono tracking-tight xl:text-[1.2vw] text-black font-semibold">
+                  Our Expertise
+                </h3>
               </div>
-
               <TextY>
-                <ul className="xl:text-[1.1vw] pt-[1vw] xl:leading-[1.2vw] tracking-tight md:text-[3vw] md:leading-[3vw] lg:text-[2vw] lg:leading-[2vw] text-[4vw] leading-[4.2vw] dm-mono-medium  text-black/70">
-
-                  {["Brand Identity, Product Design", "UI / UX Design", "Web Development", "Performance Optimization"].map((service, id) => (
-                    <li key={id}>{service}</li>
+                <ul className="xl:text-[1vw] pt-[0.5vw] xl:leading-[0.9vw] tracking-tight md:text-[2.5vw] md:leading-[2.2vw] lg:text-[1.8vw] lg:leading-[2.2vw] text-[3.5vw] leading-[4vw] text-black/70 space-y-2">
+                  {["Brand Strategy & Identity", "Digital Product Design", "Full-Stack Development", "Motion Graphics & 3D", "Performance Optimization", "Creative Direction"].map((service, id) => (
+                    <li key={id} className="flex items-center gap-3">
+                      <div className="w-2 h-2 bg-black rounded-full"></div>
+                      {service}
+                    </li>
                   ))}
+                </ul>
+              </TextY>
+            </div>
 
-                </ul>
-              </TextY>
+            <div className="md:col-start-5 md:col-span-4 col-start-4 col-span-3">
               <TextY>
-                <ul className="xl:text-[1.2vw] mt-[1vw] xl:leading-[1.3vw] tracking-tight md:text-[3vw] md:leading-[3vw] lg:text-[2vw] lg:leading-[2vw] text-[11vw] font-mono font-bold text-black/70">
-                  <h1>
-                    2025©
-                  </h1>
-                </ul>
-              </TextY>
-            </div>
-            <div className="md:col-start-1 hidden lg:hidden md:pt-0 pt-[25vw] xl:block md:hidden lg:col-start-1 lg:col-span-2 col-start-1 col-span-2 items-start justify-start overflow-hidden ">
-              <h1 className="xl:text-[4vw] text-[7vw] md:text-[4vw] lg:text-[4vw] text2025 text-start font-[Helvetica] text-black font-bold">2025©</h1>
-            </div>
-            <div className="md:col-start-9 xl:col-start-6  xl:col-span-8 lg:col-start-7 lg:col-span-6 col-start-2 col-span-5 overflow-hidden pt-[5vw]">
-              <TextY>
-                <p className="xl:text-[2vw]  lg:text-[2.5vw] md:text-[2vw] md:leading-[2.5vw] lg:leading-[2.5vw] xl:leading-[2vw] text-[5vw] leading-[5.5vw] font-[PPNeueMontreal] tracking-tighter font-bold  text-black/70">
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; crafted to delight, engage, and convert your audience. We design not just for today, but for long-term impact, helping your brand attract more clients and create meaningful results.
+                <p className="text-black/70 font-[PPNeueMontreal] font-medium xl:text-[1.3vw] md:text-[2.2vw] text-[3.8vw] leading-tight mb-6">
+                  Nothing2Real Studios was born from a simple philosophy: turn the impossible into possible. We bridge the gap between creative vision and technical execution, delivering work that stands out in an increasingly digital world.
                 </p>
               </TextY>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center p-4 bg-gradient-to-br from-[#FFA500]/5 to-[#5227FF]/5 rounded-lg">
+                  <div className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFA500] to-[#5227FF]">50+</div>
+                  <div className="text-xs font-mono text-black/60 uppercase tracking-wider">Projects</div>
+                </div>
+                <div className="text-center p-4 bg-gradient-to-br from-[#5227FF]/5 to-[#FFA500]/5 rounded-lg">
+                  <div className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#5227FF] to-[#FFA500]">5+</div>
+                  <div className="text-xs font-mono text-black/60 uppercase tracking-wider">Years</div>
+                </div>
+              </div>
             </div>
 
-            <div className="md:col-start-1 md:col-span-4 hidden md:block lg:block xl:hidden lg:col-start-1 lg:col-span-2 col-start-1 col-span-2 items-start justify-start overflow-hidden pt-[5vw]">
-              <h1 className="xl:text-[4vw] text-[7vw] md:text-[7vw] lg:text-[4vw] overflow-hidden text2025 text-start font-[Helvetica] text-black/70 font-bold">2025©</h1>
+            <div className="md:col-start-10 md:col-span-3 col-start-1 col-span-6 md:col-span-3 flex justify-center md:justify-end">
+              <div className="text-center md:text-right">
+                <div className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFA500] to-[#5227FF] mb-2">
+                  2025
+                </div>
+                <div className="text-sm font-mono text-black/50 uppercase tracking-wider mb-4">
+                  © Nothing2Real Studios
+                </div>
+                <div className="text-xs text-black/40 font-[PPNeueMontreal] italic">
+                  Where ideas become reality
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -426,17 +264,11 @@ export default function Page() {
 
 
 
-        <section className="min-h-screen w-full md:px-[2vw] px-[5vw]  bg-white">
-          <div ref={introRef2} className="overflow-hidden  md:pt-[10vw] pt-[20vw] py-[2vw]  w-full">
-            <h1 className="uppercase xl:text-[4vw] text-[8vw] font-bold flex items-center justify-start gap-2 md:items-center md:justify-start font-[PPNeueMontreal] text-black"><span>Services</span><img ref={arrow2Ref} src={images.arrow.src} className="inline-block w-[15%] h-[15%] md:w-[5%] md:h-[5%] border rounded-full p-1 md:p-2 -rotate-135" />
-            </h1>
-          </div>
-          <div className="grid md:grid-cols-12 grid-cols-6 gap-4 md:gap-8 pt-[15vw] md:pt-[5vw] pb-[10vw]">
-            <div className=" md:col-span-12  col-start-1 col-span-6">
-              <Service />
-            </div>
-          </div>
+        <section className="min-h-screen w-full   bg-white">
+
+          <Service />
         </section>
+        
 
         <section className="w-full  bg-white h-full">
           <Footer />

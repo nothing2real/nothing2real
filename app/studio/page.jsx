@@ -30,6 +30,8 @@ const Page = () => {
     const text4Ref = useRef(null)
     const team2Ref = useRef(null)
     const team1Ref = useRef(null)
+    const section1Ref = useRef(null)
+    const section2Ref = useRef(null)
 
     useGSAP(() => {
 
@@ -373,6 +375,26 @@ const Page = () => {
         });
     }, { scope: container });
 
+    useGSAP(() => {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: section1Ref.current,
+                start: "top top",
+                end: "bottom top",
+                scrub: true,
+                pin: true,
+                pinSpacing: false,
+            }
+        });
+
+        tl.fromTo(section2Ref.current, {
+            y: 0
+        }, {
+            y: "-100vh",
+            ease: "none"
+        });
+    });
+
     useEffect(() => {
         document.fonts.ready.then(() => {
         });
@@ -384,12 +406,10 @@ const Page = () => {
         <ReactLenis root>
             {/* Full Page Section */}
             <div className="bg-[#16181B] text-white w-full min-h-screen   mx-auto overflow-hidden">
-                <section className="relative w-full min-h-screen bg-[#1A1A1A] text-white flex flex-col justify-between z-0 overflow-hidden">
+                <section ref={section1Ref} className="relative w-full min-h-screen bg-[#1A1A1A] text-white flex flex-col justify-between z-0 overflow-hidden">
 
                     {/* 1. CINEMATIC BACKGROUND ASSET */}
                     <div className="absolute inset-0 z-0">
-                        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-[#0A0A0A] z-1" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0A0A] via-transparent to-[#0A0A0A] z-1 opacity-40" />
 
                         {/* Main Asset with Scale-on-Scroll Trigger */}
                         <img
@@ -406,15 +426,12 @@ const Page = () => {
                             Real
                         </h1>
                     </div>
-
-
-                    {/* 3. MAIN TITULAR CONTENT */}
                     <div className="relative z-20 px-[5vw] flex-grow flex flex-col justify-end pb-[5vw]">
                         <div className="grid md:grid-cols-12 gap-8 items-end">
 
                             {/* Left: Service List */}
-                            <div className="md:col-span-3 hidden md:block border-l border-white/20 pl-4 mb-4">
-                                <ul className="font-mono text-[10px] uppercase leading-relaxed text-white/40">
+                            <div className="md:col-span-3 hidden md:block border-l mt-[10vw] border-white/20 pl-4 mb-4">
+                                <ul className="font-semibold text-[10px]  leading-tight text-white">
                                     <li>Product Design</li>
                                     <li>Content Strategy</li>
                                     <li>Brand Identity</li>
@@ -423,36 +440,51 @@ const Page = () => {
                             </div>
 
                             {/* Center: Hero Headline */}
-                            <div className="md:col-span-6 col-span-12">
-                                <TextY>
-                                    <h1 className="text-[14vw] md:text-[8vw] leading-[0.85] font-[PPNeueMontreal] font-semibold tracking-tighter">
+
+                        </div>
+                    </div>
+
+                    {/* 3. MAIN TITULAR CONTENT */}
+                    <div className="relative z-20 px-[5vw] flex-grow flex flex-col font-[PPNeueMontreal] justify-end pb-[5vw]">
+                        <div className="grid md:grid-cols-12 gap-8 items-end">
+
+
+
+                            {/* Center: Hero Headline */}
+                            <div className="md:col-span-8 col-span-12">
+                                <div className="overflow-hidden">
+                                    <h1 className="text-[14vw] textH md:text-[8vw] leading-[0.85] font-[PPNeueMontreal] font-semibold tracking-tighter">
                                         Creative studio <br />
                                         <span className="italic font-light opacity-80">for founders</span>
                                     </h1>
+                                </div>
+
+                            </div>
+                            <div className="md:col-span-3 md:col-start-5 col-span-8 col-start-2 flex flex-col gap-6">
+                                <TextY>
+                                    <p className="xl:text-[1.2vw] font-medium leading-tight text-[4vw]">we turn your Nothing complexity vision into Real revolutionary ideas feels inevitable</p>
                                 </TextY>
                             </div>
 
                             {/* Right: Sub-text & CTA */}
-                            <div className="md:col-span-3 col-span-12 flex flex-col gap-6">
-                                <p className="font-[PPNeueMontreal] text-[4.5vw] md:text-[1.1vw] leading-tight text-white/60">
-                                    We partner with brands to create digital design that drives conversion and commands attention.
-                                </p>
-                                <div className="flex items-center gap-4">
-                                    <button className="bg-[#FF4D00] text-white px-8 py-4 rounded-full text-[12px] font-bold uppercase tracking-widest hover:scale-105 transition-transform">
-                                        Start Project
-                                    </button>
-                                    <div className="w-12 h-12 border border-white/10 rounded-full flex items-center justify-center">
-                                        <svg width="12" height="12" viewBox="0 0 15 15" fill="none" className="-rotate-45">
-                                            <path d="M7.5 2V13M7.5 13L12 8.5M7.5 13L3 8.5" stroke="currentColor" />
-                                        </svg>
-                                    </div>
+                            <div className="md:col-span-3 md:col-start-9 col-span-10 col-start-2 flex flex-col gap-6">
+                                <div className="overflow-hidden">
+                                    <p className="font-[PPNeueMontreal] textH text-[11.5vw] md:text-[5.1vw] font-bold leading-tight text-white tracking-tighter">
+                                        Elegance*
+                                    </p>
+                                </div>
+                                <div className="flex items-center font-medium leading-tight  gap-4">
+                                    <p>
+                                        We partner with brands to create digital design that drives conversion and commands attention.
+                                    </p>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </section>
 
-                <section className="relative w-full min-h-screen bg-white text-black pt-[25vw] md:pt-[15vw] pb-[10vw] px-[5vw] md:px-[2vw] overflow-hidden">
+                <section ref={section2Ref} className="absolute top-full left-0 w-full min-h-screen bg-white text-black pt-[25vw] md:pt-[15vw] pb-[10vw] px-[5vw] md:px-[2vw] overflow-hidden z-10">
 
                     {/* SECTION HEADER: The Bold Statement */}
                     <div className="w-full border-b border-black/10 pb-[5vw] mb-[10vw]">
@@ -541,7 +573,8 @@ const Page = () => {
                     </div>
                 </section>
 
-
+                {/* Spacer for overlay effect */}
+                <div className="w-full min-h-screen"></div>
 
                 <section className="w-full h-screen  flex flex-col items-center justify-center ">
                     <div className="w-full  xl:text-[8vw] text-[11vw] xl:leading-[7vw] mt-[10vw] -rotate-2 font-[PPNeueMontreal] text-white/50 leading-[10vw] uppercase font-bold text-center">

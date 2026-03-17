@@ -10,7 +10,7 @@ export const StaggeredMenu = ({
     socialItems = [],
     displaySocials = true,
     displayItemNumbering = true,
-    className,
+    className="",
     logoUrl = '/src/assets/logos/reactbits-gh-white.svg',
     menuButtonColor = '#252525',
     openMenuButtonColor = '#252525',
@@ -403,7 +403,7 @@ export const StaggeredMenu = ({
                 </div>
 
                 <header
-                    className="staggered-menu-header absolute top-0 left-0 w-full flex items-center justify-between p-[2em] bg-transparent pointer-events-none z-20"
+                    className="staggered-menu-header absolute top-0 left-0 w-full flex items-center justify-between p-[0.5em] bg-transparent pointer-events-none z-20"
                     aria-label="Main navigation header"
                 >
                     <div className="sm-logo flex items-center select-none pointer-events-auto" aria-label="Logo">
