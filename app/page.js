@@ -189,104 +189,55 @@ export default function Page() {
           </div>
         </section>
 
+        <section className="w-full relative py-[1vw] md:px-[2vw] px-[5vw] bg-white overflow-hidden selection:bg-[#5227FF] selection:text-white">
 
-        <section className="w-full relative py-[1vw] md:px-[2vw] px-[5vw] bg-white overflow-hidden">
+          {/* Header Section */}
+          <div className="grid md:grid-cols-12  grid-cols-6 border-t border-black/10 relative pt-[5vw] gap-4">
 
-
-          <div className="grid md:grid-cols-12 grid-cols-6 border-t border-black/10 relative pt-[5vw] gap-4">
-            <div className="md:col-start-1 md:col-span-4 col-start-1 col-span-2">
-              <span className="font-mono text-[12px] uppercase tracking-widest text-black/40">02 / About Nothing2Real</span>
+            <div className="md:col-start-1 md:col-span-4 h-[90vh] col-start-1 col-span-2">
+              <Image src="https://plus.unsplash.com/premium_photo-1773152015734-2d164b515ec2?w=600&auto=format&fit=crop&q=60" alt="img" fill priority className="w-full h-full grayscale-50 object-cover" />
             </div>
-            <div className="md:col-start-1 md:col-span-12 col-start-1 col-span-6 overflow-hidden">
+            <div className="md:col-start-6 md:col-span-7  col-start-1 col-span-6 overflow-hidden">
               <TextY>
                 <h1
-                  className="font-[PPNeueMontreal] tracking-tighter font-semibold xl:text-[4.5vw] xl:leading-[4.5vw]  md:text-[4vw] text-[8vw] leading-[1.1] text-[#1E1E1E]"
-                  style={{ textIndent: "25%" }}
+                  className="font-[PPNeueMontreal] tracking-tighter font-semibold xl:text-[3.5vw] xl:leading-[3.5vw] md:text-[4vw] text-[8vw] leading-[1.1] text-[#1E1E1E]"
+                  style={{ textIndent: "20%" }}
                 >
-                  We are <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFA500] to-[#5227FF]">Nothing2Real Studios</span> — where imagination becomes reality
+                  Nothing2Real helps companies create <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFA500] to-[#5227FF]">stunning and strategically</span> sound experiences that engage audiences.
                 </h1>
               </TextY>
             </div>
+            <div className="md:col-start-6 col-span-5 md:col-span-3 col-start-1 overflow-hidden relative">
+              <TextY>
+                <p className="text-black/80 font-[PPNeueMontreal] font-medium text-[4vw] xl:text-[1.1vw] leading-[1.2] mb-6">
+                  Our experts work closely with you to ensure that every detail is aligned with your goals. We believe in bridging the gap between imagination and execution.
+                </p>
+              </TextY>
+            </div>
+
+            <div className="md:col-start-9 col-span-5 col-start-1 md:col-span-3 overflow-hidden relative">
+              <TextY>
+                <p className="text-black/80 font-[PPNeueMontreal] font-medium text-[4vw] xl:text-[1.1vw] leading-[1.2] mb-6">
+                  From concept to launch, we craft digital solutions that not only look exceptional but also drive results, building connections that last through time.
+                </p>
+              </TextY>
+            </div>
+
+            <div className="md:col-start-6 col-span-6 col-start-1 overflow-hidden relative mt-8 md:mt-12">
+              <TextY>
+                <div className="flex flex-col gap-2">
+                  <h3 className="text-black font-[PPNeueMontreal] font-bold text-[6vw] xl:text-[2.5vw] tracking-tighter leading-none">
+                    Naga Ruthwik
+                  </h3>
+                  <p className="text-[#5227FF] font-mono uppercase text-[3vw] xl:text-[0.9vw] tracking-widest font-semibold">
+                    Founder & Creative Lead
+                  </p>
+                </div>
+              </TextY>
+            </div>
           </div>
 
-          <div className="grid md:grid-cols-12 grid-cols-6 xl:gap-8 md:gap-6 pt-[8vw] items-end">
-            <div className="md:col-start-6 col-span-5 md:col-span-3 col-start-2 overflow-hidden aspect-[16/9] relative">
-              <TextY>
-                <p className="text-black/80 font-[PPNeueMontreal] font-medium text-[4vw] xl:text-[1.1vw] leading-[1.02] xl:leading-[1.1] md:mb-6">
-                  Founded on the belief that every idea deserves to be brought to life, Nothing2Real Studios specializes in transforming concepts into extraordinary digital experiences that captivate and inspire.
-                </p>
-              </TextY>
-            </div>
 
-            <div className="md:col-start-9 col-span-5 col-start-1 md:col-span-3  overflow-hidden aspect-[16/9] relative">
-              <TextY>
-                <p className="text-black/80 font-[PPNeueMontreal] font-medium text-[4vw] xl:text-[1.1vw] leading-[1.02] xl:leading-[1.1] mb-6">
-                  Our team of visionary creators, strategic thinkers, and technical experts work in perfect harmony to deliver solutions that not only meet expectations but exceed them.
-                </p>
-              </TextY>
-            </div>
-
-            <div className="md:col-start-6 col-span-5 col-start-1 md:col-span-6  overflow-hidden aspect-[16/9] relative">
-              <TextY>
-                <p className="text-black/80 font-[PPNeueMontreal] font-semibold text-[4vw] xl:text-[2.1vw] xl:leading-[2vw] leading-[1.02]  mb-6">
-                  From cutting-edge web development to immersive brand experiences, we craft digital solutions that tell your story, engage your audience, and drive meaningful results for your business.
-                </p>
-              </TextY>
-            </div>
-          </div>
-
-          {/* Enhanced Services & Stats Sidebar */}
-          <div className="grid md:grid-cols-12 grid-cols-6 gap-4 md:gap-6  border-t border-black/5">
-            <div className="md:col-start-1 md:col-span-3 col-start-1 col-span-3">
-              <div className="border-b border-gray-600/80 pb-2 mb-4">
-                <h3 className="font-mono tracking-tight xl:text-[1.2vw] text-black font-semibold">
-                  Our Expertise
-                </h3>
-              </div>
-              <TextY>
-                <ul className="xl:text-[1vw] pt-[0.5vw] xl:leading-[0.9vw] tracking-tight md:text-[2.5vw] md:leading-[2.2vw] lg:text-[1.8vw] lg:leading-[2.2vw] text-[3.5vw] leading-[4vw] text-black/70 space-y-2">
-                  {["Brand Strategy & Identity", "Digital Product Design", "Full-Stack Development", "Motion Graphics & 3D", "Performance Optimization", "Creative Direction"].map((service, id) => (
-                    <li key={id} className="flex items-center gap-3">
-                      <div className="w-2 h-2 bg-black rounded-full"></div>
-                      {service}
-                    </li>
-                  ))}
-                </ul>
-              </TextY>
-            </div>
-
-            <div className="md:col-start-5 md:col-span-4 col-start-4 col-span-3">
-              <TextY>
-                <p className="text-black/70 font-[PPNeueMontreal] font-medium xl:text-[1.3vw] md:text-[2.2vw] text-[3.8vw] leading-tight mb-6">
-                  Nothing2Real Studios was born from a simple philosophy: turn the impossible into possible. We bridge the gap between creative vision and technical execution, delivering work that stands out in an increasingly digital world.
-                </p>
-              </TextY>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="text-center p-4 bg-gradient-to-br from-[#FFA500]/5 to-[#5227FF]/5 rounded-lg">
-                  <div className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFA500] to-[#5227FF]">50+</div>
-                  <div className="text-xs font-mono text-black/60 uppercase tracking-wider">Projects</div>
-                </div>
-                <div className="text-center p-4 bg-gradient-to-br from-[#5227FF]/5 to-[#FFA500]/5 rounded-lg">
-                  <div className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#5227FF] to-[#FFA500]">5+</div>
-                  <div className="text-xs font-mono text-black/60 uppercase tracking-wider">Years</div>
-                </div>
-              </div>
-            </div>
-
-            <div className="md:col-start-10 md:col-span-3 col-start-1 col-span-6 md:col-span-3 flex justify-center md:justify-end">
-              <div className="text-center md:text-right">
-                <div className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#FFA500] to-[#5227FF] mb-2">
-                  2025
-                </div>
-                <div className="text-sm font-mono text-black/50 uppercase tracking-wider mb-4">
-                  © Nothing2Real Studios
-                </div>
-                <div className="text-xs text-black/40 font-[PPNeueMontreal] italic">
-                  Where ideas become reality
-                </div>
-              </div>
-            </div>
-          </div>
         </section>
 
 

@@ -6,6 +6,7 @@ import gsap from 'gsap';
 export default function AppLoader() {
   const loaderRef = useRef(null);
   const pathRef = useRef(null);
+  const titleRef = useRef(null);
   const contentRef = useRef(null);
   
   const progressRef = useRef(0);
@@ -18,7 +19,23 @@ export default function AppLoader() {
     let pageLoaded = false;
     let fontsLoaded = false;
 
-    // Signals
+    // Split text into characters for a premium entrance
+    const characters = titleRef.current.innerText.split("");
+    titleRef.current.innerHTML = characters
+      .map(char => `<span class="char inline-block">${char === " " ? "&nbsp;" : char}</span>`)
+      .join("");
+
+    // Initial character state
+    gsap.set(".char", { y: 100, opacity: 0 });
+    gsap.to(".char", {
+      y: 0,
+      opacity: 1,
+      stagger: 0.03,
+      duration: 1.2,
+      ease: "expo.out",
+      delay: 0.2
+    });
+
     const onWindowLoad = () => { pageLoaded = true; };
     if (document.readyState === 'complete') pageLoaded = true;
     else window.addEventListener('load', onWindowLoad);
@@ -33,16 +50,12 @@ export default function AppLoader() {
       const isSystemReady = pageLoaded && fontsLoaded;
       
       // TARGET LOGIC
-      // If system isn't ready, target 90% to leave room for the final snap.
-      // If ready, target 100%.
       const target = isSystemReady ? 100 : 90;
-      const speed = isSystemReady ? 0.1 : 0.01;
+      const speed = isSystemReady ? 0.08 : 0.005; // Slightly slower for smoothness
 
       progressRef.current += (target - progressRef.current) * speed;
 
-      // --- THE FIX: HARD SNAP ---
-      // If we are at 99.5% or higher, just finish it.
-      if (isSystemReady && progressRef.current > 99.5) {
+      if (isSystemReady && progressRef.current > 99.7) {
         progressRef.current = 100;
       }
 
@@ -51,31 +64,36 @@ export default function AppLoader() {
       
       setProgress(roundedProgress);
 
-      // Sync SVG
+      // Sync SVG Path with a slight lag for "organic" feel
       if (pathRef.current) {
         const length = pathRef.current.getTotalLength();
-        gsap.set(pathRef.current, { 
-          strokeDashoffset: length - (currentProgress / 100) * length 
+        gsap.to(pathRef.current, { 
+          strokeDashoffset: length - (currentProgress / 100) * length,
+          duration: 0.5,
+          ease: "power1.out"
         });
       }
 
-      // EXIT TRIGGER
       if (roundedProgress >= 100) {
         const tl = gsap.timeline({
           onComplete: () => setVisible(false)
         });
 
-        tl.to(contentRef.current, {
-          y: -20,
-          opacity: 0,
-          duration: 0.6,
-          ease: "power2.inOut"
+        tl.to(".char", {
+          y: -100,
+          stagger: 0.02,
+          duration: 0.8,
+          ease: "expo.in"
         })
+        .to(contentRef.current, {
+          opacity: 0,
+          duration: 0.4
+        }, "-=0.6")
         .to(loaderRef.current, {
           clipPath: "inset(0% 0% 100% 0%)",
-          duration: 1,
+          duration: 1.2,
           ease: "expo.inOut"
-        }, "-=0.2");
+        }, "-=0.4");
 
         cancelAnimationFrame(rafRef.current);
         return;
@@ -102,42 +120,64 @@ export default function AppLoader() {
   return (
     <div
       ref={loaderRef}
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white overflow-hidden font-[PPNeueMontreal]"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0D0D0D] overflow-hidden font-['PP_Neue_Montreal','Neue_Montreal',sans-serif]"
       style={{ clipPath: "inset(0% 0% 0% 0%)" }}
     >
-      {/* SVG Wireframe Background */}
+      {/* Background Grid Pattern (Subtle) */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+           style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', size: '40px 40px', backgroundSize: '60px 60px' }} />
+
+      {/* SVG Path Animation */}
       <svg
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.05]"
+        className="absolute inset-0 w-full h-full pointer-events-none opacity-20"
         viewBox="0 0 1000 1000"
         fill="none"
         preserveAspectRatio="none"
       >
         <path
           ref={pathRef}
-          d="M-50,400 L 250,400 L 350,200 L 650,200 L 750,500 L 1100,500"
-          stroke="black"
-          strokeWidth="2"
+          d="M-50,500 L 400,500 L 500,450 L 600,550 L 1100,550"
+          stroke="white"
+          strokeWidth="1"
         />
-        <circle cx="350" cy="200" r="3" fill="black" />
-        <circle cx="650" cy="200" r="3" fill="black" />
       </svg>
 
       <div ref={contentRef} className="relative z-10 flex flex-col items-center">
-        <h1 className="text-[10vw] md:text-[6vw] font-bold tracking-tighter text-black uppercase">
-          Nothing2Real
-        </h1>
+        {/* Main Title - Semibold styling */}
+        <div className="overflow-hidden py-2">
+          <h1 
+            ref={titleRef}
+            className="text-[12vw] md:text-[5.5vw] font-semibold tracking-[-0.04em] text-white uppercase leading-none"
+          >
+            Nothing 2 Real
+          </h1>
+        </div>
         
-        <div className="mt-4 flex items-center gap-4">
-          <div className="w-16 h-[1px] bg-black/10 relative overflow-hidden">
+        {/* Progress Section */}
+        <div className="mt-8 flex flex-col items-center gap-4">
+          <div className="w-[200px] h-[2px] bg-white/10 relative">
             <div 
-              className="absolute inset-0 bg-black origin-left"
+              className="absolute inset-0 bg-white origin-left transition-transform duration-150 ease-out"
               style={{ transform: `scaleX(${progress / 100})` }}
             />
           </div>
-          <span className="text-[10px] font-medium tracking-[0.3em] uppercase opacity-50">
-            {progress.toString().padStart(3, '0')}%
-          </span>
+          
+          <div className="flex justify-between w-[200px]">
+            <span className="text-[10px] font-medium tracking-[0.2em] text-white/40 uppercase">
+              Initializing Studio
+            </span>
+            <span className="text-[10px] font-semibold tracking-[0.1em] text-white tabular-nums">
+              {progress.toString().padStart(3, '0')}%
+            </span>
+          </div>
         </div>
+      </div>
+
+      {/* Aesthetic Bottom Tag */}
+      <div className="absolute bottom-10 flex gap-10 opacity-20 text-white text-[9px] uppercase tracking-[0.4em] font-medium">
+        <span>© 2026</span>
+        <span>Creative Direction</span>
+        <span>Digital Reality</span>
       </div>
     </div>
   );

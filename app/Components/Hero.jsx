@@ -114,7 +114,7 @@ const Hero = () => {
         // Optional: Add a slight scale/opacity fade to Hero as it gets covered
         gsap.to(section1.current, {
             opacity: 0.5,
-            y: 500,
+            y: 300,
             ease: "none",
             scrollTrigger: {
                 trigger: section2.current,

@@ -104,40 +104,40 @@
 
 
   .dm-mono-light {
-  font-family: "DM Mono", monospace;
-  font-weight: 300;
-  font-style: normal;
-}
+    font-family: "DM Mono", monospace;
+    font-weight: 300;
+    font-style: normal;
+  }
 
-.dm-mono-regular {
-  font-family: "DM Mono", monospace;
-  font-weight: 400;
-  font-style: normal;
-}
+  .dm-mono-regular {
+    font-family: "DM Mono", monospace;
+    font-weight: 400;
+    font-style: normal;
+  }
 
-.dm-mono-medium {
-  font-family: "DM Mono", monospace;
-  font-weight: 500;
-  font-style: normal;
-}
+  .dm-mono-medium {
+    font-family: "DM Mono", monospace;
+    font-weight: 500;
+    font-style: normal;
+  }
 
-.dm-mono-light-italic {
-  font-family: "DM Mono", monospace;
-  font-weight: 300;
-  font-style: italic;
-}
+  .dm-mono-light-italic {
+    font-family: "DM Mono", monospace;
+    font-weight: 300;
+    font-style: italic;
+  }
 
-.dm-mono-regular-italic {
-  font-family: "DM Mono", monospace;
-  font-weight: 400;
-  font-style: italic;
-}
+  .dm-mono-regular-italic {
+    font-family: "DM Mono", monospace;
+    font-weight: 400;
+    font-style: italic;
+  }
 
-.dm-mono-medium-italic {
-  font-family: "DM Mono", monospace;
-  font-weight: 500;
-  font-style: italic;
-}
+  .dm-mono-medium-italic {
+    font-family: "DM Mono", monospace;
+    font-weight: 500;
+    font-style: italic;
+  }
 
 
   /* Use globally */
@@ -149,7 +149,7 @@
     padding: 0;
   }
 
-  ::-webkit-scrollbar{
+  ::-webkit-scrollbar {
     display: none;
   }
 
@@ -204,4 +204,33 @@
   /* progress bar controlled inline, but if you prefer class-based */
   #progress-bar {
     will-change: width;
+  }
+
+  /* Force Hardware Acceleration */
+  .grid-line-v,
+  .grid-line-h,
+  img,
+  h1 {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* Optimize SVG performance */
+  svg path {
+    vector-effect: non-scaling-stroke;
+    shape-rendering: optimizeSpeed;
+  }
+
+  /* Standard syntax */
+  ::selection {
+    background-color: #252525;
+    color: #ffffff;
+    /* Ensures text is readable on the dark background */
+  }
+
+  /* For Firefox */
+  ::-moz-selection {
+    background-color: #252525;
+    color: #ffffff;
   }

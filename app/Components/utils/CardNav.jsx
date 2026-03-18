@@ -162,7 +162,7 @@ const CardNav = ({
           </div>
 
           <div onClick={()=>{Router.push("/")}} className="cursor-crosshair  logo-container flex items-center font-bold font-[PPNeueMontreal] text-[#252525] md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 order-1 md:order-none">
-            <h1 className='xl:text-[1.5vw] text-[3vw] tracking-tighter'>Nothing2Real</h1>
+            <h1 className='xl:text-[1.5vw] text-[4.5vw] tracking-tighter'>Nothing2Real</h1>
           </div>
 
           <button

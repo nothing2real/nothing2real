@@ -8,12 +8,14 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { images } from "@/public/assets/assets";
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Scroll } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const FeaturedWork = () => {
   const mainref = useRef(null);
+  const textPin = useRef(null);
+
 
   useGSAP(() => {
     // 1. Premium Entrance Animation for Hero
@@ -45,6 +47,15 @@ const FeaturedWork = () => {
         ease: "power4.out",
         transformOrigin: "left"
       }, "-=1");
+
+    ScrollTrigger.create({
+      trigger: textPin.current,
+      start: "top top",
+      end: () => document.body.scrollHeight - window.innerHeight,
+      pin: true,
+      pinSpacing: false,
+      scrub: true,
+    });
 
     // 2. Advanced Project Cards Animation with Stagger & Parallax
     const cards = gsap.utils.toArray(".project-card");
@@ -145,7 +156,7 @@ const FeaturedWork = () => {
       category: "Finance Portfolio",
       image: images.studioipad, // Fallback image if needed
       link: "https://naveensangewarca.vercel.app/",
-      size: "col-span-8 col-start-5 md:col-start-8 md:col-span-5 mt-[10vw]", // Offset and smaller
+      size: "col-span-8 col-start-5 md:col-start-8 md:col-span-5 mt-[12vw]", // Offset and smaller
     },
     {
       title: "Bharath Reddy ",
@@ -161,13 +172,16 @@ const FeaturedWork = () => {
 
   return (
     <ReactLenis root>
-      <main ref={mainref} className="bg-white font-[PPNeueMontreal] text-white">
+      <main ref={mainref} className="bg-white font-[PPNeueMontreal] pt-[5vw] text-white">
 
         {/* ================= HERO ================= */}
-        <section className=" flex flex-col justify-center items-center pt-[5vw] px-[5vw] border-b border-white/5 relative overflow-hidden">
+        <section ref={textPin} className=" flex flex-col border-t-2 pt-[5vw] border-gray-400 justify-center items-center  px-[5vw]  relative overflow-hidden">
           <div className="relative z-10">
-            <h1 className="textH font-bold leading-[0.9] text-[15vw] md:text-[6vw] text-black  tracking-tighter">
-              Features <span className=" text-black ">Works.</span>
+            <h1 className=" font-bold leading-[0.9] text-[15vw] md:text-[6vw] text-black  tracking-tighter">
+              Featured <span className=" text-black ">Works.</span>
+            </h1>
+            <h1 className=" font-bold leading-[0.9] text-[15vw] md:text-[6vw] text-black  tracking-tighter">
+              Proven  <span className=" text-black ">2025-2026.</span>
             </h1>
           </div>
         </section>
@@ -175,7 +189,8 @@ const FeaturedWork = () => {
         {/* ================= PROJECTS GRID ================= */}
         {/* ================= PROJECTS GRID ================= */}
         <section className="px-[5vw] py-[10vw]">
-          <div className="grid grid-cols-12 gap-y-[5vw] md:gap-x-12">
+
+          <div className="grid grid-cols-12 gap-y-[5vw] pt-[5vw] md:gap-x-12">
             {projects.map((project, index) => (
               <div
                 key={index}
