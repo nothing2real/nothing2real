@@ -200,7 +200,7 @@ export default function Page() {
             <div className="md:col-start-6 md:col-span-7  col-start-1 col-span-6 overflow-hidden">
               <TextY>
                 <h1
-                  className="font-[PPNeueMontreal] tracking-tighter font-semibold xl:text-[3.5vw] xl:leading-[3.5vw] md:text-[4vw] text-[8vw] leading-[1.1] text-[#1E1E1E]"
+                  className="font-[PPNeueMontreal] tracking-tighter font-semibold xl:text-[4.5vw] xl:leading-[4.5vw] md:text-[4vw] text-[8vw] leading-[1.1] text-[#1E1E1E]"
                   style={{ textIndent: "20%" }}
                 >
                   Nothing2Real helps companies create <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFA500] to-[#5227FF]">stunning and strategically</span> sound experiences that engage audiences.
@@ -242,12 +242,6 @@ export default function Page() {
 
 
 
-
-
-        <section className="min-h-screen w-full   bg-white">
-
-          <Service />
-        </section>
 
 
         <section className="w-full  bg-white h-full">

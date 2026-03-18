@@ -269,7 +269,7 @@ const Hero = () => {
 
                 {/* BACKGROUND SVG PATH - The "Awwwards" touch */}
                 <svg
-                    className="absolute -left-10 top-0 w-full h-full pointer-events-none opacity-40"
+                    className="absolute md:block hidden -left-10 top-0 w-full h-full pointer-events-none opacity-40"
                     viewBox="0 0 1800 900"
                     fill="none"
                 >

@@ -177,11 +177,11 @@ const FeaturedWork = () => {
         {/* ================= HERO ================= */}
         <section ref={textPin} className=" flex flex-col border-t-2 pt-[5vw] border-gray-400 justify-center items-center  px-[5vw]  relative overflow-hidden">
           <div className="relative z-10">
-            <h1 className=" font-bold leading-[0.9] text-[15vw] md:text-[6vw] text-black  tracking-tighter">
+            <h1 className=" font-bold leading-[0.9] text-[12vw] md:text-[6vw] text-black  tracking-tighter">
               Featured <span className=" text-black ">Works.</span>
             </h1>
-            <h1 className=" font-bold leading-[0.9] text-[15vw] md:text-[6vw] text-black  tracking-tighter">
-              Proven  <span className=" text-black ">2025-2026.</span>
+            <h1 className=" font-bold leading-[0.9] text-[10vw] md:text-[6vw] text-black  tracking-tighter">
+              Proven  <span className=" text-black ">© 2025-2026.</span>
             </h1>
           </div>
         </section>

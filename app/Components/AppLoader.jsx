@@ -64,15 +64,7 @@ export default function AppLoader() {
       
       setProgress(roundedProgress);
 
-      // Sync SVG Path with a slight lag for "organic" feel
-      if (pathRef.current) {
-        const length = pathRef.current.getTotalLength();
-        gsap.to(pathRef.current, { 
-          strokeDashoffset: length - (currentProgress / 100) * length,
-          duration: 0.5,
-          ease: "power1.out"
-        });
-      }
+
 
       if (roundedProgress >= 100) {
         const tl = gsap.timeline({
@@ -120,34 +112,16 @@ export default function AppLoader() {
   return (
     <div
       ref={loaderRef}
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0D0D0D] overflow-hidden font-['PP_Neue_Montreal','Neue_Montreal',sans-serif]"
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#252525] overflow-hidden font-['PP_Neue_Montreal','Neue_Montreal',sans-serif]"
       style={{ clipPath: "inset(0% 0% 0% 0%)" }}
     >
-      {/* Background Grid Pattern (Subtle) */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-           style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', size: '40px 40px', backgroundSize: '60px 60px' }} />
-
-      {/* SVG Path Animation */}
-      <svg
-        className="absolute inset-0 w-full h-full pointer-events-none opacity-20"
-        viewBox="0 0 1000 1000"
-        fill="none"
-        preserveAspectRatio="none"
-      >
-        <path
-          ref={pathRef}
-          d="M-50,500 L 400,500 L 500,450 L 600,550 L 1100,550"
-          stroke="white"
-          strokeWidth="1"
-        />
-      </svg>
 
       <div ref={contentRef} className="relative z-10 flex flex-col items-center">
         {/* Main Title - Semibold styling */}
         <div className="overflow-hidden py-2">
           <h1 
             ref={titleRef}
-            className="text-[12vw] md:text-[5.5vw] font-semibold tracking-[-0.04em] text-white uppercase leading-none"
+            className="text-[12vw] md:text-[5.5vw] font-bold tracking-[-0.04em] text-white  leading-none"
           >
             Nothing 2 Real
           </h1>

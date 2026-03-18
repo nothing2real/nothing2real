@@ -2,136 +2,116 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
-import { ArrowRight, PlusIcon } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const AccordionItem = ({ index, title, content, isOpen, onClick }) => {
+const AccordionItem = ({ title, content, images, isOpen, onClick }) => {
   const contentRef = useRef(null);
   const iconRef = useRef(null);
-
-  const linksRef = useRef([]);
-  const titleWrapperRef = useRef(null);
   const lineRef = useRef(null);
+  const marqueeRef = useRef(null);
 
-  // GSAP Reveal Animations
+  // 1. Entrance Animations
   useGSAP(() => {
-    gsap.fromTo(
-      linksRef.current,
-      { opacity: 0, x: -20 },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        stagger: 0.12,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: contentRef.current,
-          start: "top 85%",
-        },
-      }
-    );
-
-    gsap.fromTo(
-      titleWrapperRef.current,
-      { opacity: 0, y: 20 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: titleWrapperRef.current,
-          start: "top 90%",
-        },
-      }
-    );
-
-    gsap.fromTo(
-      lineRef.current,
-      { width: "20%", opacity: 0 },
+    gsap.fromTo(lineRef.current,
+      { width: "0%", opacity: 0 },
       {
         width: "100%",
         opacity: 1,
-        duration: 1.4,
+        duration: 1.2,
         ease: "power2.out",
         scrollTrigger: {
-          trigger: titleWrapperRef.current,
+          trigger: lineRef.current,
           start: "top 95%",
         },
       }
     );
   }, []);
 
-  // Accordion Open / Close Animation
-  useEffect(() => {
-    if (contentRef.current) {
-      gsap.to(contentRef.current, {
-        height: isOpen ? "auto" : 0,
-        opacity: isOpen ? 1 : 1,
-        duration: 0.5,
-        ease: "power3.out",
-      });
-    }
+  // 2. The Infinite Loop Logic
+  useGSAP(() => {
+    if (isOpen && marqueeRef.current) {
+      const marquee = marqueeRef.current;
+      const scrollWidth = marquee.scrollWidth;
 
-    if (iconRef.current) {
-      gsap.to(iconRef.current, {
-        rotate: isOpen ? 180 : 0,
-        duration: 0.4,
-        ease: "power2.inOut",
+      // Infinite horizontal scroll
+      gsap.to(marquee, {
+        x: `-${scrollWidth / 2}px`,
+        duration: 20, // Adjust speed here
+        ease: "none",
+        repeat: -1,
       });
+    } else {
+      gsap.killTweensOf(marqueeRef.current);
     }
   }, [isOpen]);
 
+  // 3. Accordion Toggle Logic
+  useEffect(() => {
+    gsap.to(contentRef.current, {
+      height: isOpen ? "auto" : 0,
+      opacity: isOpen ? 1 : 0,
+      duration: 0.6,
+      ease: "expo.inOut",
+    });
+
+    gsap.to(iconRef.current, {
+      rotate: isOpen ? 135 : 0, // Rotates Plus into an 'X'
+      duration: 0.4,
+    });
+  }, [isOpen]);
+
   return (
-    <div className="w-full">
-      {/* Title */}
-      <div ref={titleWrapperRef} className="overflow-hidden">
-        <button
-          onClick={onClick}
-          className="w-full flex justify-between items-center py-2 text-left xl:text-[2.5vw] lg:text-[2.5vw] md:text-[3.5vw] font-[PPNeueMontreal] font-semibold text-[7vw] tracking-tighter  text-black"
-        >
-          {title}
-
-          <span
-            ref={iconRef}
-            className="text-xl  inline-block"
-          >
-            <PlusIcon />
-          </span>
-        </button>
-      </div>
-
-      {/* Content */}
-      <div
-        ref={contentRef}
-        className="overflow-hidden opacity-0 h-0 "
+    <div className="w-full border-b border-black/10">
+      <button
+        onClick={onClick}
+        className="w-full flex justify-between items-center py-2 text-left font-[PPNeueMontreal] font-semibold xl:text-[3vw] text-[7vw] tracking-tighter text-black hover:opacity-50 transition-opacity"
       >
-        <div className="pb-4 text-black leading-relaxed">
-          <div className="grid grid-cols-2 gap-2 md:grid-cols-2 md:grid-cols-4">
-            {React.Children.map(content.props.children, (child, id) => (
-              <div
-                key={id}
-                ref={(el) => (linksRef.current[id] = el)}
-                className="xl:text-[1vw] font-medium border px-2 py-2 gap-3 leading-[0.9]  tracking-tighter lg:text-[1.5vw] md:text-[2vw] text-[4vw] flex justify-center items-center"
-              >
-                {child}
-                
-              </div>
+        {title}
+        <span ref={iconRef} className="transition-transform">
+          <PlusIcon size={32} strokeWidth={1.5} />
+        </span>
+      </button>
+
+      <div ref={contentRef} className="overflow-hidden h-0 opacity-0">
+        <div className="pb-10">
+          {/* Text Services List */}
+          <div className="flex flex-wrap gap-3 mb-8 px-2">
+            {React.Children.map(content.props.children, (child, i) => (
+              <span key={i} className="xl:text-[0.9vw] text-[3vw] font-sans font-semibold  tracking-tighter border text-black border-black/10 px-4 py-1 rounded-full bg-black/5">
+                {child.props.children}
+              </span>
             ))}
+          </div>
+
+          {/* INFINITE IMAGE LOOP */}
+          <div className="relative w-full overflow-hidden py-1 pointer-events-none">
+            <div ref={marqueeRef} className="flex gap-4 w-fit whitespace-nowrap">
+              {/* Render images twice to create seamless loop */}
+              {[...images, ...images, ...images].map((img, id) => (
+                <div key={id} className="xl:w-[10vw] xl:h-[12vw] w-[60vw] h-[40vw] flex-shrink-0 overflow-hidden rounded bg-zinc-100">
+                  <img
+                    src={img}
+                    alt="Work"
+                    className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Gradient Fades for a premium look */}
+            <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
           </div>
         </div>
       </div>
-
-      {/* Divider */}
-      <div ref={lineRef} className="w-full h-[1px] bg-black/90"></div>
+      <div ref={lineRef} className="h-[1.2px] bg-black"></div>
     </div>
   );
 };
 
-// Main Component
 const Accordion = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
@@ -147,6 +127,11 @@ const Accordion = () => {
           <p>Banner Designs</p>
         </>
       ),
+      images: [
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+      ]
     },
     {
       title: "Custom Website Design ",
@@ -159,6 +144,11 @@ const Accordion = () => {
           <p>SEO-ready Structure</p>
         </>
       ),
+      images: [
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+      ]
     },
     {
       title: "Responsive Websites",
@@ -170,6 +160,11 @@ const Accordion = () => {
           <p>Smooth animations across devices</p>
         </>
       ),
+      images: [
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+      ]
     },
     {
       title: "E-commerce Development",
@@ -182,6 +177,11 @@ const Accordion = () => {
           <p>Conversion-optimized layouts</p>
         </>
       ),
+      images: [
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+      ]
     },
     {
       title: "UI / UX Design",
@@ -194,10 +194,15 @@ const Accordion = () => {
           <p>Design System</p>
         </>
       ),
+      images: [
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+      ]
     },
     {
       title: " Maintenance & Optimization",
-      desc:"",
+      desc: "",
       content: (
         <>
           <p>Speed Optimization</p>
@@ -206,21 +211,25 @@ const Accordion = () => {
           <p>SEO & Performance Updates</p>
         </>
       ),
+      images: [
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+        "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&auto=format&fit=crop&q=60",
+      ]
     },
   ];
 
+
   return (
-    <div className="w-full font-[Helvetica]">
+    <div className="w-full px-[5vw] py-20 bg-white">
       {data.map((item, index) => (
         <AccordionItem
           key={index}
-          index={index}
           title={item.title}
           content={item.content}
+          images={item.images}
           isOpen={openIndex === index}
-          onClick={() =>
-            setOpenIndex(openIndex === index ? null : index)
-          }
+          onClick={() => setOpenIndex(openIndex === index ? null : index)}
         />
       ))}
     </div>
