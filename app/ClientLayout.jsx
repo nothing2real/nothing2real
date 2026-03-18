@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Navbar from "./Components/Navbar";
 import RealtimePreloader from "./Components/RealtimePreloader";
+import CustomCursor from "./Components/CustomCursor";
 
 export default function ClientLayout({ children }) {
   const [showContent, setShowContent] = useState(false);
@@ -19,17 +20,19 @@ export default function ClientLayout({ children }) {
 
   return (
     <>
+
       {!removeLoader && (
-        <RealtimePreloader 
-          onComplete={handleLoaderFinished} 
+        <RealtimePreloader
+          onComplete={handleLoaderFinished}
           onStartExit={handleRevealStarted}
         />
       )}
-      
+
       {/* We render the content but keep it hidden/invisible 
           until the preloader starts its exit shutter. 
       */}
       <div className={`transition-opacity duration-1000 ${showContent ? "opacity-100" : "opacity-0"}`}>
+        <CustomCursor />
         <Navbar />
         <main>{children}</main>
       </div>

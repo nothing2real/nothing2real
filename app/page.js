@@ -11,6 +11,9 @@ import TextY from "./Components/TextY"
 import { ArrowRight } from "lucide-react"
 import Hero from "./Components/Hero"
 import Service from "./Components/utils/Service"
+import FeaturedWork from "./Components/FeaturedWork"
+import Accordion from "./Components/utils/Accordion"
+import Image from "next/image"
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText)
 
@@ -157,8 +160,34 @@ export default function Page() {
           <Hero />
         </section>
 
-        
 
+        <section className="min-h-screen w-full   bg-white">
+
+          <FeaturedWork />
+        </section>
+
+        <section className="min-h-screen w-full font-[PPNeueMontreal] px-[5vw] md:px-[2vw] bg-white">
+          <div className="grid grid-cols-6 gap-5 md:grid-cols-12 ">
+            <div className="col-span-6 md:col-span-4 grid grid-cols-5 gap-1  h-full">
+              <h1 className="col-span-6 md:col-span-4 xl:text-[3vw] text-[11vw] font-bold text-black tracking-tighter" >[ Our Services ]</h1>
+              <p className="col-span-5 xl:text-[1vw] text-black">
+                We define the foundation of your brand voice, visuals, and values shaped into a system built for long-term clarity.
+              </p>
+              <div className="md:col-span-3 col-span-3 col-start-3  h-[35vh] md:h-[50vh]">
+                <Image
+                  src="https://plus.unsplash.com/premium_photo-1773152015734-2d164b515ec2?w=600&auto=format&fit=crop&q=60"
+                  alt="img"
+                  fill
+                  priority
+                  className="w-full h-full grayscale-50 object-cover"
+                />
+              </div>
+            </div>
+            <div className="col-span-6 md:mt-[8vw] md:col-start-7 ">
+              <Accordion />
+            </div>
+          </div>
+        </section>
 
 
         <section className="w-full relative py-[1vw] md:px-[2vw] px-[5vw] bg-white overflow-hidden">
@@ -268,7 +297,7 @@ export default function Page() {
 
           <Service />
         </section>
-        
+
 
         <section className="w-full  bg-white h-full">
           <Footer />

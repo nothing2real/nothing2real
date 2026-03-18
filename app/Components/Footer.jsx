@@ -90,9 +90,9 @@ const Footer = () => {
         </div>
 
         {/* Footer Title */}
-        <div className="overflow-hidden textf font-[PPNeueMontreal] font-semibold md:col-start-1 col-span-7 tracking-tight  xl:text-[10vw] lg:text-[12vw] md:text-[14vw] text-[15vw] uppercase text-black ">
+        <div className="overflow-hidden textf font-[PPNeueMontreal] font-bold md:col-start-1 col-span-7 tracking-tighter  xl:text-[10vw] lg:text-[12vw] md:text-[14vw] text-[15vw]  text-black ">
           <div className="overflow-hidden">
-            <h1>NR.Studio</h1>
+            <h1>n2r Studio</h1>
           </div>
         </div>
         {/* Right Info / Acknowledgement */}
@@ -103,7 +103,7 @@ const Footer = () => {
             </h1>
             <TextY>
               <p className="text-[3vw] md:text-[1vw] leading-tight font-semibold text-black/70">
-                Built with dedication by the <span className="font-bold text-black">NR Studio</span> team —
+                Built with dedication by the <span className="font-bold text-black">n2r Studio</span> team —
                 turning every vision into a crafted digital experience. Special thanks
                 to our early supporters and collaborators for believing in our journey.
               </p>
@@ -124,8 +124,8 @@ const Footer = () => {
 
       {/* Bottom Line */}
       <div className="w-full flex flex-col md:flex-row justify-between items-center  text-black/50 text-[3vw] md:text-[0.9vw] font-bold font-[PPNeueMontreal]">
-        <p>© {new Date().getFullYear()} NR Studio. All rights reserved.</p>
-        <p>Designed & Developed by NR Studio Team</p>
+        <p>© {new Date().getFullYear()} n2r Studio. All rights reserved.</p>
+        <p>Designed & Developed by n2r Studio Team</p>
       </div>
     </footer>
   );

@@ -1,46 +1,71 @@
 "use client"
 import React from 'react';
 import StaggeredMenu from './StaggeredMenu';
+import CardNav from './utils/CardNav';
 // 1. Imports must be at the very top
 
 const Navbar = () => {
   // 2. Define your data/logic outside the return statement
-  const menuItems = [
-    { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
-    { label: 'studio', ariaLabel: 'Learn about us', link: '/studio' },
-    { label: 'Process', ariaLabel: 'View our services', link: '/process' },
-    { label: 'Projects', ariaLabel: 'View our projects', link: '/project' },
-    { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' }
-  ];
-
-  const socialItems = [
-    { label: 'Twitter', link: 'https://twitter.com' },
-    { label: 'GitHub', link: 'https://github.com' },
-    { label: 'LinkedIn', link: 'https://linkedin.com' } 
+  const items = [
+    {
+      label: "Home",
+      bgColor: "#0D0716",
+      textColor: "#fff",
+      links: [
+        { label: "Home", href: "/" },
+        { label: "Process", href: "/process" }
+      ]
+    },
+    {
+      label: "About",
+      bgColor: "#0D0716",
+      textColor: "#fff",
+      links: [
+        { label: "Our Studio", href: "/studio" },
+        { label: "Projects", href: "/project" }
+      ]
+    },
+    {
+      label: "Process",
+      bgColor: "#0D0716",
+      textColor: "#fff",
+      links: [
+        { label: "Our Process", href: "/process" },
+      ]
+    },
+    {
+      label: "Projects",
+      bgColor: "#170D27",
+      textColor: "#fff",
+      links: [
+        { label: "Featured", href: "/project" },
+        { label: "Case Studies", href: "/projects/case-studies" }
+      ]
+    },
+    {
+      label: "Contact",
+      bgColor: "#271E37",
+      textColor: "#fff",
+      links: [
+        { label: "Email", href: "/contact" },
+        { label: "Twitter", href: "/twitter" }
+      ]
+    }
   ];
 
   return (
     // 3. Keep the JSX clean
     <nav className="fixed top-0 left-0 w-full z-[10]">
-      <div style={{  pointerEvents: 'none' }} className='h-[60svh] '> 
-        {/* pointerEvents: 'none' ensures the container doesn't block card scrolls, 
-            the menu button itself will usually have its own pointer-events: auto */}
-        <StaggeredMenu
-          position="right"
-          items={menuItems}
-          socialItems={socialItems}
-          displaySocials
-          displayItemNumbering={true}
-          menuButtonColor="#252525"
-          openMenuButtonColor="#252525"
-          changeMenuColorOnOpen={true}
-          colors={['#FFA500', '#252525']}
-          logoUrl="/path-to-your-logo.svg"
-          accentColor="#5227FF"
-          onMenuOpen={() => console.log('Menu opened')}
-          onMenuClose={() => console.log('Menu closed')}
-        />
-      </div>
+      <CardNav
+        logoAlt="Company Logo"
+        items={items}
+        baseColor="#fff"
+        menuColor="#000"
+        buttonBgColor="#111"
+        buttonTextColor="#fff"
+        ease="power3.out"
+        theme="light"
+      />
     </nav>
   );
 };

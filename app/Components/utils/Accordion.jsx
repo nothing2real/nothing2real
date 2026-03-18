@@ -91,13 +91,13 @@ const AccordionItem = ({ index, title, content, isOpen, onClick }) => {
       <div ref={titleWrapperRef} className="overflow-hidden">
         <button
           onClick={onClick}
-          className="w-full flex justify-between items-center py-4 text-left xl:text-[1.5vw] lg:text-[2.5vw] md:text-[3.5vw] font-[PPNeueMontreal] font-meduim text-[5vw] tracking-tight font-medium text-black"
+          className="w-full flex justify-between items-center py-2 text-left xl:text-[2.5vw] lg:text-[2.5vw] md:text-[3.5vw] font-[PPNeueMontreal] font-semibold text-[7vw] tracking-tighter  text-black"
         >
           {title}
 
           <span
             ref={iconRef}
-            className="text-xl border border-gray-600/50 p-2 md:p-5 rounded-full inline-block"
+            className="text-xl  inline-block"
           >
             <PlusIcon />
           </span>
@@ -110,19 +110,15 @@ const AccordionItem = ({ index, title, content, isOpen, onClick }) => {
         className="overflow-hidden opacity-0 h-0 "
       >
         <div className="pb-4 text-black leading-relaxed">
-          <div className="grid grid-cols-1 md:grid-cols-2">
+          <div className="grid grid-cols-2 gap-2 md:grid-cols-2 md:grid-cols-4">
             {React.Children.map(content.props.children, (child, id) => (
               <div
                 key={id}
                 ref={(el) => (linksRef.current[id] = el)}
-                className="xl:text-[1vw] font-mono tracking-tighter lg:text-[1.5vw] md:text-[2vw] text-[4vw] flex items-center"
+                className="xl:text-[1vw] font-medium border px-2 py-2 gap-3 leading-[0.9]  tracking-tighter lg:text-[1.5vw] md:text-[2vw] text-[4vw] flex justify-center items-center"
               >
-                •&nbsp;{child}
-                <ArrowRight
-                  className="inline-block ml-2 transition-all"
-                  strokeWidth={1.1}
-                  rotate={45}
-                />
+                {child}
+                
               </div>
             ))}
           </div>
@@ -130,7 +126,7 @@ const AccordionItem = ({ index, title, content, isOpen, onClick }) => {
       </div>
 
       {/* Divider */}
-      <div ref={lineRef} className="w-full h-[1px] bg-black/80"></div>
+      <div ref={lineRef} className="w-full h-[1px] bg-black/90"></div>
     </div>
   );
 };
@@ -153,7 +149,7 @@ const Accordion = () => {
       ),
     },
     {
-      title: "Custom Website Design & Development",
+      title: "Custom Website Design ",
       content: (
         <>
           <p>Custom Layouts & Component Library</p>
@@ -165,7 +161,7 @@ const Accordion = () => {
       ),
     },
     {
-      title: "Responsive & Mobile-First Websites",
+      title: "Responsive Websites",
       content: (
         <>
           <p>100% Mobile-first layouts</p>
@@ -200,7 +196,7 @@ const Accordion = () => {
       ),
     },
     {
-      title: "Website Maintenance & Optimization",
+      title: " Maintenance & Optimization",
       desc:"",
       content: (
         <>
