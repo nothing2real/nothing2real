@@ -180,74 +180,8 @@ const Page = () => {
         gsap.set(arrowEl, { x: 0 })
 
         // Mouse move — follow cursor
-        const moveHandler = (e) => {
-            const rect = btn.getBoundingClientRect()
-            const x = e.clientX - rect.left
-            const y = e.clientY - rect.top
-            gsap.to(dot, {
-                x,
-                y,
-                duration: 0.3,
-                ease: "power3.out",
-                force3D: true
-            })
-        }
-
-        // Mouse enter — expand fill + move text & arrow
-        const enterHandler = () => {
-            gsap.to(dot, {
-                width: 50, height: 50,
-                scale: 10,
-                duration: 0.8,
-                ease: "power4.out",
-                force3D: true
-            })
-            gsap.to(text, {
-                duration: 0.5,
-                ease: "power4.inOut",
-                force3D: true
-            })
-            gsap.to(arrowEl, {
-                x: 10,
-                duration: 0.5,
-                ease: "power4.inOut",
-                force3D: true
-            })
-        }
-
-        // Mouse leave — shrink fill + reset text & arrow
-        const leaveHandler = () => {
-            gsap.to(dot, {
-                width: 0, height: 0,
-                scale: 0,
-                duration: 0.6,
-                ease: "power4.inOut",
-                force3D: true
-            })
-            gsap.to(text, {
-                duration: 0.6,
-                ease: "power4.inOut",
-                force3D: true
-            })
-            gsap.to(arrowEl, {
-                x: 0,
-                duration: 0.5,
-                ease: "power4.inOut",
-                force3D: true
-            })
-        }
 
 
-
-        btn.addEventListener("mousemove", moveHandler)
-        btn.addEventListener("mouseenter", enterHandler)
-        btn.addEventListener("mouseleave", leaveHandler)
-
-        return () => {
-            btn.removeEventListener("mousemove", moveHandler)
-            btn.removeEventListener("mouseenter", enterHandler)
-            btn.removeEventListener("mouseleave", leaveHandler)
-        }
     }, [])
 
     useGSAP(() => {
@@ -609,73 +543,6 @@ const Page = () => {
                 </section>
 
 
-
-                <section className="w-full min-h-screen px-[5vw] md:px-[2vw] flex items-start justify-start   overflow-hidden">
-                    <div className="pt-[5vw] md:pt-[3vw] ">
-                        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 space-y-2   items-start">
-                            <div className="xl:col-start-1 xl:col-span-4 md:col-start-1 md:col-span-9 border-t border-gray-100/50 pt-[1vw] ">
-                                <h1 className=""><span style={{ fontStretch: "75%" }} className="text-white font-semibold tracking-tight  xl:text-[4vw] text-[7vw] leading-[6vw] md:text-[4vw] md:leading-[3vw] lg:text-[3vw] lg:leading-[2.5vw] font-[dbsharp]">NR Studios</span></h1>
-                                <h1 style={{ fontStretch: "75%" }} className=" sm:text-lg md:text-[3vw] md:leading-[3vw] lg:text-[2.5vw] lg:leading-[2.5vw] font-[Alliance-meduim] text-[4vw] leading-[4.5vw] 2xl:text-[1.7vw]  text-white/80 xl:leading-[2vw]">
-                                    Is a Young Talent Crafting Knowledge
-                                </h1>
-
-
-                                <TextY>
-                                    <p className="text-base tracking-tighter sm:text-lg pt-[5vw] font-[MyFont2] text-[4vw] max-w-md leading-[4.5vw]  md:text-[3vw] md:leading-[3vw] lg:text-[2vw] lg:leading-[2vw] xl:text-[1.5vw] text-white/80 xl:leading-[2vw]    ">
-                                        Our 7-stage Agile flow blends design principles with development precision. We build in cycles of clarity and collaboration — keeping your vision alive at every step.
-                                    </p>
-                                </TextY>
-
-                                <div className="xl:text-[1vw] lg:text-[1.5vw] md:text-[2vw] text-[4vw] md:mt-[2vw] mt-[5vw] ">
-                                    <h1 className="text-white/50 border-b w-[30%] md:w-[30%] xl:w-[25%]"> (Our Process)</h1>
-                                </div>
-
-                                <TextY>
-                                    <div className="overflow-hidden  w-full">
-                                        {[" Concept & Requirement Gathering", " Sprint Planning", " Design & Development", "Testing & Quality Assurance", " Sprint Review & Feedback", " Deployment & Release", " User Feedback & Iteration"].map((items, id) => (
-                                            <div key={id} className="border-b border-gray-200/50 max-w-md">
-                                                <h1 className="xl:text-[1.2vw] lg:text-[1.5vw] md:text-[1.8vw] text-[4.5vw] py-2"><span className="text-white/60 text-[3vw] md:text-[1.2vw]">({id + 1})</span> &nbsp; {items}</h1>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </TextY>
-                                <div className="overflow-hidden md:mt-[2vw] mt-[5vw]">
-                                    <button ref={button} className="relative lg:w-[70%] md:w-[75%] w-[70%] xl:w-[50%] h-[45px] md:h-[51px]  border border-white rounded-full font-[dbsharp] font-semibold overflow-hidden uppercase tracking-wider">
-                                        <span ref={hoverFill} className="absolute w-[30px] h-[30px] bg-white inset-0 rounded-full will-change-transform scale-0"></span>
-                                        <span ref={textHover} className="relative z-10 text-white flex items-center justify-center gap-3 mix-blend-difference"><a href="/process">View Our Process</a> <ArrowRight ref={arrow} strokeWidth={2} /> </span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="lg:col-start-5 lg:col-span-8 md:col-start-4 md:col-span-9 ">
-                                <div ref={imageDiv} className="w-full h-full overflow-hidden  rounded-sm">
-                                    <img ref={mainbanner} className="w-full h-full object-center object-cover  rounded-sm" loading="lazy-loading" src={images.mainbanner1.src} alt="" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* What we Do?? */}
-                <section className="w-full min-h-screen px-[5vw] md:px-[2vw] ">
-                    <div className="overflow-hidden   mt-[5vw]">
-                        <h1 className="uppercase xl:text-[4vw] text-[8vw] font-bold flex items-center justify-start gap-2 md:items-center md:justify-start font-[PPNeueMontreal] text-white"><span>What we do?</span><img src={images.arrow.src} alt="arrow" className="inline-block w-[15%] h-[15%] mix-blend-difference bg-white md:w-[5%] md:h-[5%] border rounded-full p-1 md:p-2 -rotate-135" />
-                        </h1>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-4 space-y-2 mt-[3vw]  items-start">
-                        <div className="md:col-start-6 md:col-span-2    ">
-                            <h1 style={{ fontStretch: "75%" }} className=" sm:text-lg pt-[1vw] md:text-[3vw] md:leading-[3vw] lg:text-[1.5vw] lg:leading-[2.5vw] text-start font-[PPNeueMontreal] tracking-wide font-bold uppercase text-[5vw] leading-[5vw] xl:text-[1.5vw]  text-white/80 xl:leading-[2vw]"> Aim
-                            </h1>
-                        </div>
-                        <div className="md:col-start-6 md:col-span-6 ">
-                            <TextY>
-                                <p className="text-base tracking-tight sm:text-lg font-[PPNeueMontreal] font-medium pb-[1vw] text-[4vw] leading-[4.5vw] md:text-[3vw] md:leading-[3vw] lg:text-[2.5vw] lg:leading-[2.5vw] xl:leading-[1.5vw] xl:text-[1.5vw] text-white/80 2xl:text-[1.5vw] 2xl:leading-[1.7vw]   ">
-                                    We craft digital experiences that combine creativity with precision. From designing intuitive UI/UX and developing custom web solutions to deploying scalable full-stack applications, we turn ideas into high-performing, visually stunning websites that drive real results.
-                                </p>
-                            </TextY>
-                        </div>
-                    </div>
-                </section>
-
                 <div className="grid md:grid-cols-12 bg-white grid-cols-6 gap-4 md:gap-8 pt-[15vw] px-[2vw] md:pt-[5vw] pb-[10vw]">
                     <h1 className="md:col-start-1 xl:text-[5vw] text-[8vw] font-bold tracking-tight md:col-span-6 col-start-1 col-span-6 text-black">Services</h1>
                     <div className="md:col-start-7 mt-[5vw] md:col-span-6 col-start-1 text-white col-span-6">
@@ -683,76 +550,6 @@ const Page = () => {
                         <Accordion />
                     </div>
                 </div>
-
-                {/* Why Us?? */}
-                <section className="w-full px-[5vw] md:px-[2vw] h-full ">
-                    <div className="overflow-hidden   mt-[5vw]">
-                        <h1 className="uppercase xl:text-[4vw] text-[8vw] font-bold flex items-center justify-start gap-2 md:items-center md:justify-start font-[PPNeueMontreal] text-white"><span>Why Us</span><img src={images.arrow.src} alt="arrow" className="inline-block w-[15%] h-[15%] mix-blend-difference bg-white md:w-[5%] md:h-[5%] border rounded-full p-1 md:p-2 -rotate-135" />
-                        </h1>
-                    </div>
-                    <div className="grid grid-cols-6 md:grid-cols-12 gap-4 space-y-2 mt-[3vw]  items-start">
-                        <div className="md:col-start-6 md:col-span-2 col-start-1 col-span-2 w-full  ">
-                            <h1 style={{ fontStretch: "75%" }} className=" sm:text-lg pt-[1vw] md:text-[3vw] md:leading-[3vw] lg:text-[1.5vw] lg:leading-[2.5vw] text-start font-[Alliance-meduim] text-[5vw] leading-[5vw] xl:text-[2vw]  text-white/80 xl:leading-[2vw]"> Our Work
-                            </h1>
-                        </div>
-                        <div className="md:col-start-6 col-start-1 w-full col-span-6 md:col-span-6 ">
-                            <TextY>
-                                <p className="text-base tracking-tight sm:text-lg font-[PPNeueMontreal] font-medium pb-[1vw] text-[4vw] leading-[4vw] md:text-[3vw] md:leading-[3vw] lg:text-[2.5vw] lg:leading-[2.5vw] xl:leading-[1.5vw] xl:text-[1.5vw] text-white/80 2xl:text-[1.5vw] 2xl:leading-[1.7vw]   ">
-                                    At our studio, creativity meets precision. We&apos;re a team of passionate developers and designers who believe every digital experience should feel as good as it looks. From crafting seamless UI/UX flows to building powerful full-stack applications, we handle every step with care — design, development, testing, and deployment.
-                                </p>
-                            </TextY>
-                        </div>
-                    </div>
-                </section>
-
-                <section className="w-full h-full py-[5vw] md:px-[2vw] px-[5vw]">
-                    <div className="w-full  xl:text-[8vw] pt-[10vw]  text-[13vw] xl:leading-[7vw] mt-[10vw] -rotate-2 font-[dbsharp] text-red-500 leading-[13vw] uppercase font-bold text-center">
-                        <div className="overflow-hidden">
-                            <h1 ref={team1Ref} className=" overflow-hidden will-change-transform" style={{ fontStretch: "85%" }}>
-                                Meet Our
-                            </h1>
-                        </div>
-                    </div>
-                    <div className="w-full  xl:text-[8vw] text-[13vw] xl:leading-[7vw]  -rotate-2 font-[dbsharp] text-white leading-[13vw] uppercase font-bold text-center">
-                        <div className="overflow-hidden">
-                            <h1 ref={team2Ref} className=" overflow-hidden will-change-transform" style={{ fontStretch: "85%" }}>
-                                Team Members
-                            </h1>
-                        </div>
-                    </div>
-                    <div className="grid md:grid-cols-12 xl:gap-8 md:pt-[5vw] font-[PPNeueMontreal] font-bold pt-[10vw] gap-6 py-2 grid-cols-6">
-                        <div className="md:col-start-1 col-start-1 col-span-3 w-full h-full md:col-span-2">
-                            <img src={images.ruthwik.src} className="w-full h-full object-center object-cover" alt="" />
-                            <div className="flex items-center justify-between">
-                                <h1 className="xl:text-[1vw] text-[4vw] text-white mix-blend-difference">Nagaruthik</h1>
-                                <h1 className="xl:text-[0.7vw] text-[2vw] text-white mix-blend-difference">Full-Stack Developer</h1>
-                            </div>
-                        </div>
-                        <div className="xl:col-start-3 col-start-4 col-span-3 xl:col-span-2">
-                            <img src={images.varshit.src} className="w-full h-full object-center object-cover" alt="" />
-                            <div className="flex items-center justify-between">
-                                <h1 className="xl:text-[1vw] text-[4vw] text-white mix-blend-difference">Varshith</h1>
-                                <h1 className="xl:text-[0.7vw] text-[2vw] text-white mix-blend-difference">Art Director</h1>
-                            </div>
-                        </div>
-                        <div className="xl:col-start-9 col-start-3 col-span-3 xl:col-span-2">
-                            <img src={images.Rohith.src} className="w-full h-full object-center object-cover" alt="" />
-                            <div className="flex items-center justify-between">
-                                <h1 className="xl:text-[1vw] text-[4vw] text-white mix-blend-difference">Rohith</h1>
-                                <h1 className="xl:text-[0.7vw] text-[2vw] text-white mix-blend-difference">Frontend Developer</h1>
-                            </div>
-                        </div>
-                        <div className="xl:col-start-11 col-start-4 col-span-3 xl:col-span-2">
-                            <img src={images.gopi.src} className="w-full h-full object-center object-cover" alt="" />
-                            <div className="flex items-center justify-between">
-                                <h1 className="xl:text-[1vw] text-[4vw] text-white mix-blend-difference">Gopi Krishna</h1>
-                                <h1 className="xl:text-[0.7vw] text-[2vw] text-white mix-blend-difference">Backend Developer</h1>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </section>
 
                 <section className="w-full h-full  overflow-hidden ">
                     <Footer />

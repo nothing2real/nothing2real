@@ -173,7 +173,7 @@ export default function Page() {
               <p className="col-span-5 xl:text-[1vw] text-black">
                 We define the foundation of your brand voice, visuals, and values shaped into a system built for long-term clarity.
               </p>
-              <div className="md:col-span-3 col-span-3 col-start-3  h-[35vh] md:h-[50vh]">
+              <div className="md:col-span-3 col-span-3 col-start-3  h-[35vh] md:h-[60vh]">
                 <Image
                   src="https://plus.unsplash.com/premium_photo-1773152015734-2d164b515ec2?w=600&auto=format&fit=crop&q=60"
                   alt="img"
@@ -188,19 +188,20 @@ export default function Page() {
             </div>
           </div>
         </section>
+        <Service/>
 
         <section className="w-full relative py-[1vw] md:px-[2vw] px-[5vw] bg-white overflow-hidden selection:bg-[#5227FF] selection:text-white">
 
           {/* Header Section */}
           <div className="grid md:grid-cols-12  grid-cols-6 border-t border-black/10 relative pt-[5vw] gap-4">
 
-            <div className="md:col-start-1 md:col-span-4 h-[90vh] col-start-1 col-span-2">
+            <div className="md:col-start-1 md:col-span-4 h-[60vh] md:h-[90vh] col-start-1 col-span-6">
               <Image src="https://plus.unsplash.com/premium_photo-1773152015734-2d164b515ec2?w=600&auto=format&fit=crop&q=60" alt="img" fill priority className="w-full h-full grayscale-50 object-cover" />
             </div>
             <div className="md:col-start-6 md:col-span-7  col-start-1 col-span-6 overflow-hidden">
               <TextY>
                 <h1
-                  className="font-[PPNeueMontreal] tracking-tighter font-semibold xl:text-[4.5vw] xl:leading-[4.5vw] md:text-[4vw] text-[8vw] leading-[1.1] text-[#1E1E1E]"
+                  className="font-[PPNeueMontreal] tracking-tighter font-semibold xl:text-[4.5vw] xl:leading-[4.5vw] md:text-[4vw] text-[6vw] leading-[0.95] text-[#1E1E1E]"
                   style={{ textIndent: "20%" }}
                 >
                   Nothing2Real helps companies create <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFA500] to-[#5227FF]">stunning and strategically</span> sound experiences that engage audiences.
@@ -215,7 +216,7 @@ export default function Page() {
               </TextY>
             </div>
 
-            <div className="md:col-start-9 col-span-5 col-start-1 md:col-span-3 overflow-hidden relative">
+            <div className="md:col-start-9 col-span-5 col-start-2 md:col-span-3 overflow-hidden relative">
               <TextY>
                 <p className="text-black/80 font-[PPNeueMontreal] font-medium text-[4vw] xl:text-[1.1vw] leading-[1.2] mb-6">
                   From concept to launch, we craft digital solutions that not only look exceptional but also drive results, building connections that last through time.

@@ -3,7 +3,6 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import TextY from './TextY';
-import { div } from 'three/src/nodes/math/OperatorNode';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,9 +15,21 @@ const Hero = () => {
     const pathRef = useRef(null);
 
     useGSAP(() => {
-        // 1. Entrance Timeline for Content
+        if (!container.current) return;
 
+        // 🔥 Fix for Next.js + refresh issues
+        ScrollTrigger.config({
+            ignoreMobileResize: true,
+        });
 
+        // Ensure correct measurements after load
+        const refresh = () => ScrollTrigger.refresh();
+
+        window.addEventListener("load", refresh);
+
+        // =============================
+        // 1. INTRO ANIMATION
+        // =============================
         const introTl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
         introTl
@@ -27,7 +38,6 @@ const Hero = () => {
                 duration: 2.5,
                 filter: "brightness(0) blur(20px)",
             })
-            // 2. GRID LINE ENTRANCE (Starts roughly at the same time as the blur)
             .from(".grid-line-v", {
                 scaleY: 0,
                 duration: 1.5,
@@ -47,11 +57,13 @@ const Hero = () => {
                 stagger: 0.1
             }, "-=1");
 
-        // 4. INFINITE LOOPING GRID - Delayed by 2.2s to wait for intro
+        // =============================
+        // 2. GRID LOOP
+        // =============================
         const gridLoopTl = gsap.timeline({
             repeat: -1,
             yoyo: true,
-            delay: 2.2 // <--- This delays the start of the loop
+            delay: 2.2
         });
 
         gridLoopTl
@@ -68,7 +80,7 @@ const Hero = () => {
                 ease: "sine.inOut"
             }, "-=2.5")
             .to(".grid-line-v", {
-                scaleY: 1.05, // Slightly more noticeable loop
+                scaleY: 1.05,
                 duration: 4,
                 stagger: 0.1,
                 ease: "sine.inOut"
@@ -80,38 +92,46 @@ const Hero = () => {
                 ease: "sine.inOut"
             }, "-=3.5");
 
-        // 1. SVG Drawing Animation
-        const path = pathRef.current;
-        const pathLength = path.getTotalLength();
+        // =============================
+        // 3. SVG PATH DRAW
+        // =============================
+        if (pathRef.current) {
+            const path = pathRef.current;
+            const pathLength = path.getTotalLength();
 
-        // Set initial state of path (hidden)
-        gsap.set(path, {
-            strokeDasharray: pathLength,
-            strokeDashoffset: pathLength,
-            opacity: 1
-        });
+            gsap.set(path, {
+                strokeDasharray: pathLength,
+                strokeDashoffset: pathLength,
+                opacity: 1
+            });
 
-        gsap.to(path, {
-            strokeDashoffset: 0,
-            ease: "none",
-            scrollTrigger: {
-                trigger: section2.current,
-                start: "top 80%",
-                end: "bottom 60%",
-                scrub: 1,
-            }
-        });
+            gsap.to(path, {
+                strokeDashoffset: 0,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: section2.current,
+                    start: "top 80%",
+                    end: "bottom 60%",
+                    scrub: 1,
+                    invalidateOnRefresh: true
+                }
+            });
+        }
 
+        // =============================
+        // 4. PIN HERO (MAIN FIX)
+        // =============================
         ScrollTrigger.create({
             trigger: section1.current,
             start: "top top",
             end: "bottom top",
             pin: true,
-            pinSpacing: false, // This allows section2 to overlap
+            pinSpacing: false,
             anticipatePin: 1,
+            invalidateOnRefresh: true
         });
 
-        // Optional: Add a slight scale/opacity fade to Hero as it gets covered
+        // Hero fade when next section overlaps
         gsap.to(section1.current, {
             opacity: 0.5,
             y: 300,
@@ -120,37 +140,39 @@ const Hero = () => {
                 trigger: section2.current,
                 start: "top bottom",
                 end: "top top",
-                scrub: true
+                scrub: true,
+                invalidateOnRefresh: true
             }
         });
 
-
-
-
-
-        // 3. Scroll-Based Parallax
-        const scrollTl = gsap.timeline({
+        // =============================
+        // 5. PARALLAX
+        // =============================
+        gsap.timeline({
             scrollTrigger: {
                 trigger: container.current,
                 start: "top top",
                 end: "bottom top",
-                scrub: true
+                scrub: true,
+                invalidateOnRefresh: true
             }
-        });
-        // gsap.to(section2.current, {
-        //     backgroundColor: "#F4F4F4", // Elegant off-white
-        //     scrollTrigger: {
-        //         trigger: section2.current,
-        //         start: "top 80%",
-        //         end: "top 20%",
-        //         scrub: true,
-        //     }
-        // });
-
-        scrollTl
+        })
             .to(bgImage.current, { y: 150, scale: 1.2 }, 0)
             .to(watermark.current, { xPercent: -10, opacity: 0.1 }, 0)
-            .to(".hero-grid-overlay", { opacity: 0.3, y: 50 }, 0); // Subtle grid movement
+            .to(".hero-grid-overlay", { opacity: 0.3, y: 50 }, 0);
+
+        // =============================
+        // 6. FINAL REFRESH FIX
+        // =============================
+        setTimeout(() => {
+            ScrollTrigger.refresh();
+        }, 300);
+
+        // Cleanup
+        return () => {
+            window.removeEventListener("load", refresh);
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        };
 
     }, { scope: container });
 
@@ -175,7 +197,7 @@ const Hero = () => {
     ]
 
     return (
-        <div ref={container} className="relative w-full  bg-[#0D0D0D] text-white flex flex-col justify-between overflow-hidden">
+        <div ref={container} className="relative w-full min-h-screen  bg-[#0D0D0D] text-white flex flex-col justify-between overflow-hidden">
             <section ref={section1} className="relative w-full min-h-[100svh] bg-[#0D0D0D] text-white flex flex-col justify-between overflow-hidden">
 
                 {/* --- GRID SYSTEM OVERLAY --- */}
@@ -304,15 +326,6 @@ const Hero = () => {
                                 style={{ textIndent: "25%" }}
                             >
                                 We are <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFA500] to-[#5227FF]">Nothing2Real Studios</span> — where imagination becomes reality
-                            </h1>
-                        </TextY>
-                    </div>
-                    <div className="md:col-start-4 md:col-span-8 col-start-1 col-span-6 overflow-hidden">
-                        <TextY>
-                            <h1
-                                className="font-[PPNeueMontreal] tracking-tighter font-semibold xl:text-[3vw] xl:leading-[3vw]  md:text-[4vw] text-[5vw] leading-[1.1] text-[#1E1E1E]"
-                            // Responsive indent
-                            >
                                 Great digital products begin with clarity of vision.
                                 <span className="italic font-sans text-indigo-400"> We</span> design
                                 experiences that feel simple, intentional, and powerful — turning
@@ -320,6 +333,7 @@ const Hero = () => {
                             </h1>
                         </TextY>
                     </div>
+
                 </div>
 
                 <div className="grid md:grid-cols-12 grid-cols-6 xl:gap-8 md:gap-6 pt-[8vw] items-center">
@@ -328,12 +342,7 @@ const Hero = () => {
                     <div className="md:col-start-6 col-span-5 md:col-span-3 col-start-2 overflow-hidden aspect-[16/9] relative">
                         <TextY>
                             <p className="text-black/80 font-[PPNeueMontreal] font-medium text-[4vw] xl:text-[1.1vw] leading-[1.02] xl:leading-[1.1] md:mb-6">
-                                We dont just build websites.
-                                <br />
-                                We design digital systems where
-                                design, motion, and technology
-                                work together to create
-                                meaningful user experiences.
+                                nothing2real studio
                             </p>
                         </TextY>
                     </div>
@@ -348,6 +357,16 @@ const Hero = () => {
                                 and your vision — then translate it
                                 into digital experiences that feel
                                 clear, engaging, and memorable.
+                            </p>
+                        </TextY>
+                        <TextY>
+                            <p className="text-black/80 font-[PPNeueMontreal] font-medium text-[4vw] xl:text-[1.1vw] leading-[1.02] xl:leading-[1.1] md:mb-6">
+                                We dont just build websites.
+                                <br />
+                                We design digital systems where
+                                design, motion, and technology
+                                work together to create
+                                meaningful user experiences.
                             </p>
                         </TextY>
                     </div>
